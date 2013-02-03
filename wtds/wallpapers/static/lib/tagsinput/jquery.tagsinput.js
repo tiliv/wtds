@@ -1,0 +1,1 @@
+/Users/Natsumi/Projects/jQuery-Tags-Input/jquery.tagsinput.js

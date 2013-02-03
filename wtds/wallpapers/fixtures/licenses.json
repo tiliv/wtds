@@ -1,0 +1,100 @@
+[
+    {
+        "fields": {
+            "allow_commercial_use": false, 
+            "allow_derivatives": false, 
+            "attribute_author": true, 
+            "name": "Creative Commons 3.0: Attribution Non-commercial No Derivatives", 
+            "persist_license": false, 
+            "short_name": "cc by-nc-nd", 
+            "summary": "Must be redistributed unchanged and in whole, with credit to the author.", 
+            "url": "http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode"
+        }, 
+        "model": "wallpapers.license", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "allow_commercial_use": false, 
+            "allow_derivatives": true, 
+            "attribute_author": true, 
+            "name": "Creative Commons 3.0: Attribution Non-commercial Share Alike", 
+            "persist_license": true, 
+            "short_name": "cc by-nc-sa", 
+            "summary": "Remixes, derivatives, translations and tweaks are okay.  You must attribute the author.  Derivative works must carry this same license.", 
+            "url": "http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"
+        }, 
+        "model": "wallpapers.license", 
+        "pk": 2
+    }, 
+    {
+        "fields": {
+            "allow_commercial_use": false, 
+            "allow_derivatives": true, 
+            "attribute_author": true, 
+            "name": "Creative Commons 3.0: Attribution Non-commercial", 
+            "persist_license": false, 
+            "short_name": "cc by-nc", 
+            "summary": "Remixes, derivatives, translations and tweaks are okay.  You must attribute the author.  Derivative works may choose their own terms, but must remain non-commercial.", 
+            "url": "http://creativecommons.org/licenses/by-nc/3.0/legalcode"
+        }, 
+        "model": "wallpapers.license", 
+        "pk": 3
+    }, 
+    {
+        "fields": {
+            "allow_commercial_use": true, 
+            "allow_derivatives": false, 
+            "attribute_author": true, 
+            "name": "Creative Commons 3.0: Attribution No Derivatives", 
+            "persist_license": false, 
+            "short_name": "cc by-nd", 
+            "summary": "Must be used for commercial purposes, redistributed unchanged and in whole, with credit to the author.", 
+            "url": "http://creativecommons.org/licenses/by-nd/3.0/legalcode"
+        }, 
+        "model": "wallpapers.license", 
+        "pk": 4
+    }, 
+    {
+        "fields": {
+            "allow_commercial_use": true, 
+            "allow_derivatives": true, 
+            "attribute_author": true, 
+            "name": "Creative Commons 3.0: Attribution Share Alike", 
+            "persist_license": true, 
+            "short_name": "cc by-sa", 
+            "summary": "Remixes, derivatives, translations and tweaks are okay, and may be used for commercial purposes  You must attribute the author.  Derivative works must carry this same license.  Much like open source software licenses.", 
+            "url": "http://creativecommons.org/licenses/by-sa/3.0/legalcode"
+        }, 
+        "model": "wallpapers.license", 
+        "pk": 5
+    }, 
+    {
+        "fields": {
+            "allow_commercial_use": true, 
+            "allow_derivatives": true, 
+            "attribute_author": true, 
+            "name": "Creative Commons 3.0: Attribution", 
+            "persist_license": false, 
+            "short_name": "cc by", 
+            "summary": "Anything goes, so long as you attribute the original author.", 
+            "url": "http://creativecommons.org/licenses/by/3.0/legalcode"
+        }, 
+        "model": "wallpapers.license", 
+        "pk": 6
+    }, 
+    {
+        "fields": {
+            "allow_commercial_use": true, 
+            "allow_derivatives": true, 
+            "attribute_author": false, 
+            "name": "Public Domain", 
+            "persist_license": false, 
+            "short_name": "Public Domain", 
+            "summary": "Anything goes.", 
+            "url": "http://en.wikipedia.org/wiki/Public_domain"
+        }, 
+        "model": "wallpapers.license", 
+        "pk": 7
+    }
+]

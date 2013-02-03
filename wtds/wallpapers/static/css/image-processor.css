@@ -1,0 +1,38 @@
+#hover-indicator {
+    display: none;
+}
+
+#hover-indicator.hover {
+    display: block;
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    background: rgba(0, 0, 255, 0.5);
+    border: 3px solid #dfdfff;
+    border-radius: 30px;
+
+    /* Text stuff */
+    color: #dfdfdf;
+    text-shadow: 0 1px 3px #333;
+    line-height: 7em;
+    font-size: 1.5em;
+}
+
+#preview-stage {
+    width: calc(100% - 20px);
+    padding: 10px;
+}
+    #preview-stage #size-readout {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+        color: #dfdfdf;
+        font-size: 0.7em;
+        padding: 0.4em;
+    }
+    #preview-stage img {
+        width: 100%;
+    }

@@ -1,0 +1,10 @@
+body {
+    background-color: #f2f2f2;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+#wrapper {
+    padding: 2em;
+}
