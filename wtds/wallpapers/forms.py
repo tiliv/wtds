@@ -10,6 +10,7 @@ class CreateForm(forms.ModelForm):
         model = Wallpaper
         fields = ('tags', 'name', 'author', 'license', 'image')
         widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'optional'}),
             'tags': TagListInput(tagsInput_options={'defaultText': '', 'removeText': '◉'}),
             'image': DragAndDropImageProcesserWidget,
         }
