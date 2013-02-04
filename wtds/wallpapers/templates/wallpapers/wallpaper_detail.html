@@ -1,0 +1,17 @@
+{% extends "wallpapers/base.html" %}
+
+{% block title %}Wallpaper: {{ object }}{% endblock title %}
+
+{% block content %}
+    <h1>
+        {% if object.name %}
+            {{ object.name }}
+        {% else %}
+            {% for tag in object.tags.all %}
+                <a href="{#% url 'wallpapers:list' tag=tag.name %#}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        {% endif %}
+    </h1>
+    
+    <img src="{{ object.image.url }}" />
+{% endblock content %}
