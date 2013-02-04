@@ -15,8 +15,8 @@ class Wallpaper(models.Model):
     width = models.PositiveIntegerField()
     # color_profile = models.CharField()
 
-    uploader = models.ForeignKey('auth.User')
-    author = models.ForeignKey('Author', blank=True, null=True)
+    uploader = models.ForeignKey('auth.User', help_text="Contributing user account")
+    author = models.ForeignKey('Author', blank=True, null=True, help_text="Original creator")
     license = models.ForeignKey('License')
     duplicate_of = models.ForeignKey('self', blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
