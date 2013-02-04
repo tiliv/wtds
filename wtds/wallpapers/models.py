@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 
@@ -36,6 +37,9 @@ class Wallpaper(models.Model):
     def clean(self):
         if self.duplicate_of and self.duplicate_of is self:
             raise ValidationError("Wallpaper can't be marked as a duplicate of itself.")
+
+    def get_absolute_url(self):
+        return reverse('wallpapers:view', kwargs={'pk': self.pk})
 
 class Author(models.Model):
     user = models.OneToOneField('auth.User', blank=True, null=True)
