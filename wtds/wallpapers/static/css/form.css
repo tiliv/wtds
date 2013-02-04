@@ -1,0 +1,24 @@
+form label {
+    display: inline-block;
+    width: 5em;
+    font-weight: bold;
+}
+form .helptext {
+    display: inline-block;
+    margin-left: 1em;
+    font-style: italic;
+    font-size: 0.8em;
+    color: gray;
+}
+
+form input[type="text"],
+form .tagsinput {
+    min-width: 6em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ddd #ccc #aaa;
+}
+form input[type="text"] {
+    font-size: 0.7em;
+    padding: 0.5em;
+}
