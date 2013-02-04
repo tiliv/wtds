@@ -12,7 +12,7 @@ WTDS uses multiple settings modules in the `settings/` directory.  Specify the o
 * `WTDS_DATABASE_PASSWORD`
 * `WTDS_DATABASE_SECRET_KEY`
 
-These settings are potentially sensitive and should not be committed to the repository.  For most development needs, these variables can simply be exported in `.bash_profile`.  For production, variables such as these could be made available in the system's `/etc/launchd.conf` or similar.
+These settings are potentially sensitive and should not be committed to the repository.  For most development needs, these variables can simply be exported in `.bash_profile`.  For production, variables such as these could be made available in the system's `/etc/environment` and/or `/etc/apache/envvars`.
 
 Create a settings module in `wtds/settings/` and import from the `base` or `development` modules to avoid changing settings for other developers.
 
