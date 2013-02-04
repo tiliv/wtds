@@ -12,4 +12,4 @@ INSTALLED_APPS += (
     'debug_toolbar',
 )
 
-DATABASES['default']['name'] = 'wtds2'
+DATABASES['default']['NAME'] = 'wtds2'
