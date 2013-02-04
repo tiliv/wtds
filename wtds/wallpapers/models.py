@@ -31,7 +31,7 @@ class Wallpaper(models.Model):
     def __unicode__(self):
         if self.name:
             return self.name
-        return unicode(self.tags)
+        return u", ".join(map(unicode, self.tags.all()))
 
     def clean(self):
         if self.duplicate_of and self.duplicate_of is self:
