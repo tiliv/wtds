@@ -13,16 +13,17 @@ $(document).ready(function(){
         'image/jpeg': true,
         'image/gif': true
     };
-    
+
     var aspect_ratio_special_cases = {
         '8:5': '16:10'
     }
-    
+
     var HOVER_CLASS = 'hover';
+    var FORM = $('form');
     var HOVER_INDICATOR = $('#hover-indicator');
     var PREVIEW_STAGE = $('#preview-stage');
     var RESIZE_READOUT = $('#size-readout');
-    
+
     var image_tag = null;
     var image_data = null;
 
@@ -61,15 +62,17 @@ $(document).ready(function(){
                 image_tag = new Image();
                 image_tag.src = event.target.result;
                 PREVIEW_STAGE.append(image_tag);
-                
+
                 // Give the DOM a brief delay to respond to automatic CSS width sizing
-                setTimeout(function(){ activateHelpers(); }, 100);
+                setTimeout(function(){
+                    activateHelpers();
+                    replaceTraditionalImageInputField();
+                    disableDragEvents();
+                    bindFormSubmissionListener();
+                }, 100);
             };
             reader.readAsDataURL(image_data);
         }
-        
-        // Now that there's an image in the preview stage, activate the helper utilities
-        disableDragEvents();
     }
     function activateHelpers() {
         updateInfoLabel();
@@ -83,7 +86,7 @@ $(document).ready(function(){
                         $(window).resize(); // Let a pending event through
                     }
                 }, 100);
-                
+
                 // Update the label
                 updateInfoLabel();
                 pending_event = false;
@@ -102,11 +105,27 @@ $(document).ready(function(){
         if (aspect_ratio_special_cases[ratio]) {
             ratio = aspect_ratio_special_cases[ratio];
         }
-        
+
         var s = '' + Math.round(percentage) + '% actual size';
         s += ' ('+image_tag.naturalWidth+'&times;'+image_tag.naturalHeight+')';
         s += '; <strong>Aspect ratio</strong>: ' + ratio;
         RESIZE_READOUT.html(s);
+    }
+    function replaceTraditionalImageInputField() {
+        // Destroys the normal file picker and sets up the #preview-stage to stand in its place.
+        var input = $('#id_image');
+        PREVIEW_STAGE.attr('data-name', input.attr('name'));
+        input.closest('p').slideUp(function(){ $(this).remove(); });
+    }
+    function bindFormSubmissionListener() {
+        // Attach submission event for slipping the stage's image data into a hidden field.
+        FORM.on('submit', function(){
+            var field_name = PREVIEW_STAGE.attr('data-name') + '_raw';
+            var image_data = PREVIEW_STAGE.find('img').attr('src')
+            var image_raw = $('<input type="hidden" />').attr('name', field_name).val(image_data);
+            FORM.append(image_raw);
+            return true;
+        });
     }
 
     // Bind drag events
