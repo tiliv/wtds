@@ -91,7 +91,7 @@ class CreateForm(WallpaperForm):
         }
     
 
-class UpdateForm(forms.ModelForm):
+class UpdateForm(WallpaperForm):
     class Meta:
         model = Wallpaper
         fields = ('tags', 'name', 'author', 'license', 'image', 'uploader', 'duplicate_of', 'is_public', 'views', 'tags')

@@ -32,7 +32,9 @@ class TagListInput(forms.TextInput):
         super(TagListInput, self).__init__(attrs=attrs)
 
     def render(self, name, value, attrs=None):
-        if not isinstance(value, basestring):
+        if value is None:
+            value = ''
+        elif not isinstance(value, basestring):
             value = ','.join([taggeditem.tag.name for taggeditem in value])
         s = super(TagListInput, self).render(name, value, attrs)
         js = '<script type="text/javascript">$("#{id}").tagsInput({tagsInput_options});</script>'
