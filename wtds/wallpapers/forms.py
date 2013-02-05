@@ -20,20 +20,22 @@ IMAGE_TYPE_EXTENSION_MAP = {
 BASE64_CONTENT_PATTERN = re.compile(r'^data:(?P<content_type>image/(?P<type>{}));base64,(?P<data>.*)$'.format(
         r'|'.join(IMAGE_TYPE_EXTENSION_MAP.keys())))
 
-class CreateForm(forms.ModelForm):
+_tags_widget = TagListInput(tagsInput_options={'defaultText': '', 'removeText': '◉'})
+
+class WallpaperForm(forms.ModelForm):
     # Not required if image_raw is sent
     image = forms.ImageField(widget=DragAndDropImageProcesserWidget, required=False)
 
     # Receives drag-and-drop binary data, if any
     image_raw = forms.CharField(widget=forms.HiddenInput, required=False)
 
-    class Meta:
-        model = Wallpaper
-        fields = ('tags', 'name', 'author', 'license', 'image')
-        widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'optional'}),
-            'tags': TagListInput(tagsInput_options={'defaultText': '', 'removeText': '◉'}),
-        }
+    # class Meta:
+    #     model = Wallpaper
+    #     fields = ('tags', 'name', 'author', 'license', 'image')
+    #     widgets = {
+    #         'name': forms.TextInput(attrs={'placeholder': 'optional'}),
+    #         'tags': TagListInput(tagsInput_options={'defaultText': '', 'removeText': '◉'}),
+    #     }
 
     def clean_image_raw(self):
         """
@@ -68,7 +70,7 @@ class CreateForm(forms.ModelForm):
 
     def clean(self):
         """ Validates that either ``image`` or ``image_raw`` exists. """
-        cleaned_data = super(CreateForm, self).clean()
+        cleaned_data = super(WallpaperForm, self).clean()
         image = cleaned_data.get('image')
         image_raw = cleaned_data.get('image_raw')
 
@@ -79,6 +81,21 @@ class CreateForm(forms.ModelForm):
 
         return cleaned_data
 
+class CreateForm(WallpaperForm):
+    class Meta:
+        model = Wallpaper
+        fields = ('tags', 'name', 'author', 'license', 'image')
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'optional'}),
+            'tags': _tags_widget,
+        }
+    
+
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = Wallpaper
+        fields = ('tags', 'name', 'author', 'license', 'image', 'uploader', 'duplicate_of', 'is_public', 'views', 'tags')
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'optional'}),
+            'tags': _tags_widget,
+        }

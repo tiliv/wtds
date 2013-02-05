@@ -7,10 +7,10 @@
 
 {% block content %}
     {{ block.super }}
-    <form action="{% url 'wallpapers:upload' %}" method="post" enctype="form/multipart">
+    <form action="" method="post" enctype="form/multipart">
         {% csrf_token %}
         <p>
-            <input type="submit" value="Upload" />
+            <input type="submit" value="Save" />
         </p>
         {{ form.as_p }}
     </form>
