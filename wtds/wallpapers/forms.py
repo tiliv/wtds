@@ -98,4 +98,5 @@ class UpdateForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'optional'}),
             'tags': _tags_widget,
+            'duplicate_of': forms.TextInput(attrs={'placeholder': 'wallpaper id'}),
         }
