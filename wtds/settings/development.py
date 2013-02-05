@@ -8,6 +8,8 @@ MIDDLEWARE_CLASSES += (
 )
 
 INSTALLED_APPS += (
+    'django.contrib.admin',
+
     'django_extensions',
     'debug_toolbar',
 )
