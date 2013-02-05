@@ -1,0 +1,20 @@
+{% extends "wallpapers/base.html" %}
+
+{% block content %}
+    {{ block.super }}
+    
+    <h2>Wallpapers</h2>
+    
+    <p>Filtering by tags:
+        {% for tag in tags %}
+            <a href="{% url 'wallpapers:list' tag.slug %}">{{ tag }}</a>
+            {% if not forloop.last %}&raquo;{% endif %}
+        {% endfor %}
+    </p>
+    
+    <div>
+        {% for wallpaper in object_list %}
+            {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
+        {% endfor %}
+    </div>
+{% endblock content %}

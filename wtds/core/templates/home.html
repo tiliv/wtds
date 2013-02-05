@@ -5,11 +5,7 @@
     <div id="info-area"></div>
     <div id="lineup">
         {% for wallpaper in wallpapers.recent %}
-        {% spaceless %}
-            <a href="{{ wallpaper.get_absolute_url }}">
-                <img src="{{ wallpaper.image.url }}" width="200px" />
-            </a>
-        {% endspaceless %}
+            {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
         {% endfor %}
     </div>
     <div id="tags">
