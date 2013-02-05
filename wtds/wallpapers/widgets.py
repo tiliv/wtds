@@ -1,4 +1,5 @@
 import json
+from operator import attrgetter
 
 from django import forms
 from django.utils.safestring import mark_safe
@@ -31,6 +32,8 @@ class TagListInput(forms.TextInput):
         super(TagListInput, self).__init__(attrs=attrs)
 
     def render(self, name, value, attrs=None):
+        if not isinstance(value, basestring):
+            value = ','.join([taggeditem.tag.name for taggeditem in value])
         s = super(TagListInput, self).render(name, value, attrs)
         js = '<script type="text/javascript">$("#{id}").tagsInput({tagsInput_options});</script>'
         attrs = self.build_attrs(attrs, type=self.input_type, name=name)
