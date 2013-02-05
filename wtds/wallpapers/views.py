@@ -13,7 +13,7 @@ class AuthenticationMixin(object):
     
     def dispatch(self, request, *args, **kwargs):
         if self.login_required and not request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('login'))
+            return HttpResponseRedirect(reverse('auth:login'))
         if self.permissions_required:
             for permission in self.permissions_required:
                 if not self.request.user.has_perm(permission):
