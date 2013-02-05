@@ -1,0 +1,29 @@
+{% extends "wallpapers/base.html" %}
+
+{% block title %}Delete '{{ object }}'?{% endblock title %}
+
+{% block content %}
+    <h1>
+        {% if object.name %}
+            {{ object.name }}
+        {% else %}
+            {% for tag in object.tags.all %}
+                <a href="{#% url 'wallpapers:list' tag=tag.name %#}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        {% endif %}
+    </h1>
+    
+    <form action="{% url 'wallpapers:delete' object.pk %}" method="post">
+        {% csrf_token %}
+        <img src="{{ object.image.url }}" width="200px" style="float: left; margin: 0 1em 1em 0;" />
+        <p>Delete this wallpaper?</p>
+        
+        {% if not object.duplicate_of %}
+            <p class="warning">WARNING: This image is not marked as being a duplicate.</p>
+        {% endif %}
+        
+        <p>
+            <input type="submit" value="Delete" />
+        </p>
+    </form>
+{% endblock content %}
