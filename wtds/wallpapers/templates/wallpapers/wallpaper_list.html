@@ -5,12 +5,14 @@
     
     <h2>Wallpapers</h2>
     
+    {% if tags %}
     <p>Filtering by tags:
         {% for tag in tags %}
             <a href="{% url 'wallpapers:list' tag.slug %}">{{ tag }}</a>
             {% if not forloop.last %}&raquo;{% endif %}
         {% endfor %}
     </p>
+    {% endif %}
     
     <div>
         {% for wallpaper in object_list %}
