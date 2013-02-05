@@ -19,7 +19,7 @@ class ManagementCommandTaskBase(object):
     """ Mixin for tasks that want to run a ``manage.py`` command. """
     name = None
 
-    def run(self, settings='wtds.settings.base', virtualenv=None):
+    def run(self, settings=None, virtualenv=None):
         manage.run(self.name, settings)
 
 class SyncDB(ManagementCommandTaskBase, Task):
