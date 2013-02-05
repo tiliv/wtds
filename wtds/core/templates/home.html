@@ -1,7 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% for wallpaper in wallpapers.popular %}
-        {{ variable }}
-    {% endfor %}
+    <div id="viewing-area"></div>
+    <div id="info-area"></div>
+    <div id="lineup">
+        {% for wallpaper in wallpapers.recent %}
+        {% spaceless %}
+            <a href="{{ wallpaper.get_absolute_url }}">
+                <img src="{{ wallpaper.image.url }}" width="200px" />
+            </a>
+        {% endspaceless %}
+        {% endfor %}
+    </div>
+    <div id="tags">
+        <h4>Most used tags</h4>
+        <div>
+            {% for tag in tags.most_used %}
+                <a href="{#% url 'wallpapers:list' tag=tag.name %#}">{{ tag }}</a>
+            {% endfor %}
+        </div>
+        <h4>Recently used tags</h4>
+        <div>
+            {% for tag in tags.recent %}
+                <a href="{#% url 'wallpapers:list' tag=tag.name %#}">{{ tag }}</a>
+            {% endfor %}
+        </div>
+        <h4>Newly created tags</h4>
+        <div>
+            {% for tag in tags.new %}
+                <a href="{#% url 'wallpapers:list' tag=tag.name %#}">{{ tag }}</a>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}
