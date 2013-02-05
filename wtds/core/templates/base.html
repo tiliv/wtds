@@ -11,9 +11,19 @@
     {% block extra_head %}{{ form.media }}{% endblock extra_head %}
 </head>
 <body>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'wallpapers:upload' %}">Upload</a>
     <div id="wrapper">
         <div id="content">
-            <div id="viewing-area"></div>
+            <div id="viewing-area">
+                {% for wallpaper in wallpapers.recent %}
+                {% spaceless %}
+                    <a href="{{ wallpaper.get_absolute_url }}">
+                        <img src="{{ wallpaper.image.url }}" width="200px" />
+                    </a>
+                {% endspaceless %}
+                {% endfor %}
+            </div>
             <div id="info-area"></div>
             {% block content %}{% endblock content %}
         </div>

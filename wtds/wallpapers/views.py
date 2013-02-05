@@ -1,5 +1,6 @@
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, DeleteView
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse_lazy
 
 from .models import Wallpaper
 from .forms import CreateForm
@@ -22,3 +23,6 @@ class WallpaperCreateView(WallpaperMixin, CreateView):
 
 class WallpaperDetailView(WallpaperMixin, DetailView):
     pass
+
+class WallpaperDeleteView(WallpaperMixin, DeleteView):
+    success_url = reverse_lazy('home')
