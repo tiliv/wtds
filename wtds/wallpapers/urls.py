@@ -5,7 +5,7 @@ from .views import WallpaperCreateView, WallpaperDetailView, WallpaperDeleteView
 urlpatterns = patterns('',
     url(r'^new/$', WallpaperCreateView.as_view(), name='upload'),
     url(r'^list/', include(patterns('',
-        url(r'^$', WallpaperListView.as_view(view_all=True), name='list'),
+        url(r'^$', WallpaperListView.as_view(), name='list'),
         url(r'^(?P<slug>[\w-]+)/$', WallpaperListView.as_view(), name='list'),
         # url(r'^(?P<slugs>.*)$', WallpaperListView.as_view(), name='list'),
     ))),

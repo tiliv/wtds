@@ -30,8 +30,6 @@ class WallpaperDeleteView(WallpaperMixin, DeleteView):
     success_url = reverse_lazy('home')
 
 class WallpaperListView(WallpaperMixin, ListView):
-    view_all = False
-    
     queryset = Wallpaper.objects.all()
     
     _tags = None
