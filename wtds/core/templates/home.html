@@ -12,19 +12,19 @@
         <h4>Most used tags</h4>
         <div>
             {% for tag in tags.most_used %}
-                <a href="{#% url 'wallpapers:list' tag=tag.name %#}">{{ tag }}</a>
+                <a href="{% url 'wallpapers:list' tag.slug %}">{{ tag }}</a>
             {% endfor %}
         </div>
         <h4>Recently used tags</h4>
         <div>
             {% for tag in tags.recent %}
-                <a href="{#% url 'wallpapers:list' tag=tag.name %#}">{{ tag }}</a>
+                <a href="{% url 'wallpapers:list' tag.slug %}">{{ tag }}</a>
             {% endfor %}
         </div>
         <h4>Newly created tags</h4>
         <div>
             {% for tag in tags.new %}
-                <a href="{#% url 'wallpapers:list' tag=tag.name %#}">{{ tag }}</a>
+                <a href="{% url 'wallpapers:list' tag.slug %}">{{ tag }}</a>
             {% endfor %}
         </div>
     </div>
