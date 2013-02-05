@@ -47,6 +47,9 @@ MEDIA_ROOT = _dir('..', 'media')
 MEDIA_URL = '/media/'
 STATIC_ROOT = _dir('..', 'static')
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'auth:login'
+LOGOUT_URL = 'auth:logout'
 
 # Additional locations of static files
 STATICFILES_DIRS = (

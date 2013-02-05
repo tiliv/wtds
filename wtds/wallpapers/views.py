@@ -1,16 +1,31 @@
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from taggit.models import Tag
 from taggit.utils import parse_tags
 
 from .models import Wallpaper
 from .forms import CreateForm, UpdateForm
 
+class AuthenticationMixin(object):
+    login_required = True
+    permissions_required = []
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.login_required and not request.user.is_authenticated():
+            return HttpResponseRedirect(reverse('login'))
+        if self.permissions_required:
+            for permission in self.permissions_required:
+                if not self.request.user.has_perm(permission):
+                    return HttpResponseForbidden("Sorry! You don't have permission to go there.")
+        return super(AuthenticationMixin, self).dispatch(request, *args, **kwargs)
+    
+
 class WallpaperMixin(object):
     model = Wallpaper
 
-class WallpaperCreateView(WallpaperMixin, CreateView):
+class WallpaperCreateView(AuthenticationMixin, WallpaperMixin, CreateView):
+    permissions_required = ['wallpapers.add_wallpaper']
     form_class = CreateForm
 
     def form_valid(self, form):
@@ -23,13 +38,15 @@ class WallpaperCreateView(WallpaperMixin, CreateView):
 
         return HttpResponseRedirect(self.get_success_url())
 
-class WallpaperUpdateView(WallpaperMixin, UpdateView):
+class WallpaperUpdateView(AuthenticationMixin, WallpaperMixin, UpdateView):
+    permissions_required = ['wallpapers.change_wallpaper']
     form_class = UpdateForm
 
 class WallpaperDetailView(WallpaperMixin, DetailView):
     pass
 
-class WallpaperDeleteView(WallpaperMixin, DeleteView):
+class WallpaperDeleteView(AuthenticationMixin, WallpaperMixin, DeleteView):
+    permissions_required = ['wallpapers.delete_wallpaper']
     success_url = reverse_lazy('home')
 
 class WallpaperListView(WallpaperMixin, ListView):

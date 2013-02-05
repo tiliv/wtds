@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script type="text/javascript">
+        window.location = "{% url 'home' %}";
+    </script>
+{% endblock javascript %}
