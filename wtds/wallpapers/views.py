@@ -1,11 +1,11 @@
-from django.views.generic import CreateView, DetailView, DeleteView, ListView
+from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from taggit.models import Tag
 from taggit.utils import parse_tags
 
 from .models import Wallpaper
-from .forms import CreateForm
+from .forms import CreateForm, UpdateForm
 
 class WallpaperMixin(object):
     model = Wallpaper
@@ -22,6 +22,9 @@ class WallpaperCreateView(WallpaperMixin, CreateView):
         form.save_m2m()
 
         return HttpResponseRedirect(self.get_success_url())
+
+class WallpaperUpdateView(WallpaperMixin, UpdateView):
+    form_class = UpdateForm
 
 class WallpaperDetailView(WallpaperMixin, DetailView):
     pass

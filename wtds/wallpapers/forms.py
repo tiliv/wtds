@@ -79,3 +79,6 @@ class CreateForm(forms.ModelForm):
 
         return cleaned_data
 
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = Wallpaper

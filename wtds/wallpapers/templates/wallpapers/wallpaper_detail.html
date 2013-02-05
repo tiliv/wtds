@@ -12,6 +12,7 @@
             {% endfor %}
         {% endif %}
     </h1>
+    <a href="{% url 'wallpapers:edit' object.pk %}">Edit</a>
     <a href="{% url 'wallpapers:delete' object.pk %}">Delete</a>
     
     <img src="{{ object.image.url }}" width="100%" />
