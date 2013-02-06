@@ -1,11 +1,15 @@
 #details {
     float: right;
-    width: 24%;
+    width: 34%;
 }
 
 #stage {
-    width: 75%;
+    width: 65%;
 }
+    #stage img {
+        border: none;
+        box-shadow: 0 5px 10px #bbb;
+    }
 
 #details label {
     display: inline-block;
@@ -26,3 +30,23 @@
     #details .aspect-ratio label {
         background-image: url(../img/aspect-ratio.png);
     }
+
+#similar {
+    /* Can't code "transparent" into this, or else the gradient gets weird and dark. */
+    background-image: -webkit-radial-gradient(top center, 50% 5px, #ccc, #f2f2f2);
+    padding-top: 1em;
+    margin-top: 11em;
+}
+    #similar h4 {
+        font-weight: normal;
+    }
+        #similar .related {
+            float: left;
+            width: 30%;
+            margin-right: 2%;
+        }
+            #similar h5 {
+                font-weight: normal;
+                text-align: center;
+                margin: 0;
+            }

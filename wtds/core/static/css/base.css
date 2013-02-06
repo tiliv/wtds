@@ -12,6 +12,13 @@ body {
 .hidden {
     display: none;
 }
+.clear {
+    clear: left;
+}
+
+a img {
+    border: none;
+}
 
 a.button {
     background-image: -webkit-linear-gradient(top, #dfdfdf, #dfdfdf, #d5d5d5, #ccc);
@@ -41,3 +48,26 @@ a.button {
         background-image: -webkit-linear-gradient(top, #ccc, #ccc, #d5d5d5, #dfdfdf);
         box-shadow: inset 0 1px 2px #999;
     }
+
+
+.wallpaper img {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #333;
+    box-shadow: 0 1px 3px #666;
+}
+
+.wallpaper.tile.stack {
+    position: relative;
+    z-index: 5;
+}
+.wallpaper.tile.stack::after {
+    content: -webkit-linear-gradient(left, black, black);
+    position: relative;
+    top: -98px;
+    display: block;
+    width: calc(100% - 0px); /* tricks webkit into forgetting about border-width */
+    height: calc(94px - 1px);
+    border: 1px solid #333;
+    box-shadow: 0 1px 3px #666;
+}

@@ -39,10 +39,33 @@
             <span>{{ object.aspect_ratio }}</span>
         </p>
         {# <p><label>:</label> <span class=""></span></p> #}
+        
+        <div id="similar">
+            <h4>Similar by:</h4>
+            <div class="related tags">
+                <h5>tags</h5>
+                {% for similar in object.tags.similar_objects|slice:":1" %}
+                    {% include "wallpapers/includes/tile.html" with wallpaper=similar width="140px" stack=True only %}
+                {% endfor %}
+            </div>
+            <div class="related color">
+                <h5>color</h5>
+                {% for similar in object.get_similar_by_color|slice:":1" %}
+                    {% include "wallpapers/includes/tile.html" with wallpaper=similar width="140px" stack=True only %}
+                {% endfor %}
+            </div>
+            <div class="related size">
+                <h5>size</h5>
+                {% for similar in object.get_similar_by_size|slice:":1" %}
+                    {% include "wallpapers/includes/tile.html" with wallpaper=similar width="140px" stack=True only %}
+                {% endfor %}
+            </div>
+            <div class="clear">&nbsp;</div>
+        </div>
+        
     </aside>
 
-    <div id="stage">
-        <div id="scale-readout"></div>
+    <div id="stage" class="wallpaper">
         <img src="{{ object.image.url }}" width="100%" />
     </div>
 {% endblock content %}

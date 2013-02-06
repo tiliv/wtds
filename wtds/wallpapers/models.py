@@ -1,4 +1,5 @@
 from fractions import gcd
+import random
 
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -11,6 +12,7 @@ from .managers import WallpaperManager
 FRIENDLY_ASPECT_RATIOS = {
     (8, 5): (16, 10),
 }
+RANDOM_STACK_TILT_ANGLES = (-4, -3, -2, 2, 3, 4)
 
 class Wallpaper(models.Model):
     objects = WallpaperManager()
@@ -59,6 +61,30 @@ class Wallpaper(models.Model):
         return ratio
     
     aspect_ratio = property(get_aspect_ratio)
+    
+    def get_similar_by_size(self):
+        """
+        Returns a queryset of ``Wallpaper`` objects that use the same pixel dimensions.
+        
+        This is primarily a discovery mechanism, so the list is randomized.
+        
+        """
+        
+        # TODO: Add some fuzziness to the filter.
+        queryset = Wallpaper.objects.filter(width=self.width, height=self.height)
+        
+        # queryset = queryset.exclude(pk=self.pk)
+        
+        return queryset.order_by('?')
+
+    def get_similar_by_color(self):
+        # TODO: Implement this
+        return Wallpaper.objects.all()
+    
+    def get_random_stack_tilt(self):
+        """ Template UI function that generates a degree rotation value for a "stack". """
+        
+        return random.choice(RANDOM_STACK_TILT_ANGLES)
 
 class Author(models.Model):
     user = models.OneToOneField('auth.User', blank=True, null=True)

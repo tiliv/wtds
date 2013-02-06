@@ -1,7 +1,23 @@
 {# Snippet for use with {% include %} #}
 
-{% spaceless %}
-    <a href="{{ wallpaper.get_absolute_url }}">
-        <img src="{{ wallpaper.image.url }}" width="200px" />
+{# Parameters: width (css value), stack (True/False) #}
+
+{# {% spaceless %} #}
+    <a href="{{ wallpaper.get_absolute_url }}" class="wallpaper tile{% if stack %} stack{% endif %}"
+            data-id="wallpaper_{{ wallpaper.pk }}">
+        {# <div class="overlay"></div> #}
+        <img src="{{ wallpaper.image.url }}" width="{{ width|default:"200px" }}" />
     </a>
-{% endspaceless %}
+    {% if stack %}
+    {% with angle=wallpaper.get_random_stack_tilt %}
+        <style type="text/css">
+            .wallpaper.tile.stack[data-id=wallpaper_{{ wallpaper.pk }}]::after {
+                transform: rotate({{ angle }}deg);
+                -webkit-transform: rotate({{ angle }}deg);
+                -moz-transform: rotate({{ angle }}deg);
+                -o-transform: rotate({{ angle }}deg);
+            }
+        </style>
+    {% endwith %}
+    {% endif %}
+{# {% endspaceless %} #}
