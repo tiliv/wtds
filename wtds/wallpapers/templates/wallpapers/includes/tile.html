@@ -1,23 +1,28 @@
+{% load thumbnail %}
+
 {# Snippet for use with {% include %} #}
 
-{# Parameters: width (css value), stack (True/False) #}
+{# Parameters: width (css value), stack (wallpaper object or None) #}
 
 {# {% spaceless %} #}
+{% thumbnail wallpaper.image "280x188" crop="center" as image %}
     <a href="{{ wallpaper.get_absolute_url }}" class="wallpaper tile{% if stack %} stack{% endif %}"
             data-id="wallpaper_{{ wallpaper.pk }}">
-        {# <div class="overlay"></div> #}
-        <img src="{{ wallpaper.image.url }}" width="{{ width|default:"200px" }}" />
+        <img src="{{ image.url }}" width="140" height="94" />
     </a>
-    {% if stack %}
-    {% with angle=wallpaper.get_random_stack_tilt %}
-        <style type="text/css">
-            .wallpaper.tile.stack[data-id=wallpaper_{{ wallpaper.pk }}]::after {
-                transform: rotate({{ angle }}deg);
-                -webkit-transform: rotate({{ angle }}deg);
-                -moz-transform: rotate({{ angle }}deg);
-                -o-transform: rotate({{ angle }}deg);
-            }
-        </style>
-    {% endwith %}
-    {% endif %}
+{% endthumbnail %}
+
+{% thumbnail stack.image "280x188" crop="center" as stack_image %}
+{% with angle=wallpaper.get_random_stack_tilt %}
+    <style type="text/css">
+        .wallpaper.tile.stack[data-id=wallpaper_{{ wallpaper.pk }}]::before {
+            content: url({{ stack_image.url }});
+            transform: rotate({{ angle }}deg);
+            -webkit-transform: rotate({{ angle }}deg);
+            -moz-transform: rotate({{ angle }}deg);
+            -o-transform: rotate({{ angle }}deg);
+        }
+    </style>
+{% endwith %}
+{% endthumbnail %}
 {# {% endspaceless %} #}

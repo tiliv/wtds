@@ -14,6 +14,7 @@ def _var(name):
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
 
 ADMINS = (
     ('Tim Valenta', 'tim.valenta@thesimpler.net'),
@@ -118,6 +119,7 @@ INSTALLED_APPS = (
     
     # User apps
     'taggit',
+    'sorl.thumbnail',
     'wtds.wallpapers',
 )
 
@@ -139,7 +141,11 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'thumbnail': {
+            'level': 'WARNING',
+            'class': 'sorl.thumbnail.log.ThumbnailLogHandler',
+        },
     },
     'loggers': {
         'django.request': {
@@ -147,5 +153,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }

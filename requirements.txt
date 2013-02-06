@@ -9,4 +9,8 @@ django-extensions==1.0.3
 django-taggit==0.9.3
 paramiko==1.9.0
 pycrypto==2.6
+sorl-thumbnail==11.12
+stevedore==0.8
+virtualenv==1.8.4
+virtualenv-clone==0.2.4
 wsgiref==0.1.2
