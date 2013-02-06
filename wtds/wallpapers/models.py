@@ -51,7 +51,7 @@ class Wallpaper(models.Model):
 
     def get_aspect_ratio(self, as_tuple=False):
         """ Returns a friendly ratio such as ``16:10``. """
-        
+
         divisor = gcd(self.width, self.height)
         ratio = (self.width / divisor, self.height / divisor)
         if ratio in FRIENDLY_ASPECT_RATIOS:
@@ -59,31 +59,28 @@ class Wallpaper(models.Model):
         if not as_tuple:
             ratio = ':'.join(map(str, ratio))
         return ratio
-    
+
     aspect_ratio = property(get_aspect_ratio)
-    
-    def get_similar_by_size(self):
-        """
-        Returns a queryset of ``Wallpaper`` objects that use the same pixel dimensions.
-        
-        This is primarily a discovery mechanism, so the list is randomized.
-        
-        """
-        
-        # TODO: Add some fuzziness to the filter.
-        queryset = Wallpaper.objects.filter(width=self.width, height=self.height)
-        
-        # queryset = queryset.exclude(pk=self.pk)
-        
-        return queryset.order_by('?')
+
+    def get_similar_by_size(self, variation=0.1):
+        """ This is primarily a discovery mechanism, so the list is randomized. """
+
+        queryset = Wallpaper.objects.filter(**{
+            'width__gte': self.width - self.width * variation,
+            'width__lte': self.width + self.width * variation,
+            'height__gte': self.height - self.height * variation,
+            'height__lte': self.height + self.height * variation,
+        })
+
+        return queryset.exclude(pk=self.pk).order_by('?')
 
     def get_similar_by_color(self):
         # TODO: Implement this
-        return Wallpaper.objects.all()
-    
+        return Wallpaper.objects.exclude(pk=self.pk).order_by('?')
+
     def get_random_stack_tilt(self):
         """ Template UI function that generates a degree rotation value for a "stack". """
-        
+
         return random.choice(RANDOM_STACK_TILT_ANGLES)
 
 class Author(models.Model):
