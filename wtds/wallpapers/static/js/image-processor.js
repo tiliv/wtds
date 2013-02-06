@@ -1,6 +1,7 @@
-// Depends on:
+// Depends on: (* represents project resource)
 // jQuery
 // calculate-gcd-javascript.js (gcd function)
+// *resize.js
 
 $(document).ready(function(){
     var dndSupported = function () {
@@ -13,10 +14,6 @@ $(document).ready(function(){
         'image/jpeg': true,
         'image/gif': true
     };
-
-    var aspect_ratio_special_cases = {
-        '8:5': '16:10'
-    }
 
     var HOVER_CLASS = 'hover';
     var FORM = $('form');
@@ -76,25 +73,8 @@ $(document).ready(function(){
     }
     function activateHelpers() {
         updateInfoLabel();
-        var resize_throttle_id = null;
         var pending_event = false;
-        $(window).resize(function(){
-            if (resize_throttle_id === null) {
-                resize_throttle_id = setTimeout(function(){
-                    resize_throttle_id = null;
-                    if (pending_event) {
-                        $(window).resize(); // Let a pending event through
-                    }
-                }, 100);
-
-                // Update the label
-                updateInfoLabel();
-                pending_event = false;
-            } else {
-                // Rate-limited; do nothing
-                pending_event = true;
-            }
-        });
+        set_resize_callback(updateInfoLabel);
     }
     function updateInfoLabel() {
         var percentage = 100 * image_tag.width / image_tag.naturalWidth;
@@ -102,8 +82,8 @@ $(document).ready(function(){
         var ratio_width = image_tag.naturalWidth / divisor;
         var ratio_height = image_tag.naturalHeight / divisor;
         var ratio = '' + ratio_width + ':' + ratio_height;
-        if (aspect_ratio_special_cases[ratio]) {
-            ratio = aspect_ratio_special_cases[ratio];
+        if (ASPECT_RATIO_SPECIAL_CASES[ratio]) {
+            ratio = ASPECT_RATIO_SPECIAL_CASES[ratio];
         }
 
         var s = '' + Math.round(percentage) + '% actual size';

@@ -2,8 +2,13 @@
 
 {% block title %}{% if form.instance.id %}Edit{% else %}Upload{% endif %}{% endblock title %}
 {% block css %}
+    {{ block.super }}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/form.css" type="text/css" />
 {% endblock css %}
+{% block javascript %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/resize.js"></script>
+{% endblock javascript %}
 
 {% block content %}
     {{ block.super }}
