@@ -29,14 +29,6 @@ class WallpaperForm(forms.ModelForm):
     # Receives drag-and-drop binary data, if any
     image_raw = forms.CharField(widget=forms.HiddenInput, required=False)
 
-    # class Meta:
-    #     model = Wallpaper
-    #     fields = ('tags', 'name', 'author', 'license', 'image')
-    #     widgets = {
-    #         'name': forms.TextInput(attrs={'placeholder': 'optional'}),
-    #         'tags': TagListInput(tagsInput_options={'defaultText': '', 'removeText': '◉'}),
-    #     }
-
     def clean_image_raw(self):
         """
         Some trickery to make the fake file field pass through the normal machinery without having
@@ -60,10 +52,11 @@ class WallpaperForm(forms.ModelForm):
         data = b64decode(match.group('data'))
         filename = uuid.uuid4()
         extension = IMAGE_TYPE_EXTENSION_MAP.get(match.group('type'))
+        filename = '{}.{}'.format(filename, extension)
 
         # Generate some internal objects to keep things as close to legit as possible
-        content_file = ContentFile(data, name='{}.{}'.format(filename, extension))
-        uploaded_file = UploadedFile(content_file, content_type, size=content_file.size)
+        content_file = ContentFile(data, name=filename)
+        uploaded_file = UploadedFile(content_file, filename, content_type, size=content_file.size)
 
         # Run the built-in image file validation so that we don't have to reinvent that wheel
         return forms.ImageField().to_python(uploaded_file)
