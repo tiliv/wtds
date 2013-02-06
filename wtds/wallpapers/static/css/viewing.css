@@ -1,0 +1,28 @@
+#details {
+    float: right;
+    width: 24%;
+}
+
+#stage {
+    width: 75%;
+}
+
+#details label {
+    display: inline-block;
+    vertical-align: bottom;
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+}
+    #details .tags label {
+        background-image: url(../img/tag.png);
+    }
+    #details .name label {
+        background-image: url(../img/name.png);
+    }
+    #details .size label {
+        background-image: url(../img/size.png);
+    }
+    #details .aspect-ratio label {
+        background-image: url(../img/aspect-ratio.png);
+    }

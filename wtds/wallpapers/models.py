@@ -1,3 +1,5 @@
+from fractions import gcd
+
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
@@ -5,6 +7,10 @@ from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
 
 from .managers import WallpaperManager
+
+FRIENDLY_ASPECT_RATIOS = {
+    (8, 5): (16, 10),
+}
 
 class Wallpaper(models.Model):
     objects = WallpaperManager()
@@ -40,6 +46,19 @@ class Wallpaper(models.Model):
 
     def get_absolute_url(self):
         return reverse('wallpapers:view', kwargs={'pk': self.pk})
+
+    def get_aspect_ratio(self, as_tuple=False):
+        """ Returns a friendly ratio such as ``16:10``. """
+        
+        divisor = gcd(self.width, self.height)
+        ratio = (self.width / divisor, self.height / divisor)
+        if ratio in FRIENDLY_ASPECT_RATIOS:
+            ratio = FRIENDLY_ASPECT_RATIOS[ratio]
+        if not as_tuple:
+            ratio = ':'.join(map(str, ratio))
+        return ratio
+    
+    aspect_ratio = property(get_aspect_ratio)
 
 class Author(models.Model):
     user = models.OneToOneField('auth.User', blank=True, null=True)

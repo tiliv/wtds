@@ -2,18 +2,47 @@
 
 {% block title %}Wallpaper: {{ object }}{% endblock title %}
 
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/viewing.css" type="text/css" />
+{% endblock css %}
+{% block javascript %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/calculate-gcd-javascript.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/resize.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/viewing.js"></script>
+{% endblock javascript %}
+
 {% block content %}
-    <h1>
-        {% if object.name %}
-            {{ object.name }}
-        {% else %}
-            {% for tag in object.tags.all %}
-                <a href="{% url 'wallpapers:list' tag.slug %}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
-            {% endfor %}
+    <aside id="details">
+        {% if perms.wallpaper.change_wallpaper %}
+        <a class="button edit" href="{% url 'wallpapers:edit' object.pk %}">Edit</a>
         {% endif %}
-    </h1>
-    <a href="{% url 'wallpapers:edit' object.pk %}">Edit</a>
-    <a href="{% url 'wallpapers:delete' object.pk %}">Delete</a>
-    
-    <img src="{{ object.image.url }}" width="100%" />
+        {% if perms.wallpaper.delete_wallpaper %}
+        <a class="button delete" href="{% url 'wallpapers:delete' object.pk %}">Delete</a>
+        {% endif %}
+        
+        <p class="name{% if not object.name %} hidden{% endif %}">
+            <label title="Name"></label>
+            <span>{{ object.name }}</span>
+        </p>
+        <p class="tags">
+            <label title="Tags"></label>
+            <span>{% include "wallpapers/includes/tags_as_links.html" with tags=object.tags.all only %}</span>
+        </p>
+        <p class="size">
+            <label title="Dimensions"></label>
+            <span>{{ object.width }} &times; {{ object.height }}</span> (<span class="showing"></span>% actual size)
+        </p>
+        <p class="aspect-ratio">
+            <label title="Aspect ratio"></label>
+            <span>{{ object.aspect_ratio }}</span>
+        </p>
+        {# <p><label>:</label> <span class=""></span></p> #}
+    </aside>
+
+    <div id="stage">
+        <div id="scale-readout"></div>
+        <img src="{{ object.image.url }}" width="100%" />
+    </div>
 {% endblock content %}
