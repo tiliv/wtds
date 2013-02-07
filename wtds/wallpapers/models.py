@@ -12,8 +12,8 @@ from .managers import WallpaperManager
 COMMON_ASPECT_RATIOS = (
     (16, 10),
     (16, 9),
+    (5, 4),
     (4, 3),
-    
 )
 FRIENDLY_ASPECT_RATIOS = {
     (8, 5): (16, 10),
@@ -61,7 +61,7 @@ class Wallpaper(models.Model):
     def get_absolute_url(self):
         return reverse('wallpapers:view', kwargs={'pk': self.pk})
 
-    def get_aspect_ratio(self, as_tuple=False):
+    def get_aspect_ratio(self, as_tuple=False, nearest=True):
         """
         Returns the nearest friendly ratio such as ``16:10``.
         
@@ -70,10 +70,13 @@ class Wallpaper(models.Model):
         
         """
 
-        ratio = 1. * self.width / self.height
-
         divisor = gcd(self.width, self.height)
-        ratio = (self.width / divisor, self.height / divisor)
+        rw, rh = (self.width / divisor, self.height / divisor)
+        if nearest:
+            ratio = sorted(COMMON_ASPECT_RATIOS, key=lambda (w,h): (1.*rw/rh) / (1.*w/h))[-1]
+        else:
+            ratio = (rw, rh)
+
         if ratio in FRIENDLY_ASPECT_RATIOS:
             ratio = FRIENDLY_ASPECT_RATIOS[ratio]
         if not as_tuple:
