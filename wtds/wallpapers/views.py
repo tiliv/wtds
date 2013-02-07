@@ -72,7 +72,6 @@ class WallpaperListView(WallpaperMixin, ListView):
             queryset = queryset.filter()
         else:
             tags = self.get_filter_tags()
-            print self.in_danger
             if self.in_danger:
                 queryset = Wallpaper.objects.filter_by_orphan_danger(tags=tags)
             else:
