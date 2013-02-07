@@ -10,7 +10,7 @@ from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import UploadedFile
 
 from .models import Wallpaper
-from .widgets import TagListInput, DragAndDropImageProcesserWidget
+from .widgets import TagListInput, DragAndDropImageProcesserWidget, ClearableThumbnailImageWidget
 
 # For base64 generated uploads (drag-and-drop API), this map converts the inline content type to a nice usable extension for automatic file name generation.
 IMAGE_TYPE_EXTENSION_MAP = {
@@ -22,13 +22,21 @@ BASE64_CONTENT_PATTERN = re.compile(r'^data:(?P<content_type>image/(?P<type>{}))
 
 _tags_widget = TagListInput(tagsInput_options={'defaultText': '', 'removeText': '◉'})
 
-class WallpaperForm(forms.ModelForm):
+class CreateForm(forms.ModelForm):
     # Not required if image_raw is sent
     image = forms.ImageField(widget=DragAndDropImageProcesserWidget, required=False)
 
     # Receives drag-and-drop binary data, if any
     image_raw = forms.CharField(widget=forms.HiddenInput, required=False)
 
+    class Meta:
+        model = Wallpaper
+        fields = ('tags', 'name', 'author', 'license', 'purity_rating', 'image')
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'optional'}),
+            'tags': _tags_widget,
+        }
+    
     def clean_image_raw(self):
         """
         Some trickery to make the fake file field pass through the normal machinery without having
@@ -74,22 +82,14 @@ class WallpaperForm(forms.ModelForm):
 
         return cleaned_data
 
-class CreateForm(WallpaperForm):
+class UpdateForm(forms.ModelForm):
     class Meta:
         model = Wallpaper
-        fields = ('tags', 'name', 'author', 'license', 'image')
-        widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'optional'}),
-            'tags': _tags_widget,
-        }
-    
-
-class UpdateForm(WallpaperForm):
-    class Meta:
-        model = Wallpaper
-        fields = ('tags', 'name', 'author', 'license', 'image', 'uploader', 'duplicate_of', 'is_public', 'views', 'tags')
+        fields = ('tags', 'name', 'author', 'license', 'purity_rating', 'image', 'uploader',
+                'duplicate_of', 'is_public', 'views', 'tags')
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'optional'}),
             'tags': _tags_widget,
             'duplicate_of': forms.TextInput(attrs={'placeholder': 'wallpaper id'}),
+            'image': ClearableThumbnailImageWidget,
         }
