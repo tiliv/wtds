@@ -45,7 +45,42 @@ a.button {
         box-shadow: inset 0 1px 2px #999;
     }
 
+/* Messages */
+.message {
+    text-indent: 0;
+    padding: 0.4em calc(16px + 1em);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0));
+    box-shadow: 0 1px 1px #aaa;
+    text-shadow: 0 1px 0 #dfdfdf;
+}
+    .message::before {
+        position: absolute;
+        margin-left: calc(-32px - 0.5em);
+        zoom: 0.5;
+    }
 
+.info {
+    color: #29598c;
+    background-color: #c8d5e3;
+    border-color: #29598c;
+}
+    .info::before {
+        content: url(../img/info.png);
+    }
+.warning {
+    color: #6b4314;
+    background-color: #f1e2d1;
+    border-color: #6b4314;
+}
+    .warning::before {
+        content: url(../img/warning.png);
+    }
+
+
+/* Wallpaper tiles */
 .wallpaper img {
     border-width: 1px;
     border-style: solid;
@@ -61,7 +96,6 @@ a.button {
     content: url();
     position: relative;
     zoom: 0.5;
-/*    top: -98px;*/
     margin-bottom: -95px;
     display: block;
     width: calc(100% - 0px); /* tricks webkit into forgetting about border-width */
