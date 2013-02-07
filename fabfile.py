@@ -1,6 +1,6 @@
 import os.path
 
-from fabric.api import env, run, cd, sudo
+from fabric.api import env, run, cd, sudo, prefix
 from fabric.tasks import Task
 
 from tasks import manage
@@ -20,11 +20,25 @@ class Bounce(Task):
 class Deploy(Task):
     name = "deploy"
 
-    def run(self):
+    def run(self, syncdb=True, collectstatic=True):
         with cd(get_project_root()):
             with cd("wtds"):
                 run("git pull")
+                install_requirements.run()
+                if syncdb:
+                    manage.syncdb.run()
+                if collectstatic:
+                    manage.collectstatic.run()
                 bounce.run()
+
+class InstallRequirements(Task):
+    name = "install_requirements"
+    
+    def run(self, virtualenv="wtds"):
+        with cd(get_project_root() + '/wtds'):
+            with prefix('source /etc/bash_completion.d/virtualenvwrapper'):
+                with prefix('workon {}'.format(virtualenv)):
+                    run("pip install -r requirements.txt")
 
 class Debug(Task):
     name = "debug"
@@ -35,4 +49,5 @@ class Debug(Task):
 
 bounce = Bounce()
 deploy = Deploy()
+install_requirements = InstallRequirements()
 debug = Debug()
