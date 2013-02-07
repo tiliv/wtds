@@ -5,11 +5,20 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 
+from taggit.models import TagBase, GenericTaggedItemBase
 from taggit.managers import TaggableManager
 
 from .managers import WallpaperManager
 from .constants import (COMMON_ASPECT_RATIOS, FRIENDLY_ASPECT_RATIOS, RANDOM_STACK_TILT_ANGLES,
         PURITY_CHOICES)
+
+class Tag(TagBase):
+    """ Adds a purity rating to the existing taggit ``Tag`` model. """
+    purity_rating = models.IntegerField(choices=PURITY_CHOICES, default=0)
+
+class TaggedWallpaper(GenericTaggedItemBase):
+    """ A replacement ``Tag`` model for taggit's API. """
+    tag = models.ForeignKey('Tag', related_name="%(app_label)s_%(class)s_items")
 
 class Wallpaper(models.Model):
     objects = WallpaperManager()
@@ -31,7 +40,7 @@ class Wallpaper(models.Model):
     purity_rating = models.IntegerField('purity', choices=PURITY_CHOICES, default=0)
 
     views = models.PositiveIntegerField(default=0)
-    tags = TaggableManager(blank=False)
+    tags = TaggableManager(blank=False, through=TaggedWallpaper)
 
     class Meta:
         get_latest_by = 'date_created'
@@ -44,7 +53,7 @@ class Wallpaper(models.Model):
     def clean(self):
         if self.duplicate_of and self.duplicate_of is self:
             raise ValidationError("Wallpaper can't be marked as a duplicate of itself.")
-    
+
     def save(self, *args, **kwargs):
         """ Pre-bake the ratio. """
         self.raw_ratio = self.get_aspect_ratio()
@@ -56,10 +65,10 @@ class Wallpaper(models.Model):
     def get_aspect_ratio(self, as_tuple=False, nearest=True):
         """
         Returns the nearest friendly ratio such as ``16:10``.
-        
+
         We can find the "nearest" ratio because not all uploads fit perfectly into a standard ratio
         size, but can be set as a wallpaper with simple height cropping.
-        
+
         """
 
         divisor = gcd(self.width, self.height)

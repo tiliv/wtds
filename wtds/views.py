@@ -1,8 +1,7 @@
 from django.views.generic import TemplateView
 from django.db.models import Count
-from taggit.models import Tag
 
-from .wallpapers.models import Wallpaper
+from .wallpapers.models import Wallpaper, Tag
 
 class HomeView(TemplateView):
     template_name = 'home.html'
