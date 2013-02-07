@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     
     # User apps
     'taggit',
+    'south',
     'sorl.thumbnail',
     'wtds.wallpapers',
 )

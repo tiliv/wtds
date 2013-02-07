@@ -9,6 +9,12 @@ from taggit.managers import TaggableManager
 
 from .managers import WallpaperManager
 
+COMMON_ASPECT_RATIOS = (
+    (16, 10),
+    (16, 9),
+    (4, 3),
+    
+)
 FRIENDLY_ASPECT_RATIOS = {
     (8, 5): (16, 10),
 }
@@ -22,6 +28,7 @@ class Wallpaper(models.Model):
     image = models.ImageField(upload_to='%Y/%m/%d', height_field='height', width_field='width')
     height = models.PositiveIntegerField()
     width = models.PositiveIntegerField()
+    raw_ratio = models.CharField(max_length=50)
     # color_profile = models.CharField()
 
     uploader = models.ForeignKey('auth.User', help_text="Contributing user account")
@@ -45,12 +52,25 @@ class Wallpaper(models.Model):
     def clean(self):
         if self.duplicate_of and self.duplicate_of is self:
             raise ValidationError("Wallpaper can't be marked as a duplicate of itself.")
+    
+    def save(self, *args, **kwargs):
+        """ Pre-bake the ratio. """
+        self.raw_ratio = self.get_aspect_ratio()
+        super(Wallpaper, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('wallpapers:view', kwargs={'pk': self.pk})
 
     def get_aspect_ratio(self, as_tuple=False):
-        """ Returns a friendly ratio such as ``16:10``. """
+        """
+        Returns the nearest friendly ratio such as ``16:10``.
+        
+        We can find the "nearest" ratio because not all uploads fit perfectly into a standard ratio
+        size, but can be set as a wallpaper with simple height cropping.
+        
+        """
+
+        ratio = 1. * self.width / self.height
 
         divisor = gcd(self.width, self.height)
         ratio = (self.width / divisor, self.height / divisor)
