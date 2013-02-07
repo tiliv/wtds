@@ -38,7 +38,9 @@
             <label title="Aspect ratio"></label>
             <span>{{ object.aspect_ratio }}</span>
         </p>
-        {# <p><label>:</label> <span class=""></span></p> #}
+        {% if perms.wallpaper.change_wallpaper and object.tags.all|length == 1 %}
+            <p class="message warning">This wallpaper has only one tag.</p>
+        {% endif %}
 
         <div id="similar">
             <h4>Similar by:</h4>

@@ -1,16 +1,16 @@
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.urlresolvers import reverse, reverse_lazy
 from taggit.models import Tag
 from taggit.utils import parse_tags
 
-from .models import Wallpaper
+from .models import Wallpaper, Tag
 from .forms import CreateForm, UpdateForm
 
 class AuthenticationMixin(object):
     login_required = True
     permissions_required = []
-    
+
     def dispatch(self, request, *args, **kwargs):
         if self.login_required and not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('auth:login'))
@@ -19,7 +19,7 @@ class AuthenticationMixin(object):
                 if not self.request.user.has_perm(permission):
                     return HttpResponseForbidden("Sorry! You don't have permission to go there.")
         return super(AuthenticationMixin, self).dispatch(request, *args, **kwargs)
-    
+
 
 class WallpaperMixin(object):
     model = Wallpaper
@@ -51,8 +51,11 @@ class WallpaperDeleteView(AuthenticationMixin, WallpaperMixin, DeleteView):
 
 class WallpaperListView(WallpaperMixin, ListView):
     queryset = Wallpaper.objects.all()
-    
+
     _tags = None
+
+    # If set, a single-tag filter will only show results that have that tag as their only tag.
+    in_danger = False
 
     def get_filter_tags(self):
         if self._tags is None:
@@ -70,12 +73,33 @@ class WallpaperListView(WallpaperMixin, ListView):
         else:
             tags = self.get_filter_tags()
             if tags:
-                queryset = queryset.filter(tags__in=tags).distinct()
+                if self.in_danger:
+                    queryset = Wallpaper.objects.filter_by_orphan_danger(tags=tags)
+                else:
+                    queryset = queryset.filter(tags__in=tags).distinct()
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super(WallpaperListView, self).get_context_data(**kwargs)
         context.update({
             'tags': self.get_filter_tags(),
+            'in_danger': self.in_danger,
         })
         return context
+
+class TagMixin(object):
+    model = Tag
+
+class TagListView(TagMixin, ListView):
+    pass
+
+class TagUpdateView(AuthenticationMixin, TagMixin, UpdateView):
+    permissions_required = ['wallpapers.change_tag']
+
+class TagDeleteView(AuthenticationMixin, TagMixin, DeleteView):
+    permissions_required = ['wallpapers.delete_tag']
+
+    def post(self, request, *args, **kwargs):
+        if self.get_object().get_wallpapers_with_this_tag_only().count():
+            return HttpResponseForbidden()
+        return super(TagDeleteView, self).post(request, *args, **kwargs)

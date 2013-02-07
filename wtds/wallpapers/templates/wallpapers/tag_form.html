@@ -1,0 +1,25 @@
+{% extends "wallpapers/base.html" %}
+
+{% block title %}Edit tag '{{ object }}'{% endblock title %}
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/form.css" type="text/css" />
+{% endblock css %}
+
+{% block content %}
+    {{ block.super }}
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+        {{ form.as_p }}
+    </form>
+
+    {% with wallpapers=object.get_wallpapers %}
+        <h2>{{ wallpapers|length }} wallpaper{{ wallpapers|pluralize }} currently tagged:</h2>
+        {% for wallpaper in wallpapers %}
+            {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
+        {% endfor %}
+    {% endwith %}
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "wallpapers/base.html" %}
+
+{% block title %}All Tags{% endblock title %}
+
+{% block content %}
+    {{ block.super }}
+    
+    <h2>Tags</h2>
+    
+    <ul>
+        {% for tag in object_list %}
+            <li>
+                <a href="{{ tag.get_absolute_url }}">{{ tag }}</a>
+                (
+                    <a href="{% url 'tags:edit' tag.slug %}">Edit</a>
+                    <a href="{% url 'tags:delete' tag.slug %}">Delete</a>
+                )
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

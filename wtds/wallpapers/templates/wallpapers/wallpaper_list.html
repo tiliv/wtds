@@ -1,17 +1,30 @@
 {% extends "wallpapers/base.html" %}
 
+{% block title %}Wallpapers{% if tags %} by tag{{ tags|pluralize }}: {{ tags|join:', ' }}{% endif %}{% endblock title %}
+
 {% block content %}
     {{ block.super }}
     
     <h2>Wallpapers</h2>
     
     {% if tags %}
-    <p>Filtering by tags:
+    <p>Filtering by tag{{ tags|pluralize }}:
         {% for tag in tags %}
             <a href="{% url 'wallpapers:list' tag.slug %}">{{ tag }}</a>
             {% if not forloop.last %}&raquo;{% endif %}
         {% endfor %}
     </p>
+    {% endif %}
+    
+    {% if in_danger and object_list %}
+        <p class="message warning">
+            The wallpaper{{ object_list|pluralize }} shown here {{ object_list|pluralize:"is,are" }}
+            in danger of becoming orphaned and should receive additional tags.
+        </p>
+    {% elif in_danger and not object_list %}
+        <p class="message info">
+            No "{{ tags.0 }}" wallpapers are in danger of becoming orphaned!
+        </p>
     {% endif %}
     
     <div>

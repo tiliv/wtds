@@ -13,12 +13,14 @@
 <body>
     <a href="{% url 'home' %}">Home</a>
     <a href="{% url 'wallpapers:upload' %}">Upload</a>
+    <a href="{% url 'tags:list' %}">All tags</a>
     
     {% if not user.is_authenticated %}
-    <a href="{% url 'auth:login' %}?next={{ request.path }}">Log in</a>
+        <a href="{% url 'auth:login' %}?next={{ request.path }}">Log in</a>
     {% else %}
-    <a href="{% url 'auth:logout' %}">Log out</a>
+        <a href="{% url 'auth:logout' %}">Log out</a>
     {% endif %}
+
     <div id="wrapper">
         <div id="content">
             {% block content %}{% endblock content %}

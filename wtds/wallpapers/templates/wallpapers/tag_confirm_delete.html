@@ -1,0 +1,50 @@
+{% extends "wallpapers/base.html" %}
+{% load i18n %}
+
+{% block title %}Delete tag '{{ object }}'?{% endblock title %}
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/form.css" type="text/css" />
+{% endblock css %}
+
+{% block content %}
+{% with wallpapers=object.get_wallpapers orphaned=object.get_wallpapers_with_this_tag_only %}
+    {{ block.super }}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if wallpapers %}
+            <p class="message warning">
+                Deleting this tag will remove it from the {{ wallpapers|length }}
+                wallpaper{{ wallpapers|pluralize }} shown below.
+            </p>
+            
+            {% if orphaned %}
+                <p class="message warning">
+                    {% blocktrans count counter=orphaned|length %}
+                    One wallpaper is using this as its only tag.
+                    This tag cannot be deleted until this wallpaper is given an additional tag.
+                    {% plural %}
+                    {{ counter }} wallpapers are using this as their only tag.
+                    This tag cannot be deleted until these wallpapers are given an additional tag.
+                    {% endblocktrans %}
+                    The wallpaper{{ orphaned|pluralize }} {{ orphaned|pluralize:"is,are" }}
+                    listed <a href="{% url 'wallpapers:in_danger' tag.slug %}">here</a>.
+                </p>
+            {% endif %}
+        {% else %}
+            <p class="message info">
+                This tag is unused, and deleting it will have no outside consequences.
+            </p>
+        {% endif %}
+        <p>
+            <input type="submit" value="Delete"{% if orphaned %} disabled="disabled"{% endif %} />
+        </p>
+    </form>
+
+    <h2>{{ wallpapers|length }} wallpaper{{ wallpapers|length|pluralize }} currently tagged:</h2>
+    {% for wallpaper in wallpapers %}
+        {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
+    {% endfor %}
+{% endwith %}
+{% endblock content %}

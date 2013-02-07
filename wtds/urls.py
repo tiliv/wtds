@@ -9,7 +9,7 @@ from .views import HomeView
 
 urlpatterns = patterns('',
     url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^wallpapers/', include('wtds.wallpapers.urls', namespace='wallpapers')),
+    url(r'^', include('wtds.wallpapers.urls')),
     
     # auth
     url(r'^', include(patterns('',
