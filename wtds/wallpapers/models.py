@@ -8,22 +8,8 @@ from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
 
 from .managers import WallpaperManager
-
-COMMON_ASPECT_RATIOS = (
-    (16, 10),
-    (16, 9),
-    (5, 4),
-    (4, 3),
-)
-FRIENDLY_ASPECT_RATIOS = {
-    (8, 5): (16, 10),
-}
-RANDOM_STACK_TILT_ANGLES = (-4, -3, -2, 2, 3, 4)
-PURITY_CHOICES = (
-    (0, "Clean"),
-    (1, "Sketchy"),
-    (2, "NSFW"),
-)
+from .constants import (COMMON_ASPECT_RATIOS, FRIENDLY_ASPECT_RATIOS, RANDOM_STACK_TILT_ANGLES,
+        PURITY_CHOICES)
 
 class Wallpaper(models.Model):
     objects = WallpaperManager()
@@ -42,7 +28,7 @@ class Wallpaper(models.Model):
     duplicate_of = models.ForeignKey('self', blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=True)
-    purity_rating = models.IntegerField(choices=PURITY_CHOICES)
+    purity_rating = models.IntegerField('purity', choices=PURITY_CHOICES, default=0)
 
     views = models.PositiveIntegerField(default=0)
     tags = TaggableManager(blank=False)

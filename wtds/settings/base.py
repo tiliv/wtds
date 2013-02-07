@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'south',
     'sorl.thumbnail',
     'wtds.wallpapers',
+    'wtds.profile',
 )
 
 # A sample logging configuration. The only tangible logging
