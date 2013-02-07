@@ -71,7 +71,7 @@ class CreateForm(forms.ModelForm):
 
     def clean(self):
         """ Validates that either ``image`` or ``image_raw`` exists. """
-        cleaned_data = super(WallpaperForm, self).clean()
+        cleaned_data = super(CreateForm, self).clean()
         image = cleaned_data.get('image')
         image_raw = cleaned_data.get('image_raw')
 
