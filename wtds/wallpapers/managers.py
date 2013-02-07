@@ -24,4 +24,7 @@ class WallpaperQuerySet(QuerySet):
 
     def filter_by_orphan_danger(self, tags=None):
         """ Filters where the given tags (queryset or an instance) is the wallpaper's only tag. """
-        return self.annotate(num_tags=Count('tags')).filter(num_tags=1).filter(tags=tags).distinct()
+        queryset = self.annotate(num_tags=Count('tags')).filter(num_tags=1)
+        if tags is not None:
+            queryset = queryset.filter(tags=tags)
+        return queryset.distinct()
