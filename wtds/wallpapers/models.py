@@ -1,5 +1,6 @@
 from fractions import gcd
 import random
+from operator import itemgetter
 
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -106,6 +107,29 @@ class Wallpaper(models.Model):
         """ Template UI function that generates a degree rotation value for a "stack". """
 
         return random.choice(RANDOM_STACK_TILT_ANGLES)
+
+    def calculate_purity_rating(self, escalate=True):
+        """
+        Examines the current tags and their independent purity ratings to compound and independent
+        rating for this wallpaper.
+
+        If ``escalate`` is ``True``, then an average rating that is missing in the choices list
+        will round up, erring in favor of a more severe rating than a more forgiving one.  If
+        ``False``, it will round down.
+
+        """
+
+        ratings = sorted(map(itemgetter(0), PURITY_CHOICES))
+        rating = int(self.tags.aggregate(n=models.Avg('purity_rating'))['n'])
+        if rating < ratings[0]:
+            return ratings[0]
+        elif rating > ratings[-1]:
+            return ratings[-1]
+
+        slide_factor = 1 if escalate else -1
+        while rating not in ratings:
+            rating += slide_factor
+        return rating
 
 class Author(models.Model):
     user = models.OneToOneField('auth.User', blank=True, null=True)
