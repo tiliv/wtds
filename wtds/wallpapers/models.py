@@ -16,6 +16,17 @@ from .constants import (COMMON_ASPECT_RATIOS, FRIENDLY_ASPECT_RATIOS, RANDOM_STA
 class Tag(TagBase):
     """ Adds a purity rating to the existing taggit ``Tag`` model. """
     purity_rating = models.IntegerField(choices=PURITY_CHOICES, default=0)
+    
+    def get_absolute_url(self):
+        return reverse('wallpapers:list', kwargs={'slug': self.slug})
+    
+    def get_wallpapers(self):
+        """ Due to the generic relation between this and ``Wallpaper`` this method eases lookup. """
+        return Wallpaper.objects.filter(tags=self)
+    
+    def get_wallpapers_with_this_tag_only(self):
+        """ Returns ``Wallpaper`` objects whose only tag is this one. """
+        return Wallpaper.objects.filter_by_orphan_danger(tags=self)
 
 class TaggedWallpaper(GenericTaggedItemBase):
     """ A replacement ``Tag`` model for taggit's API. """
