@@ -96,5 +96,19 @@
         }, 
         "model": "wallpapers.license", 
         "pk": 7
+    },
+    {
+        "fields": {
+            "allow_commercial_use": false, 
+            "allow_derivatives": false, 
+            "attribute_author": false, 
+            "name": "UNKNOWN", 
+            "persist_license": false, 
+            "short_name": "UNKNOWN", 
+            "summary": "UNKNOWN", 
+            "url": ""
+        },
+        "model": "wallpapers.license",
+        "pk": 8
     }
 ]

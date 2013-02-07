@@ -26,7 +26,7 @@ class Wallpaper(models.Model):
 
     uploader = models.ForeignKey('auth.User', help_text="Contributing user account")
     author = models.ForeignKey('Author', blank=True, null=True, help_text="Original creator")
-    license = models.ForeignKey('License')
+    license = models.ForeignKey('License', default=8)
     duplicate_of = models.ForeignKey('self', blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=True)
@@ -99,7 +99,7 @@ class License(models.Model):
     short_name = models.CharField(max_length=20)
     summary = models.CharField(max_length=400)
 
-    url = models.URLField(max_length=400)
+    url = models.URLField(max_length=400, blank=True)
 
     attribute_author = models.BooleanField()
     allow_derivatives = models.BooleanField()
