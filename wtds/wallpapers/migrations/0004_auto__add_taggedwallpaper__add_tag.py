@@ -128,7 +128,7 @@ class Migration(SchemaMigration):
             'uploader': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
             'views': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'width': ('django.db.models.fields.PositiveIntegerField', [], {})
-        }
+        },
         u'taggit.tag': {
             'Meta': {'object_name': 'Tag'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
