@@ -19,6 +19,11 @@ FRIENDLY_ASPECT_RATIOS = {
     (8, 5): (16, 10),
 }
 RANDOM_STACK_TILT_ANGLES = (-4, -3, -2, 2, 3, 4)
+PURITY_CHOICES = (
+    (0, "Clean"),
+    (1, "Sketchy"),
+    (2, "NSFW"),
+)
 
 class Wallpaper(models.Model):
     objects = WallpaperManager()
@@ -37,6 +42,7 @@ class Wallpaper(models.Model):
     duplicate_of = models.ForeignKey('self', blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=True)
+    purity_rating = models.IntegerField(choices=PURITY_CHOICES)
 
     views = models.PositiveIntegerField(default=0)
     tags = TaggableManager(blank=False)
