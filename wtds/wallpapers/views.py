@@ -64,10 +64,14 @@ class WallpaperListView(WallpaperMixin, ListView):
 
     # TODO: Sorting
     def get_queryset(self):
-        tags = self.get_filter_tags()
-        if tags:
-            return self.queryset.filter(tags__in=tags).distinct()
-        return self.queryset
+        queryset = self.queryset
+        if 'ratio' in self.kwargs:
+            queryset = queryset.filter()
+        else:
+            tags = self.get_filter_tags()
+            if tags:
+                queryset = queryset.filter(tags__in=tags).distinct()
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(WallpaperListView, self).get_context_data(**kwargs)
@@ -75,4 +79,3 @@ class WallpaperListView(WallpaperMixin, ListView):
             'tags': self.get_filter_tags(),
         })
         return context
-        
