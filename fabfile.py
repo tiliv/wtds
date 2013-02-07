@@ -27,6 +27,7 @@ class Deploy(Task):
                 install_requirements.run()
                 if syncdb:
                     manage.syncdb.run()
+                manage.migrate.run()
                 if collectstatic:
                     manage.collectstatic.run()
                 bounce.run()

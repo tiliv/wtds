@@ -19,8 +19,8 @@ class ManagementCommandTaskBase(object):
     """ Mixin for tasks that want to run a ``manage.py`` command. """
     name = None
 
-    def run(self, settings=None, virtualenv=None, run_local=False):
-        manage.run(self.name, settings, run_local)
+    def run(self, settings=None, virtualenv=None):
+        manage.run(self.name, settings)
 
 class SyncDB(ManagementCommandTaskBase, Task):
     name = "syncdb"
@@ -31,9 +31,17 @@ class CollectStatic(ManagementCommandTaskBase, Task):
 class Migrate(ManagementCommandTaskBase, Task):
     name = "migrate"
 
+    def run(self, apps=None, fake=None, **kwargs):
+        command = self.name
+        if apps:
+            command += " " + apps
+        if fake:
+            command += " --fake " + fake
+        manage.run(command, **kwargs)
+
 class SchemaMigration(ManagementCommandTaskBase, Task):
     name = "schemamigration"
-    
+
     def run(self, apps=None, fake=None, **kwargs):
         command = self.name
         if apps:
