@@ -4,12 +4,13 @@
 
 {# Parameters: stack (wallpaper object or None) #}
 
-{# {% spaceless %} #}
 {% thumbnail wallpaper.image "280x188" crop="center" as image %}
+    {% spaceless %}
     <a href="{{ wallpaper.get_absolute_url }}" class="wallpaper tile{% if stack %} stack{% endif %}"
             data-id="wallpaper_{{ wallpaper.pk }}">
         <img src="{{ image.url }}" width="140" height="94" />
     </a>
+    {% endspaceless %}
 {% endthumbnail %}
 
 {% thumbnail stack.image "280x188" crop="center" as stack_image %}
@@ -25,4 +26,3 @@
     </style>
 {% endwith %}
 {% endthumbnail %}
-{# {% endspaceless %} #}
