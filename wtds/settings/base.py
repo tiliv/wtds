@@ -133,12 +133,22 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            'format': '[%(asctime)s] [%(module)s] %(levelname)s %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S',
+        },
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
         }
     },
     'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -155,7 +165,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-    }
+        'wtds': {
+            'handlers': ['mail_admins', 'thumbnail'],
+            'level': 'ERROR',
+        },
+    },
 }
 
 CACHES = {

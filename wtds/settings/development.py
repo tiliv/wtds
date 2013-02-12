@@ -15,6 +15,18 @@ INSTALLED_APPS += (
 )
 
 DATABASES['default']['NAME'] = 'wtds2'
+LOGGING['formatters']['colored'] = dict(LOGGING['formatters']['default'], **{
+    '()': 'djangocolors_formatter.DjangoColorsFormatter',
+})
+LOGGING['handlers']['console'] = {
+    'level': 'DEBUG',
+    'class': 'logging.StreamHandler',
+    'formatter': 'colored',
+}
+LOGGING['loggers']['wtds'] = {
+    'handlers': ['console', 'thumbnail'],
+    'level': 'DEBUG',
+}
 
 CACHES = {
     'default': {
