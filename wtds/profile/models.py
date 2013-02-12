@@ -12,8 +12,9 @@ class Profile(models.Model):
     """
     
     objects = ProfileManager()
-    
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    
+
+    is_active = models.BooleanField(default=False)
     purity_rating = models.IntegerField('purity', choices=PURITY_CHOICES, default=0)
 
