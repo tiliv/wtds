@@ -31,5 +31,4 @@ class ProfileQuerySet(QuerySet):
                 if field.name == 'user':
                     users = data.values()
                     logger.info("Generating automatic profile for users: %r", users)
-                    self.model.objects.create_default(*users)
-                    break
+                    return self.model.objects.create_default(*users)

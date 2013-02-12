@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+        {% for form in formset %}
+            {% if forloop.counter0 == formset.initial_form_count %}
+                <h2>{% trans "Add a new profile" noop %}:</h2>
+            {% endif %}
+            <fieldset>
+                {{ form.as_p }}
+            </fieldset>
+        {% endfor %}
+    </form>
+{% endblock content %}

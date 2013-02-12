@@ -95,6 +95,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
+
+    "wtds.profile.context_processors.profile_switching",
 )
 
 ROOT_URLCONF = 'wtds.urls'

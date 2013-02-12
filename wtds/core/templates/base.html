@@ -1,3 +1,4 @@
+{% load i18n %}
 <!doctype html>
 <html>
 <head>
@@ -7,22 +8,41 @@
     {% block css %}{% endblock css %}
     {% block javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/switcher.js"></script>
     {% endblock javascript %}
-    {% block extra_head %}{{ form.media }}{% endblock extra_head %}
+    {% block extra_head %}
+        {{ form.media }}
+    {% endblock extra_head %}
 </head>
 <body>
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'wallpapers:upload' %}">Upload</a>
-    <a href="{% url 'tags:list' %}">All tags</a>
-    
-    {% if not user.is_authenticated %}
-        <a href="{% url 'auth:login' %}?next={{ request.path }}">Log in</a>
-    {% else %}
-        <a href="{% url 'auth:logout' %}">Log out</a>
-    {% endif %}
-
     <div id="wrapper">
+        <header>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'wallpapers:upload' %}">Upload</a>
+            <a href="{% url 'tags:list' %}">All tags</a>
+    
+            {% if not user.is_authenticated %}
+                <a href="{% url 'auth:login' %}?next={{ request.path }}">Log in</a>
+            {% else %}
+                <a href="{% url 'profile:view' %}">Account</a>
+                <a href="{% url 'auth:logout' %}">Log out</a>
+            {% endif %}
+
+            <form id="profile-switch-form" action="{% url 'profile:switch' %}?next={{ request.path }}" method="post">
+                {% csrf_token %}
+                {{ profile_switch_form.profile.label_tag }}
+                {{ profile_switch_form.profile }}
+                (<a href="{% url 'profile:view' %}">{% trans "Edit" noop %}</a>)
+            </form>
+        </header>
         <div id="content">
+            {% block messages %}
+                {% for message in messages %}
+                    <p class="message {{ message.tags }}">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            {% endblock messages %}
             {% block content %}{% endblock content %}
         </div>
     </div>
