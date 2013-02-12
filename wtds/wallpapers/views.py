@@ -50,8 +50,6 @@ class WallpaperDeleteView(AuthenticationMixin, WallpaperMixin, DeleteView):
     success_url = reverse_lazy('home')
 
 class WallpaperListView(WallpaperMixin, ListView):
-    queryset = Wallpaper.objects.all()
-
     _tags = None
 
     # If set, a single-tag filter will only show results that have that tag as their only tag.
@@ -67,7 +65,8 @@ class WallpaperListView(WallpaperMixin, ListView):
 
     # TODO: Sorting
     def get_queryset(self):
-        queryset = self.queryset
+        profile = self.request.user.profile_set.get_active()
+        queryset = Wallpaper.objects.filter_through_profile(profile)
         if 'ratio' in self.kwargs:
             queryset = queryset.filter()
         else:
