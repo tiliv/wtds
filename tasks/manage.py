@@ -18,15 +18,25 @@ class Manage(Task):
 class ManagementCommandTaskBase(object):
     """ Mixin for tasks that want to run a ``manage.py`` command. """
     name = None
+    command = None
 
     def run(self, settings=None, virtualenv=None):
-        manage.run(self.name, settings)
+        command = self.command
+        if command is None:
+            command = self.name
+        manage.run(command, settings)
 
 class SyncDB(ManagementCommandTaskBase, Task):
     name = "syncdb"
 
 class CollectStatic(ManagementCommandTaskBase, Task):
     name = "collectstatic"
+
+    def run(self, noinput=True, **kwargs):
+        command = self.name
+        if noinput:
+            command += " --noinput"
+        manage.run(command, **kwargs)
 
 class Migrate(ManagementCommandTaskBase, Task):
     name = "migrate"
