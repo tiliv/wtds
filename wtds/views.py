@@ -10,7 +10,7 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
 
         profile = user.profile_set.get_active()
-        wallpapers = Wallpaper.objects.filter(purity_rating=profile.purity_rating)
+        wallpapers = Wallpaper.objects.filter_through_profile(profile)
 
         most_used_tags = Tag.objects.annotate(times_used=Count('wallpaper')).order_by('-times_used')
         recently_used_tags = Tag.objects.order_by('-wallpaper__date_created')
