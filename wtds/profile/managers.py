@@ -9,7 +9,11 @@ class ProfileManager(Manager):
     def get_query_set(self):
         return ProfileQuerySet(self.model, using=self._db)
 
-    def get_active(self):
+    def get_active(self, user=None):
+        if user:
+            if user.is_authenticated():
+                return user.profile_set.get_active()
+            return self.model()
         return self.get_query_set().get_active()
 
     def create_default(self, *users):

@@ -29,6 +29,9 @@ class WallpaperManager(Manager):
     def filter_through_profile(self, profile):
         return self.get_query_set().filter_through_profile(profile)
 
+    def filter_for_user(self, user):
+        self.filter_through_profile(Profile.objects.get_active(self.request.user))
+
     # def assess_purity_rating(self):
     #     return self.get_query_set().assess_purity_rating()
 

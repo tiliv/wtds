@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView
 from django.db.models import Count
 
+from .profile.models import Profile
 from .wallpapers.models import Wallpaper, Tag
 
 class HomeView(TemplateView):
@@ -9,7 +10,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
 
-        profile = self.request.user.profile_set.get_active()
+        profile = Profile.objects.get_active(self.request.user)
         wallpapers = Wallpaper.objects.filter_through_profile(profile)
         tags = Tag.objects.filter_through_profile(profile)
 

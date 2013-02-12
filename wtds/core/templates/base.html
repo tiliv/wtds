@@ -26,14 +26,13 @@
             {% else %}
                 <a href="{% url 'profile:view' %}">Account</a>
                 <a href="{% url 'auth:logout' %}">Log out</a>
+                <form id="profile-switch-form" action="{% url 'profile:switch' %}?next={{ request.path }}" method="post">
+                    {% csrf_token %}
+                    {{ profile_switch_form.profile.label_tag }}
+                    {{ profile_switch_form.profile }}
+                    (<a href="{% url 'profile:view' %}">{% trans "Edit" noop %}</a>)
+                </form>
             {% endif %}
-
-            <form id="profile-switch-form" action="{% url 'profile:switch' %}?next={{ request.path }}" method="post">
-                {% csrf_token %}
-                {{ profile_switch_form.profile.label_tag }}
-                {{ profile_switch_form.profile }}
-                (<a href="{% url 'profile:view' %}">{% trans "Edit" noop %}</a>)
-            </form>
         </header>
         <div id="content">
             {% block messages %}

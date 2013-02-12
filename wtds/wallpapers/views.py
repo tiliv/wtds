@@ -65,8 +65,7 @@ class WallpaperListView(WallpaperMixin, ListView):
 
     # TODO: Sorting
     def get_queryset(self):
-        profile = self.request.user.profile_set.get_active()
-        queryset = Wallpaper.objects.filter_through_profile(profile)
+        queryset = Wallpaper.objects.filter_for_user(self.request.user)
         if 'ratio' in self.kwargs:
             queryset = queryset.filter()
         else:
