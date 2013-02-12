@@ -1,5 +1,16 @@
-from django.db.models import Manager, Count
+from django.db.models import Manager, Count, Avg, Max
 from django.db.models.query import QuerySet
+
+class TagManager(Manager):
+    def get_query_set(self):
+        return TagQuerySet(self.model, using=self._db)
+
+    def filter_through_profile(self, profile):
+        return self.get_query_set().filter_through_profile(profile)
+
+class TagQuerySet(QuerySet):
+    def filter_through_profile(self, profile):
+        return self.filter(purity_rating__lte=profile.purity_rating)
 
 class WallpaperManager(Manager):
     def get_query_set(self):
@@ -18,6 +29,9 @@ class WallpaperManager(Manager):
     def filter_through_profile(self, profile):
         return self.get_query_set().filter_through_profile(profile)
 
+    # def assess_purity_rating(self):
+    #     return self.get_query_set().assess_purity_rating()
+
 class WallpaperQuerySet(QuerySet):
     def popular(self):
         return self.order_by('id') # FIXME: This isn't a measurement of popularity
@@ -34,5 +48,11 @@ class WallpaperQuerySet(QuerySet):
 
     def filter_through_profile(self, profile):
         """ Uses options specified by the ``profile`` instance. """
-        queryset = self.filter(purity_rating=profile.purity_rating)
+        queryset = self.filter(purity_rating__lte=profile.purity_rating)
         return queryset
+
+    # def assess_purity_rating(self):
+    #     """ Generates a purity rating on each wallpaper from its tags. """
+    #     queryset = self.annotate(average_purity=Avg('tags__purity_rating'),
+    #             max_purity=Max('tags__purity_rating'))
+    #     return queryset

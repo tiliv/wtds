@@ -1,6 +1,7 @@
 from fractions import gcd
 import random
 from operator import itemgetter
+import logging
 
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -9,13 +10,17 @@ from django.core.urlresolvers import reverse
 from taggit.models import TagBase, GenericTaggedItemBase
 from taggit.managers import TaggableManager
 
-from .managers import WallpaperManager
+from .managers import TagManager, WallpaperManager
 from .constants import (COMMON_ASPECT_RATIOS, FRIENDLY_ASPECT_RATIOS, RANDOM_STACK_TILT_ANGLES,
         PURITY_CHOICES)
 
+logger = logging.getLogger(__name__)
+
 class Tag(TagBase):
     """ Adds a purity rating to the existing taggit ``Tag`` model. """
-    purity_rating = models.IntegerField(choices=PURITY_CHOICES, default=0)
+    purity_rating = models.FloatField(default=0, editable=False)
+
+    objects = TagManager()
     
     def get_absolute_url(self):
         return reverse('wallpapers:list', kwargs={'slug': self.slug})
@@ -70,6 +75,16 @@ class Wallpaper(models.Model):
         """ Pre-bake the ratio. """
         self.raw_ratio = self.get_aspect_ratio()
         super(Wallpaper, self).save(*args, **kwargs)
+        
+        # Reassess tag purity
+        AVG = models.Avg('wallpapers_taggedwallpaper_items__wallpaper__purity_rating')
+        tags = self.tags.annotate(purity_avg=AVG)
+        for tag in tags:
+            if tag.purity_rating != tag.purity_avg:
+                logger.info("Tag %r changing purity rating from %r to %r", tag, tag.purity_rating,
+                        tag.purity_avg)
+                tag.purity_rating = tag.purity_avg
+                tag.save()
 
     def get_absolute_url(self):
         return reverse('wallpapers:view', kwargs={'pk': self.pk})
@@ -119,28 +134,28 @@ class Wallpaper(models.Model):
 
         return random.choice(RANDOM_STACK_TILT_ANGLES)
 
-    def calculate_purity_rating(self, escalate=True):
-        """
-        Examines the current tags and their independent purity ratings to compound and independent
-        rating for this wallpaper.
-
-        If ``escalate`` is ``True``, then an average rating that is missing in the choices list
-        will round up, erring in favor of a more severe rating than a more forgiving one.  If
-        ``False``, it will round down.
-
-        """
-
-        ratings = sorted(map(itemgetter(0), PURITY_CHOICES))
-        rating = int(self.tags.aggregate(n=models.Avg('purity_rating'))['n'])
-        if rating < ratings[0]:
-            return ratings[0]
-        elif rating > ratings[-1]:
-            return ratings[-1]
-
-        slide_factor = 1 if escalate else -1
-        while rating not in ratings:
-            rating += slide_factor
-        return rating
+    # def calculate_purity_rating(self, escalate=True):
+    #     """
+    #     Examines the current tags and their independent purity ratings to compound and independent
+    #     rating for this wallpaper.
+    # 
+    #     If ``escalate`` is ``True``, then an average rating that is missing in the choices list
+    #     will round up, erring in favor of a more severe rating than a more forgiving one.  If
+    #     ``False``, it will round down.
+    # 
+    #     """
+    # 
+    #     ratings = sorted(map(itemgetter(0), PURITY_CHOICES))
+    #     rating = int(self.tags.aggregate(n=models.Avg('purity_rating'))['n'])
+    #     if rating < ratings[0]:
+    #         return ratings[0]
+    #     elif rating > ratings[-1]:
+    #         return ratings[-1]
+    # 
+    #     slide_factor = 1 if escalate else -1
+    #     while rating not in ratings:
+    #         rating += slide_factor
+    #     return rating
 
 class Author(models.Model):
     user = models.OneToOneField('auth.User', blank=True, null=True)

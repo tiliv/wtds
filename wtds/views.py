@@ -11,10 +11,11 @@ class HomeView(TemplateView):
 
         profile = self.request.user.profile_set.get_active()
         wallpapers = Wallpaper.objects.filter_through_profile(profile)
+        tags = Tag.objects.filter_through_profile(profile)
 
-        most_used_tags = Tag.objects.annotate(times_used=Count('wallpaper')).order_by('-times_used')
-        recently_used_tags = Tag.objects.order_by('-wallpaper__date_created')
-        new_tags = Tag.objects.annotate(times_used=Count('wallpaper')) \
+        most_used_tags = tags.annotate(times_used=Count('wallpaper')).order_by('-times_used')
+        recently_used_tags = tags.order_by('-wallpaper__date_created')
+        new_tags = tags.annotate(times_used=Count('wallpaper')) \
                 .order_by('times_used', '-wallpaper__date_created')
 
         context.update({
