@@ -17,3 +17,9 @@ class Profile(models.Model):
 
     is_active = models.BooleanField(default=False)
     purity_rating = models.IntegerField('purity', choices=PURITY_CHOICES, default=0)
+
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
+
+        if self.is_active:
+            self.user.profile_set.exclude(id=self.id).update(is_active=False)
