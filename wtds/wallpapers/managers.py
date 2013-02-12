@@ -1,6 +1,8 @@
 from django.db.models import Manager, Count, Avg, Max
 from django.db.models.query import QuerySet
 
+from wtds.profile.models import Profile
+
 class TagManager(Manager):
     def get_query_set(self):
         return TagQuerySet(self.model, using=self._db)
@@ -30,7 +32,8 @@ class WallpaperManager(Manager):
         return self.get_query_set().filter_through_profile(profile)
 
     def filter_for_user(self, user):
-        self.filter_through_profile(Profile.objects.get_active(self.request.user))
+        """ User might be anonymous, so let the profile manager handle it. """
+        return self.filter_through_profile(Profile.objects.get_active(user))
 
     # def assess_purity_rating(self):
     #     return self.get_query_set().assess_purity_rating()
