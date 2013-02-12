@@ -2,11 +2,18 @@ import logging
 
 from django.db import models
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 from wtds.wallpapers.constants import PURITY_CHOICES
 from .managers import ProfileManager
 
 logger = logging.getLogger(__name__)
+
+FILTER_STYLE_CHOICES = (
+    ('==', 'only'),
+    ('<=', 'at most'),
+    ('>=', 'at least'),
+)
 
 class Profile(models.Model):
     """
@@ -19,9 +26,10 @@ class Profile(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
-    name = models.CharField(max_length=100, blank=True)
-    is_active = models.BooleanField(default=False)
-    purity_rating = models.IntegerField('purity', choices=PURITY_CHOICES, default=0)
+    name = models.CharField(_('name'), max_length=100, blank=True)
+    is_active = models.BooleanField(_('active'), default=False)
+    purity_rating = models.IntegerField(_('purity'), choices=PURITY_CHOICES, default=0)
+    filter_style = models.CharField(_('filter style'), choices=FILTER_STYLE_CHOICES, max_length=10)
 
     class Meta:
         ordering = ('name', '-id')
