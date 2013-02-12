@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 from wtds.wallpapers.constants import PURITY_CHOICES
+from .managers import ProfileManager
 
 class Profile(models.Model):
     """
@@ -9,6 +10,8 @@ class Profile(models.Model):
     filters, and purity ratings.
     
     """
+    
+    objects = ProfileManager()
     
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     
