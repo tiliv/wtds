@@ -18,3 +18,14 @@ class Profile(models.Model):
     is_active = models.BooleanField(default=False)
     purity_rating = models.IntegerField('purity', choices=PURITY_CHOICES, default=0)
 
+    def save(self, *args, **kwargs):
+        created = self.id is None
+
+        super(Profile, self).save(*args, **kwargs)
+        
+        if created:
+            profiles = self.profile_set.all()
+            if profiles.count() == 0:
+                profiles.create_default()
+        
+
