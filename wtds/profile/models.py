@@ -10,9 +10,9 @@ from .managers import ProfileManager
 logger = logging.getLogger(__name__)
 
 FILTER_STYLE_CHOICES = (
-    ('==', 'only'),
-    ('<=', 'at most'),
-    ('>=', 'at least'),
+    ('exact', 'only'),
+    ('lte', 'at most'),
+    ('gte', 'at least'),
 )
 
 class Profile(models.Model):
@@ -30,7 +30,7 @@ class Profile(models.Model):
     is_active = models.BooleanField(_('active'), default=False)
     purity_rating = models.IntegerField(_('purity'), choices=PURITY_CHOICES, default=0)
     filter_style = models.CharField(_('filter'), choices=FILTER_STYLE_CHOICES, max_length=10,
-            default="<=")
+            default="lte")
 
     class Meta:
         ordering = ('name', '-id')
