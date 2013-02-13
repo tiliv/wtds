@@ -29,13 +29,15 @@ class Profile(models.Model):
     name = models.CharField(_('name'), max_length=100, blank=True)
     is_active = models.BooleanField(_('active'), default=False)
     purity_rating = models.IntegerField(_('purity'), choices=PURITY_CHOICES, default=0)
-    filter_style = models.CharField(_('filter style'), choices=FILTER_STYLE_CHOICES, max_length=10)
+    filter_style = models.CharField(_('filter'), choices=FILTER_STYLE_CHOICES, max_length=10, default="<=")
 
     class Meta:
         ordering = ('name', '-id')
 
     def __unicode__(self):
-        return self.name or self.get_purity_rating_display()
+        if self.name:
+            return self.name
+        return " ".join((self.get_filter_style_display(), self.get_purity_rating_display()))
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
