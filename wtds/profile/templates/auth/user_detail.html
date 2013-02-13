@@ -13,11 +13,6 @@
         purity setting will automatically be used. Changing the drop-down at the upper right
         instantly activates a new profile.
     </p>
-    <p class="description">
-        By setting the <em>Filter</em> on a profile, you're changing how the <em>Purity</em> setting
-        affects your searches. For example, if set to <strong>at most</strong> (a sensible default),
-        then searches will show you items that either match the purity or are less severely rated.
-    </p>
     <form action="" method="post">
         {% csrf_token %}
         {{ formset.management_form }}
