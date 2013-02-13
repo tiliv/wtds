@@ -4,17 +4,23 @@
 
 {% block content %}
     {{ block.super }}
-    
+
     <h2>Tags</h2>
-    
+
     <ul>
-        {% for tag in object_list %}
+        {% regroup object_list by get_purity_rating_display as tag_groups %}
+        {% for tags in tag_groups %}
             <li>
-                <a href="{{ tag.get_absolute_url }}">{{ tag }}</a>
-                (
-                    <a href="{% url 'tags:edit' tag.slug %}">Edit</a>
-                    <a href="{% url 'tags:delete' tag.slug %}">Delete</a>
-                )
+                Purity: {{ tags.grouper }}
+                <ul>
+                    {% for tag in tags.list %}
+                    <li>
+                        {% include "wallpapers/includes/single_tag_link.html" with tag=tag only %}
+                        <a class="button" href="{% url 'tags:edit' tag.slug %}">Edit</a>
+                        <a class="button" href="{% url 'tags:delete' tag.slug %}">Delete</a>
+                    </li>
+                    {% endfor %}
+                </ul>
             </li>
         {% endfor %}
     </ul>
