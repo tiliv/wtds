@@ -10,7 +10,7 @@ from django.utils.translation import ungettext, ugettext as _
 from extra_views import InlineFormSetView
 
 from .models import Profile
-from .forms import ProfileSwitchForm
+from .forms import ProfileSwitchForm, ProfileForm
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +18,8 @@ class AccountView(InlineFormSetView):
     model = User
     inline_model = Profile
     extra = 1
+
+    form_class = ProfileForm
 
     self_view = False
 
@@ -47,6 +49,8 @@ class AccountView(InlineFormSetView):
                 deleted_count,
             ) % {'count': deleted_count}
             messages.success(self.request, msg)
+        if not any((updated_count, deleted_count)):
+            messages.info(self.request, _("No changes."))
 
         return response
 

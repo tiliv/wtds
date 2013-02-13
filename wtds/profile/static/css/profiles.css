@@ -1,0 +1,47 @@
+#content {
+    width: 600px;
+    margin: auto;
+}
+
+fieldset {
+    border-width: 2px;
+    border-style: solid;
+    margin-bottom: 1em;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+fieldset legend {
+    background: #f0f0f0;
+    padding: 0.2em 0.8em;
+    border: 1px solid white;
+    border-radius: 15px;
+    box-shadow: 0 1px 3px #555;
+}
+    fieldset.active legend {
+        border-color: #298c5a;
+    }
+
+
+fieldset.clean.at-most,
+fieldset.clean.only {
+    background-color: #c8e3d5;
+    border-color: #298c5a;
+}
+fieldset.sketchy {
+    background-color: #f1e2d1;
+    border-color: #6b4314;
+}
+fieldset.clean.at-least,
+fieldset.sketchy.at-least,
+fieldset.nsfw {
+    background-color: #f1d1d1;
+    border-color: #6b1414;
+}
+
+fieldset.active legend label {
+    font-weight: bold;
+}
+
+div.DELETE {
+    float: right;
+}

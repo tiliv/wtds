@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 
 from .models import Profile
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'optional'}),
+        }
+    
+
 class ProfileSwitchForm(forms.Form):
     profile = forms.ModelChoiceField(queryset=Profile.objects.none(), empty_label=None)
 
