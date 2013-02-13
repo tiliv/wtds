@@ -97,6 +97,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
 
     "wtds.profile.context_processors.profile_switching",
+    "wtds.wallpapers.context_processors.random_logo_wallpapers",
 )
 
 ROOT_URLCONF = 'wtds.urls'

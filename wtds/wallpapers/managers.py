@@ -50,6 +50,15 @@ class WallpaperManager(Manager):
         """ User might be anonymous, so let the profile manager handle it. """
         return self.filter_through_profile(Profile.objects.get_active(user))
 
+    def filter_clean(self):
+        return self.get_query_set().filter_clean()
+
+    def filter_sketchy(self):
+        return self.get_query_set().filter_sketchy()
+
+    def filter_nsfw(self):
+        return self.get_query_set().filter_nsfw()
+
 class WallpaperQuerySet(QuerySet):
     def popular(self):
         return self.order_by('id') # FIXME: This isn't a measurement of popularity
@@ -70,3 +79,13 @@ class WallpaperQuerySet(QuerySet):
             'purity_rating__{}'.format(profile.filter_style): profile.purity_rating,
         }
         return self.filter(**terms)
+
+    def filter_clean(self):
+        return self.filter(purity_rating=0)
+
+    def filter_sketchy(self):
+        return self.filter(purity_rating=1)
+
+    def filter_nsfw(self):
+        return self.filter(purity_rating=2)
+

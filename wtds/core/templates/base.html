@@ -5,10 +5,32 @@
     <title>{% block title %}Home{% endblock title %}</title>
     <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}img/favicon.ico" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" />
-    {% block css %}{% endblock css %}
+    {% block css %}
+    <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        body.webkit #sitename .text-background {
+            background-image: url({{ logo_wallpaper.image.url }});
+        }
+    </style>
+    {% endblock css %}
     {% block javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-1.9.0.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/switcher.js"></script>
+    <script type="text/javascript" src="https://raw.github.com/myadzel/patternizer/master/jquery.patternizer.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            if (/webkit/i.test(window.navigator.userAgent)) {
+                $('body').addClass('webkit');
+            } else {
+                if (/opera/i.test(window.navigator.userAgent)) {
+                    $('body').addClass('opera');
+                } else if (/mozilla/i.test(window.navigator.userAgent)) {
+                    $('body').addClass('mozilla');
+                }
+                $(".text-background").attr('data-pattern', "{{ logo_wallpaper.image.url }}").patternizer();
+            }
+        });
+    </script>
     {% endblock javascript %}
     {% block extra_head %}
         {{ form.media }}
@@ -17,6 +39,10 @@
 <body>
     <div id="wrapper">
         <header>
+            <div id="sitename">
+                <span class="text-shadow">wallpapers that don't suck</span>
+                <span class="text-background">wallpapers that don't suck</span>
+            </div>
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'wallpapers:upload' %}">Upload</a>
             <a href="{% url 'tags:list' %}">All tags</a>
