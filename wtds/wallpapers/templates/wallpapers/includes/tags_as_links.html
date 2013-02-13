@@ -1,4 +1,3 @@
 {% for tag in tags %}
-    <a href="{% url 'wallpapers:list' tag.slug %}" class="tag {{ tag.get_purity_rating_display|slugify }}">
-        {{ tag }} <span class="hole">&#x25C9;</span></a>{% if not forloop.last %}{{ separator|default:"" }}{% endif %}
+    {% include "wallpapers/includes/single_tag_link.html" with tag=tag only %}{% if not forloop.last %}{{ separator|default:"" }}{% endif %}
 {% endfor %}
