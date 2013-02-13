@@ -1,6 +1,8 @@
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.forms.models import modelform_factory
+
 from taggit.utils import parse_tags
 
 from .models import Wallpaper, Tag
@@ -95,6 +97,7 @@ class TagListView(TagMixin, ListView):
 
 class TagUpdateView(AuthenticationMixin, TagMixin, UpdateView):
     permissions_required = ['wallpapers.change_tag']
+    form_class = modelform_factory(Tag, fields=('name',))
 
 class TagDeleteView(AuthenticationMixin, TagMixin, DeleteView):
     permissions_required = ['wallpapers.delete_tag']
