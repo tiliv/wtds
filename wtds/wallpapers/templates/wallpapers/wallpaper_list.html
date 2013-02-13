@@ -9,10 +9,7 @@
     
     {% if tags %}
     <p>Filtering by tag{{ tags|pluralize }}:
-        {% for tag in tags %}
-            <a href="{% url 'wallpapers:list' tag.slug %}">{{ tag }}</a>
-            {% if not forloop.last %}&raquo;{% endif %}
-        {% endfor %}
+        {% include "wallpapers/includes/tags_as_links.html" with tags=tags only %}
     </p>
     {% endif %}
     
