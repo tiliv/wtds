@@ -80,6 +80,10 @@ class WallpaperQuerySet(QuerySet):
         }
         return self.filter(**terms)
 
+    def filter_for_user(self, user):
+        """ User might be anonymous, so let the profile manager handle it. """
+        return self.filter_through_profile(Profile.objects.get_active(user))
+
     def filter_clean(self):
         return self.filter(purity_rating=0)
 
