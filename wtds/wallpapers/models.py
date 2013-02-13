@@ -21,7 +21,10 @@ class Tag(TagBase):
     purity_rating = models.FloatField(default=0, editable=False)
 
     objects = TagManager()
-    
+
+    class Meta:
+        ordering = ('name',)
+
     def get_absolute_url(self):
         return reverse('wallpapers:list', kwargs={'slug': self.slug})
     
