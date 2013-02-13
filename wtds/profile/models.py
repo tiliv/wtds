@@ -29,7 +29,8 @@ class Profile(models.Model):
     name = models.CharField(_('name'), max_length=100, blank=True)
     is_active = models.BooleanField(_('active'), default=False)
     purity_rating = models.IntegerField(_('purity'), choices=PURITY_CHOICES, default=0)
-    filter_style = models.CharField(_('filter'), choices=FILTER_STYLE_CHOICES, max_length=10, default="<=")
+    filter_style = models.CharField(_('filter'), choices=FILTER_STYLE_CHOICES, max_length=10,
+            default="<=")
 
     class Meta:
         ordering = ('name', '-id')
