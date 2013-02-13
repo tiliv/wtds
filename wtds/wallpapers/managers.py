@@ -10,9 +10,17 @@ class TagManager(Manager):
     def filter_through_profile(self, profile):
         return self.get_query_set().filter_through_profile(profile)
 
+    def filter_for_user(self, user):
+        """ User might be anonymous, so let the profile manager handle it. """
+        return self.get_query_set().filter_for_user(user)
+
 class TagQuerySet(QuerySet):
     def filter_through_profile(self, profile):
         return self.filter(purity_rating__lte=profile.purity_rating)
+
+    def filter_for_user(self, user):
+        """ User might be anonymous, so let the profile manager handle it. """
+        return self.filter_through_profile(Profile.objects.get_active(user))
 
 class WallpaperManager(Manager):
     def get_query_set(self):

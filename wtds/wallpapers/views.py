@@ -1,7 +1,6 @@
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.urlresolvers import reverse, reverse_lazy
-from taggit.models import Tag
 from taggit.utils import parse_tags
 
 from .models import Wallpaper, Tag
@@ -89,7 +88,10 @@ class TagMixin(object):
     model = Tag
 
 class TagListView(TagMixin, ListView):
-    pass
+    queryset = Tag.objects.order_by('purity_rating', 'name')
+
+    def get_queryset(self):
+        return self.queryset.filter_for_user(self.request.user)
 
 class TagUpdateView(AuthenticationMixin, TagMixin, UpdateView):
     permissions_required = ['wallpapers.change_tag']
