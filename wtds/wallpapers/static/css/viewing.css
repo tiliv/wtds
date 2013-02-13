@@ -27,6 +27,9 @@
     #details .size label {
         background-image: url(../img/size.png);
     }
+    #details .purity.clean label {
+        background-image: url(../img/clean.png);
+    }
     #details .purity.sketchy label {
         background-image: url(../img/sketchy.png);
     }
