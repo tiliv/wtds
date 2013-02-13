@@ -102,6 +102,7 @@ a.button {
     border-style: solid;
     border-color: #333;
     box-shadow: 0 1px 3px #666;
+/*    opacity: 0;*/
 }
 
 .wallpaper.tile .sleeve {
@@ -114,12 +115,12 @@ a.button {
 }
 
 .wallpaper.tile.sketchy .sleeve {
-    background-image: url(../img/sketchy.png);
+    background-image: url(../img/sketchy-ribbon.png);
     box-shadow: inset 0 0 10px rgba(255, 255, 0, 0.5);
 }
 
 .wallpaper.tile.nsfw .sleeve {
-    background-image: url(../img/nsfw.png);
+    background-image: url(../img/nsfw-ribbon.png);
     box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
@@ -130,15 +131,79 @@ a.button {
 .wallpaper.tile.stack::before {
     content: url();
     position: relative;
+    z-index: -1;
     zoom: 0.5;
-    margin-bottom: -95px;
+    margin-top: 20px;
+    margin-bottom: -180px;
     display: block;
-    width: calc(100% - 0px); /* tricks webkit into forgetting about border-width */
-    height: calc(94px - 1px);
+    width: calc(100% - 4px); /* tricks webkit into forgetting about border-width */
+    height: 100%;
     border: 1px solid #333;
     box-shadow: 0 1px 3px #666;
 }
 
+.tag {
+    display: inline-block;
+    height: 14px;
+    font-size: 0.7em;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 16px;
+    padding: 1px 4px 1px 5px;
+    margin: 3px 1px 3px 3px;
+}
+
+
+.tag .hole {
+    font-size: 0.8em;
+}
+    .tag:hover .hole {
+        color: white !important;
+    }
+
+.tag.clean {
+    background: #dee7f8;
+    border-color: #a5beea;
+}
+    .tag.clean .hole {
+        color: #6f97dd;
+    }
+        .tag.clean:hover .hole {
+            text-shadow: 0 0 1px #5672a1;
+        }
+    .tag.clean:hover {
+        background: #bbcef1;
+        border-color: #6f97dd;
+    }
+.tag.sketchy {
+    background: #f7f7df;
+    border-color: #ebeba7;
+}
+    .tag.sketchy .hole {
+        color: #dede6f;
+    }
+        .tag.sketchy:hover .hole {
+            text-shadow: 0 0 1px #a1a155;
+        }
+    .tag.sketchy:hover {
+        background: #f2f2bd;
+        border-color: #dede6f;
+    }
+.tag.nsfw {
+    background: #f8dede;
+    border-color: #eaa5a5;
+}
+    .tag.nsfw .hole {
+        color: #dd6f6f;
+    }
+        .tag.nsfw:hover .hole {
+            text-shadow: 0 0 1px #a15656;
+        }
+    .tag.nsfw:hover {
+        background: #f1bbbb;
+        border-color: #dd6f6f;
+    }
 
 /* Some firefox blemishes */
 a img {

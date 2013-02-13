@@ -12,7 +12,7 @@ from taggit.managers import TaggableManager
 
 from .managers import TagManager, WallpaperManager
 from .constants import (COMMON_ASPECT_RATIOS, FRIENDLY_ASPECT_RATIOS, RANDOM_STACK_TILT_ANGLES,
-        PURITY_CHOICES)
+        PURITY_CHOICES, MIN_PURITY_RATING, MAX_PURITY_RATING)
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +32,18 @@ class Tag(TagBase):
     def get_wallpapers_with_this_tag_only(self):
         """ Returns ``Wallpaper`` objects whose only tag is this one. """
         return Wallpaper.objects.filter_by_orphan_danger(tags=self)
+
+    def get_purity_rating_display(self):
+        """ Fakes the normal API for a ``choices`` field. """
+        try:
+            return PURITY_CHOICES[int(round(self.purity_rating))][1]
+        except IndexError:
+            rating = self.purity_rating
+            self.purity_rating = min(max(self.purity_rating, MIN_PURITY_RATING), MAX_PURITY_RATING)
+            logger.error("Tag %r has a purity rating %r outside of the valid range %d-%d."
+                    "Normalizing to %d.", self, rating, MIN_PURITY_RATING, MAX_PURITY_RATING,
+                    self.purity_rating)
+            self.save()
 
 class TaggedWallpaper(GenericTaggedItemBase):
     """ A replacement ``Tag`` model for taggit's API. """

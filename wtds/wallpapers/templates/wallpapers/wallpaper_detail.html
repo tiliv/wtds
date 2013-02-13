@@ -30,6 +30,10 @@
             <label title="Tags"></label>
             <span>{% include "wallpapers/includes/tags_as_links.html" with tags=object.tags.all only %}</span>
         </p>
+        <p class="purity {{ wallpaper.get_purity_rating_display|slugify }}">
+            <label title="Aspect ratio"></label>
+            <span>{{ wallpaper.get_purity_rating_display }}</span>
+        </p>
         <p class="size">
             <label title="Dimensions"></label>
             <span>{{ object.width }} &times; {{ object.height }}</span> (<span class="showing"></span>% actual size)

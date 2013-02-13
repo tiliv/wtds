@@ -6,7 +6,7 @@
 
 {% thumbnail wallpaper.image "280x188" crop="center" as image %}
     {% spaceless %}
-    <a href="{{ wallpaper.get_absolute_url }}" class="wallpaper tile {{ wallpaper.get_purity_rating_display|lower }}{% if stack %} stack{% endif %}"
+    <a href="{{ wallpaper.get_absolute_url }}" class="wallpaper tile {{ wallpaper.get_purity_rating_display|slugify }}{% if stack %} stack{% endif %}"
             data-id="wallpaper_{{ wallpaper.pk }}">
         <div class="sleeve"></div>
         <img src="{{ image.url }}" width="140" height="94" />

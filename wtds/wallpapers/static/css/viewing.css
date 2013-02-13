@@ -27,6 +27,12 @@
     #details .size label {
         background-image: url(../img/size.png);
     }
+    #details .purity.sketchy label {
+        background-image: url(../img/sketchy.png);
+    }
+    #details .purity.nsfw label {
+        background-image: url(../img/nsfw.png);
+    }
     #details .aspect-ratio label {
         background-image: url(../img/aspect-ratio.png);
     }

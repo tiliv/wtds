@@ -1,3 +1,4 @@
 {% for tag in tags %}
-    <a href="{% url 'wallpapers:list' tag.slug %}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+    <a href="{% url 'wallpapers:list' tag.slug %}" class="tag {{ tag.get_purity_rating_display|slugify }}">
+        {{ tag }} <span class="hole">&#x25C9;</span></a>
 {% endfor %}
