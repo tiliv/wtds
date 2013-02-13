@@ -69,6 +69,14 @@ a.button {
         zoom: 0.5;
     }
 
+.success {
+    color: #298c5a;
+    background-color: #c8e3d5;
+    border-color: #298c5a;
+}
+    .success::before {
+        content: url(../img/success.png);
+    }
 .info {
     color: #29598c;
     background-color: #c8d5e3;
@@ -84,6 +92,14 @@ a.button {
 }
     .warning::before {
         content: url(../img/warning.png);
+    }
+.error {
+    color: #6b1414;
+    background-color: #f1d1d1;
+    border-color: #6b1414;
+}
+    .error::before {
+        content: url(../img/error.png);
     }
 
 /* Profile switching form */
