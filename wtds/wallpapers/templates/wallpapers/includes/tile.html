@@ -6,11 +6,20 @@
 
 {% thumbnail wallpaper.image "280x188" crop="center" as image %}
     {% spaceless %}
-    <a href="{{ wallpaper.get_absolute_url }}" class="wallpaper tile {{ wallpaper.get_purity_rating_display|slugify }}{% if stack %} stack{% endif %}"
-            data-id="wallpaper_{{ wallpaper.pk }}">
-        <div class="sleeve"></div>
-        <img src="{{ image.url }}" width="140" height="94" />
-    </a>
+    <div class="tile-wrapper">
+        <a href="{{ wallpaper.get_absolute_url }}"
+                class="wallpaper tile {{ wallpaper.get_purity_rating_display|slugify }}{% if stack %} stack{% endif %}"
+                data-id="wallpaper_{{ wallpaper.pk }}"
+                data-download-url="{{ wallpaper.get_download_url }}"
+                data-full-search-url="{{ wallpaper.get_full_search_url }}"
+                contextmenu="tile-options">
+            <div class="sleeve"></div>
+            <img src="{{ image.url }}" width="140" height="94" />
+        </a>
+        <div class="tags">
+            {% include "wallpapers/includes/tags_as_links.html" with tags=wallpaper.tags.all only %}
+        </div>
+    </div>
     {% endspaceless %}
 {% endthumbnail %}
 

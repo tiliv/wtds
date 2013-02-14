@@ -51,6 +51,10 @@ header menu {
     background-size: cover;
 }
 
+menu#tile-options {
+    display: none;
+}
+
 .hidden {
     display: none;
 }
@@ -192,6 +196,13 @@ a.button {
     body.mozilla .wallpaper.tile.stack::before {
         transform: scale(0.5);
     }
+
+.tile-wrapper {
+    display: inline-block;
+}
+.tile-wrapper .tags {
+    display: none !important;
+}
 
 .tag {
     display: inline-block;

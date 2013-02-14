@@ -9,6 +9,7 @@
     {% endblock css %}
     {% block javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/switcher.js"></script>
     <script type="text/javascript">
         $(function(){
@@ -57,6 +58,13 @@
                 <a id="logo" href="{% url 'home' %}"></a>
             </div>
         </header>
+        <menu id="tile-options" type="context">
+            {% block wallpaper_tile_menuitems %}
+            <menuitem class="zoom" label="{% trans "Zoom" noop %} " data-url=""></menuitem>
+            <menuitem class="download" label="{% trans "Download" noop %}" data-url=""></menuitem>
+            <menu id="contextmenu-tags" label="{% trans "Tags" noop %}"></menu>
+            {% endblock %}
+        </menu>
         <div id="content">
             {% block messages %}
                 {% for message in messages %}
@@ -67,6 +75,9 @@
             {% endblock messages %}
             {% block content %}{% endblock content %}
         </div>
+        <footer>
+            <div id="tip">{{ random_tip }}</div>
+        </footer>
     </div>
 </body>
 </html>
