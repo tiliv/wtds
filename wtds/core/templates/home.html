@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div id="viewing-area"></div>
-    <div id="info-area"></div>
     <div id="lineup">
         {% for wallpaper in wallpapers.recent %}
             {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}

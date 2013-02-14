@@ -8,7 +8,6 @@ body {
 #wrapper {
     padding: 2em;
 }
-
 header {
     padding-bottom: 10px;
     border-bottom: 1px solid #f5f5f5;
@@ -16,7 +15,6 @@ header {
     background-image: -webkit-radial-gradient(bottom center, 50% 5px, #ccc, #f2f2f2);
     background-image: -moz-radial-gradient(50% 98.5%, ellipse closest-corner, #ccc, #f2f2f2);
 }
-
 header menu {
     float: left;
     list-style: none;
@@ -34,13 +32,15 @@ header menu {
             margin: 0;
         }
 
+#content #lineup {
+    text-align: center;
+}
 
 #sitename,
 #logo {
     width: 775px;
     height: 110px;
 }
-
 #sitename {
     background-size: cover;
     margin: auto;
@@ -51,32 +51,6 @@ header menu {
     background-size: cover;
 }
 
-/*#sitename {
-    font-size: 60pt;
-    font-family: 'Shadows Into Light', cursive;
-    margin: -40pt 0 -40pt 0;
-    text-align: center;
-}
-    #sitename span {
-        display: inline-block;
-        color: transparent;
-    }
-    body.webkit #sitename .span {
-        word-spacing: -0.2em;
-    }
-    #sitename .text-shadow {
-        position: absolute;
-        z-index: 1;
-        text-shadow: 1px 1px 0 #333, -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333;
-    }
-    #sitename .text-background {
-        position: relative;
-        z-index: 5;
-        -webkit-background-clip: text;
-        background-size: cover;
-        background-position: center center;
-    }
-*/
 .hidden {
     display: none;
 }
@@ -107,7 +81,6 @@ a.button {
         text-shadow: 0 1px 1px #f5f5f5;
         border-bottom: 1px solid #1e90ff;
     }
-
     a.button:active {
         background-image: linear-gradient(to bottom, #ccc, #ccc, #d5d5d5, #dfdfdf);
         box-shadow: inset 0 1px 2px #999;
@@ -140,7 +113,6 @@ a.button {
     body.opera .message::before {
         margin-left: -1.75em;
     }
-
 .success {
     color: #298c5a;
     background-color: #c8e3d5;
@@ -184,7 +156,6 @@ a.button {
     border-color: #333;
     box-shadow: 0 1px 3px #666;
 }
-
 .wallpaper.tile .sleeve {
     position: absolute;
     width: 142px;
@@ -193,17 +164,14 @@ a.button {
     background-repeat: no-repeat;
     background-size: 16px 16px;
 }
-
 .wallpaper.tile.sketchy .sleeve {
     background-image: url(../img/sketchy-ribbon.png);
     box-shadow: inset 0 0 10px rgba(255, 255, 0, 0.5);
 }
-
 .wallpaper.tile.nsfw .sleeve {
     background-image: url(../img/nsfw-ribbon.png);
     box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.5);
 }
-
 .wallpaper.tile.stack {
     position: relative;
     z-index: 5;
@@ -236,15 +204,12 @@ a.button {
     padding: 1px 4px 1px 5px;
     margin: 3px 1px 3px 3px;
 }
-
-
 .tag .hole {
     font-size: 0.8em;
 }
     .tag:hover .hole {
         color: white !important;
     }
-
 .tag.clean {
     background: #dee7f8;
     border-color: #a5beea;
