@@ -104,6 +104,14 @@ class Wallpaper(models.Model):
     def get_absolute_url(self):
         return reverse('wallpapers:view', kwargs={'pk': self.pk})
 
+    def get_download_url(self):
+        return reverse('wallpapers:download', kwargs={'pk': self.pk})
+
+    def get_full_search_url(self):
+        """ Returns the url searching all tags on this wallpaper. """
+        tag_slugs = list(self.tags.values_list('slug', flat=True))
+        return reverse('wallpapers:list') + "?" + '&'.join('tag='+slug for slug in tag_slugs)
+
     def get_aspect_ratio(self, as_tuple=False, nearest=True):
         """
         Returns the nearest friendly ratio such as ``16:10``.
