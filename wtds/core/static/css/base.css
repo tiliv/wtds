@@ -10,14 +10,48 @@ body {
 }
 
 header {
-    padding-bottom: 2em;
+    padding-bottom: 10px;
     border-bottom: 1px solid #f5f5f5;
     margin-bottom: 1em;
     background-image: -webkit-radial-gradient(bottom center, 50% 5px, #ccc, #f2f2f2);
     background-image: -moz-radial-gradient(50% 98.5%, ellipse closest-corner, #ccc, #f2f2f2);
 }
 
+header menu {
+    float: left;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+    header menu li {
+        display: inline;
+    }
+    header #settings {
+        float: right;
+    }
+        header #settings form {
+            padding: 0;
+            margin: 0;
+        }
+
+
+#sitename,
+#logo {
+    width: 775px;
+    height: 110px;
+}
+
 #sitename {
+    background-size: cover;
+    margin: auto;
+}
+#logo {
+    display: block;
+    background: transparent url(../img/logo.png) no-repeat;
+    background-size: cover;
+}
+
+/*#sitename {
     font-size: 60pt;
     font-family: 'Shadows Into Light', cursive;
     margin: -40pt 0 -40pt 0;
@@ -42,7 +76,7 @@ header {
         background-size: cover;
         background-position: center center;
     }
-
+*/
 .hidden {
     display: none;
 }
@@ -139,13 +173,6 @@ a.button {
     .error::before {
         content: url(../img/error.png);
     }
-
-/* Profile switching form */
-#profile-switch-form {
-    float: right;
-    padding: 0;
-    margin: 0;
-}
 
 /* Wallpaper tiles */
 .wallpaper.tile {

@@ -6,17 +6,10 @@
     <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}img/favicon.ico" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" />
     {% block css %}
-    <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
-    <style type="text/css">
-        body.webkit #sitename .text-background {
-            background-image: url({{ logo_wallpaper.image.url }});
-        }
-    </style>
     {% endblock css %}
     {% block javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-1.9.0.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/switcher.js"></script>
-    <script type="text/javascript" src="https://raw.github.com/myadzel/patternizer/master/jquery.patternizer.js"></script>
     <script type="text/javascript">
         $(function(){
             if (/webkit/i.test(window.navigator.userAgent)) {
@@ -27,7 +20,6 @@
                 } else if (/mozilla/i.test(window.navigator.userAgent)) {
                     $('body').addClass('mozilla');
                 }
-                $(".text-background").attr('data-pattern', "{{ logo_wallpaper.image.url }}").patternizer();
             }
         });
     </script>
@@ -39,19 +31,20 @@
 <body>
     <div id="wrapper">
         <header>
-            <div id="sitename">
-                <span class="text-shadow">wallpapers that don't suck</span>
-                <span class="text-background">wallpapers that don't suck</span>
-            </div>
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'wallpapers:upload' %}">Upload</a>
-            <a href="{% url 'tags:list' %}">All tags</a>
+            <menu type="toolbar">
+                <li><a href="{% url 'wallpapers:upload' %}">Upload</a></li>
+                <li><a href="{% url 'tags:list' %}">All tags</a></li>
     
-            {% if not user.is_authenticated %}
-                <a href="{% url 'auth:login' %}?next={{ request.path }}">Log in</a>
-            {% else %}
-                <a href="{% url 'profile:view' %}">Account</a>
-                <a href="{% url 'auth:logout' %}">Log out</a>
+                {% if not user.is_authenticated %}
+                    <li><a href="{% url 'auth:login' %}?next={{ request.path }}">Log in</a></li>
+                {% else %}
+                    <li><a href="{% url 'profile:view' %}">Account</a></li>
+                    <li><a href="{% url 'auth:logout' %}">Log out</a></li>
+                {% endif %}
+            </menu>
+
+            <div id="settings">
+            {% if user.is_authenticated %}
                 <form id="profile-switch-form" action="{% url 'profile:switch' %}?next={{ request.path }}" method="post">
                     {% csrf_token %}
                     {{ profile_switch_form.profile.label_tag }}
@@ -59,6 +52,11 @@
                     (<a href="{% url 'profile:view' %}">{% trans "Edit" noop %}</a>)
                 </form>
             {% endif %}
+            </div>
+
+            <div id="sitename" style="background-image: url({{ logo_wallpaper.image.url }})">
+                <a id="logo" href="{% url 'home' %}"></a>
+            </div>
         </header>
         <div id="content">
             {% block messages %}
