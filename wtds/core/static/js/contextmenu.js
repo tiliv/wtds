@@ -13,7 +13,7 @@ $(function(){
     contextmenu = $('menu#tile-options');
     contextmenu_tags = $('menu#tile-options menu#contextmenu-tags');
 
-    contextmenu.on('click', function(){
+    contextmenu.find('menuitem.download').on('click', function(){
         window.location = $(this).attr('data-url');
     });
 
