@@ -1,5 +1,8 @@
+import os.path
+import mimetypes
+
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import StreamingHttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelform_factory
 
@@ -44,7 +47,22 @@ class WallpaperUpdateView(AuthenticationMixin, WallpaperMixin, UpdateView):
     form_class = UpdateForm
 
 class WallpaperDetailView(WallpaperMixin, DetailView):
-    pass
+    download = False
+
+    def get(self, request, *args, **kwargs):
+        if self.download:
+            return self.download_content(request, *args, **kwargs)
+        return super(WallpaperDetailView, self).get(request, *args, **kwargs)
+
+    def download_content(self, request, *args, **kwargs):
+        """ Works like the ``get`` or ``post`` methods. Returns an HttpResponse. """
+        wallpaper = self.get_object()
+        filename = os.path.basename(wallpaper.image.name)
+        content_type = mimetypes.guess_type(filename)[0]
+
+        response = StreamingHttpResponse(wallpaper.image, content_type=content_type)
+        response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+        return response
 
 class WallpaperDeleteView(AuthenticationMixin, WallpaperMixin, DeleteView):
     permissions_required = ['wallpapers.delete_wallpaper']
@@ -85,6 +103,7 @@ class WallpaperListView(WallpaperMixin, ListView):
             'in_danger': self.in_danger,
         })
         return context
+
 
 class TagMixin(object):
     model = Tag
