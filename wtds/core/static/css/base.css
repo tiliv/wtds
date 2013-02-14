@@ -260,3 +260,12 @@ a img {
 a:focus {
     outline: 0;
 }
+
+footer {
+    margin-top: 2em;
+}
+#tip {
+    font-style: italic;
+    font-size: 0.8em;
+    color: #888;
+}
