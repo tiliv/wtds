@@ -2,6 +2,7 @@ from fractions import gcd
 import random
 from operator import itemgetter
 import logging
+from decimal import Decimal
 
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -61,6 +62,7 @@ class Wallpaper(models.Model):
     height = models.PositiveIntegerField()
     width = models.PositiveIntegerField()
     raw_ratio = models.CharField(max_length=50)
+    fractional_ratio = models.DecimalField(max_digits=11, decimal_places=10)
     # color_profile = models.CharField()
 
     uploader = models.ForeignKey('auth.User', help_text="Contributing user account")
@@ -89,6 +91,7 @@ class Wallpaper(models.Model):
     def save(self, *args, **kwargs):
         """ Pre-bake the ratio. """
         self.raw_ratio = self.get_aspect_ratio()
+        self.fractional_ratio = self.get_fractional_aspect_ratio()
         super(Wallpaper, self).save(*args, **kwargs)
         
         # Reassess tag purity
@@ -135,6 +138,11 @@ class Wallpaper(models.Model):
         return ratio
 
     aspect_ratio = property(get_aspect_ratio)
+
+    def get_fractional_aspect_ratio(self):
+        ratio = self.get_aspect_ratio()
+        x, y = map(Decimal, ratio.split(':'))
+        return x / y
 
     def get_similar_by_size(self, variation=0.1):
         """ This is primarily a discovery mechanism, so the list is randomized. """

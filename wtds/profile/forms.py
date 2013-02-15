@@ -8,11 +8,14 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'optional'}),
+            'ratio_style': forms.Select(attrs={'tabindex': -1}),
+            'width_style': forms.Select(attrs={'tabindex': -1}),
+            'height_style': forms.Select(attrs={'tabindex': -1}),
         }
     
 
 class ProfileSwitchForm(forms.Form):
-    profile = forms.ModelChoiceField(queryset=Profile.objects.none(), empty_label=None)
+    profile = forms.ModelChoiceField(queryset=Profile.objects.none(), empty_label=unicode(Profile()))
 
     def __init__(self, user, *args, **kwargs):
         super(ProfileSwitchForm, self).__init__(*args, **kwargs)

@@ -21,6 +21,16 @@ fieldset legend {
         border-color: #298c5a;
     }
 
+fieldset.active legend label {
+    font-weight: bold;
+}
+fieldset p label {
+    width: 6em !important;
+}
+fieldset p[rel="ratio"] input,
+fieldset p[rel="dimensions"] input {
+    width: 5em;
+}
 
 fieldset.clean.at-most,
 fieldset.clean.only {
@@ -36,10 +46,6 @@ fieldset.sketchy.at-least,
 fieldset.nsfw {
     background-color: #f1d1d1;
     border-color: #6b1414;
-}
-
-fieldset.active legend label {
-    font-weight: bold;
 }
 
 div.DELETE {

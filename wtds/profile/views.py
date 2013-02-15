@@ -2,6 +2,7 @@ import logging
 
 from django.views.generic import View
 from django.views.generic.edit import FormMixin
+from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.template.defaultfilters import pluralize
@@ -87,6 +88,15 @@ class ProfileSwitchView(FormMixin, View):
         return super(ProfileSwitchView, self).form_valid(form)
 
     def form_invalid(self, form):
-        """ Redirect the user back to where they came from. """
+        """ If none-value, deactivate.  Redirect as if it worked. """
+        if not form['profile'].value():
+            self.request.user.profile_set.deactivate()
         return super(ProfileSwitchView, self).form_valid(form)
-        
+
+class ProfileDeactivateView(View):
+    def get(self, request):
+        self.request.user.profile_set.deactivate()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return self.request.GET.get('next', '/')

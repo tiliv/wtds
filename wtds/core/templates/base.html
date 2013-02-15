@@ -50,6 +50,8 @@
                     {% csrf_token %}
                     {{ profile_switch_form.profile.label_tag }}
                     {{ profile_switch_form.profile }}
+                    {# <br /> #}
+                    {# <a href="{% url 'profile:deactivate' %}?next={{ request.path }}">Turn off filters</a> #}
                 </form>
             {% endif %}
             </div>

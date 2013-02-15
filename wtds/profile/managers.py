@@ -25,8 +25,11 @@ class ProfileManager(Manager):
             return profiles[0]
         return dict(zip(users, profiles))
 
-    def get_cleanest(self):
-        return self.get_query_set().get_cleanest()
+    # def get_cleanest(self):
+    #     return self.get_query_set().get_cleanest()
+    # 
+    def deactivate(self):
+        return self.get_query_set().deactivate()
 
 class ProfileQuerySet(QuerySet):
     def get_active(self):
@@ -35,13 +38,16 @@ class ProfileQuerySet(QuerySet):
             return self.get(is_active=True)
         except self.model.DoesNotExist:
             if self.count():
-                return self.get_cleanest()
+                return self.model()
             for field, data in self._known_related_objects.items():
                 if field.name == 'user':
                     users = data.values()
                     logger.info("Generating automatic profile for users: %r", users)
                     return self.model.objects.create_default(*users)
 
-    def get_cleanest(self):
-        """ Returns the profile with the least risk of showing severe content. """
-        return self.order_by('purity_rating')[0]
+    # def get_cleanest(self):
+    #     """ Returns the profile with the least risk of showing severe content. """
+    #     return self.order_by('purity_rating')[0]
+    # 
+    def deactivate(self):
+        self.update(is_active=False)
