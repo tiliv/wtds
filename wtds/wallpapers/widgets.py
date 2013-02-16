@@ -9,10 +9,11 @@ from django.core.urlresolvers import reverse_lazy
 from sorl.thumbnail.shortcuts import get_thumbnail
 
 # This will be serialized by the json module
+TAGSINPUT_AUTOCOMPLETE_URL = reverse_lazy('tags:autocomplete')
 DEFAULT_TAGSINPUT_OPTIONS = {
     'defaultText': '',
     'removeText': u'\u25c9', # circle thingy
-    'autocomplete_url': reverse_lazy('tags:autocomplete'),
+    'autocomplete_url': None, # filled in at runtime so it's not a wonky __proxy__ reverse
     'autocomplete': {
         'selectFirst': True,
         'width': '100px',
@@ -51,6 +52,9 @@ class TagListInput(forms.TextInput):
         super(TagListInput, self).__init__(attrs=attrs)
 
     def render(self, name, value, attrs=None):
+        # Kind of a wonky workaround for hyper-lazy url resolution
+        self.tagsInput_options['autocomplete_url'] = unicode(TAGSINPUT_AUTOCOMPLETE_URL)
+
         if value is None:
             value = ''
         elif not isinstance(value, basestring):
