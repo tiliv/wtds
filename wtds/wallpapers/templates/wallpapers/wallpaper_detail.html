@@ -50,21 +50,15 @@
             <h4>Similar by:</h4>
             <div class="related tags">
                 <h5>tags</h5>
-                {% with similar=object.tags.similar_objects|slice:":2" %}
-                    {% include "wallpapers/includes/tile.html" with wallpaper=similar.0 stack=similar.1 only %}
-                {% endwith %}
+                {% include "wallpapers/includes/tile.html" with wallpaper=similar.tags.0 stack=similar.tags.1 only %}
             </div>
             <div class="related color">
                 <h5>color</h5>
-                {% with similar=object.get_similar_by_color|slice:":2" %}
-                    {% include "wallpapers/includes/tile.html" with wallpaper=similar.0 stack=similar.1 only %}
-                {% endwith %}
+                {% include "wallpapers/includes/tile.html" with wallpaper=similar.color.0 stack=similar.color.1 only %}
             </div>
             <div class="related size">
                 <h5>size</h5>
-                {% with similar=object.get_similar_by_size|slice:":2" %}
-                    {% include "wallpapers/includes/tile.html" with wallpaper=similar.0 stack=similar.1 only %}
-                {% endwith %}
+                {% include "wallpapers/includes/tile.html" with wallpaper=similar.size.0 stack=similar.size.1 only %}
             </div>
             <div class="clear">&nbsp;</div>
         </div>

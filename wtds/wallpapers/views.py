@@ -64,6 +64,20 @@ class WallpaperDetailView(WallpaperMixin, DetailView):
         response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
         return response
 
+    def get_context_data(self, **kwargs):
+        context = super(WallpaperDetailView, self).get_context_data(**kwargs)
+        user_wallpapers = Wallpaper.objects.filter_for_user(self.request.user) \
+                .exclude(pk=self.object.pk)
+        context.update({
+            'similar': {
+                'tags': self.object.tags.similar_objects()[:2],
+                'size': user_wallpapers.filter_by_size(self.object.width, self.object.height)[:2],
+                'color': user_wallpapers.filter_by_color(None)[:2] # FIXME: Implement color profile
+            }
+        })
+        return context
+        
+
 class WallpaperDeleteView(AuthenticationMixin, WallpaperMixin, DeleteView):
     permissions_required = ['wallpapers.delete_wallpaper']
     success_url = reverse_lazy('home')

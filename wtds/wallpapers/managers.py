@@ -59,10 +59,10 @@ class WallpaperManager(Manager):
     def filter_nsfw(self):
         return self.get_query_set().filter_nsfw()
 
-    def filter_similar_by_size(self, width, height, variation=0.1):
+    def filter_by_size(self, width, height, variation=0.1):
         return self.get_query_set().filter_similar_by_size(width, height, variation)
 
-    def filter_similar_by_color(self, color_profile):
+    def filter_by_color(self, color_profile):
         return self.get_query_set().filter_similar_by_color(color_profile)
 
 class WallpaperQuerySet(QuerySet):
@@ -104,7 +104,7 @@ class WallpaperQuerySet(QuerySet):
     def filter_nsfw(self):
         return self.filter(purity_rating=2)
 
-    def filter_similar_by_size(self, width, height, variation=0.1):
+    def filter_by_size(self, width, height, variation=0.1):
         """ This is primarily a discovery mechanism, so the list is randomized. """
         return self.filter(**{
             'width__gte': width - width * variation,
@@ -113,6 +113,6 @@ class WallpaperQuerySet(QuerySet):
             'height__lte': height + height * variation,
         }).order_by('?')
 
-    def filter_similar_by_color(self, color_profile):
+    def filter_by_color(self, color_profile):
         # TODO: Implement this
-        return self.exclude(pk=self.pk).order_by('?')
+        return self.order_by('?')

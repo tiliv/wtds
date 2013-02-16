@@ -146,12 +146,12 @@ class Wallpaper(models.Model):
 
     def get_similar_by_size(self, variation=0.1):
         """ Forwards to the queryset method. """
-        return Wallpaper.objects.filter_similar_by_size(self.width, self.height, variation=variation)
+        return Wallpaper.objects.filter_by_size(self.width, self.height, variation=variation)
 
     def get_similar_by_color(self):
         """ Forwards to the queryset method. """
         # TODO: Implement this
-        return Wallpaper.objects.filter_similar_by_color(None)
+        return Wallpaper.objects.filter_by_color(None)
 
     def get_random_stack_tilt(self):
         """ Template UI function that generates a degree rotation value for a "stack". """
