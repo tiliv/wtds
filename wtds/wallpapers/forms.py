@@ -21,7 +21,6 @@ BASE64_CONTENT_PATTERN = re.compile(r'^data:(?P<content_type>image/(?P<type>{}))
 
 class SearchForm(forms.Form):
     terms = forms.CharField(required=False, widget=TagListInput(attrs={
-        'type': 'search',
         'placeholder': _("Narrow by tag names"),
     }))
 
