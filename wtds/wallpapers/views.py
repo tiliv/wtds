@@ -39,6 +39,7 @@ class WallpaperCreateView(AuthenticationMixin, WallpaperMixin, CreateView):
 
         # Saves the tags
         form.save_m2m()
+        self.object.assess_tag_purity()
 
         return HttpResponseRedirect(self.get_success_url())
 

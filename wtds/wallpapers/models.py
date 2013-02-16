@@ -93,16 +93,17 @@ class Wallpaper(models.Model):
         self.raw_ratio = self.get_aspect_ratio()
         self.fractional_ratio = self.get_fractional_aspect_ratio()
         super(Wallpaper, self).save(*args, **kwargs)
-        
-        # Reassess tag purity
+        self.assess_tag_purity()
+
+    def assess_tag_purity(self):
+        """ Visits each tag and crunches the average purity rating of its wallpapers. """
         AVG = models.Avg('wallpapers_taggedwallpaper_items__wallpaper__purity_rating')
-        tags = self.tags.annotate(purity_avg=AVG)
+        tags = self.tags.annotate(purity_avg=AVG).exclude(purity_avg=models.F('purity_rating'))
         for tag in tags:
-            if tag.purity_rating != tag.purity_avg:
-                logger.info("Tag %r changing purity rating from %r to %r", tag, tag.purity_rating,
-                        tag.purity_avg)
-                tag.purity_rating = tag.purity_avg
-                tag.save()
+            logger.info("Tag %r changing purity rating from %r to %r", tag, tag.purity_rating,
+                    tag.purity_avg)
+            tag.purity_rating = tag.purity_avg
+            tag.save()
 
     def get_absolute_url(self):
         return reverse('wallpapers:view', kwargs={'pk': self.pk})
