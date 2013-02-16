@@ -18,6 +18,11 @@ IMAGE_TYPE_EXTENSION_MAP = {
 BASE64_CONTENT_PATTERN = re.compile(r'^data:(?P<content_type>image/(?P<type>{}));base64,(?P<data>.*)$'.format(
         r'|'.join(IMAGE_TYPE_EXTENSION_MAP.keys())))
 
+class SearchForm(forms.Form):
+    terms = forms.CharField(required=False, widget=TagListInput(attrs={
+        'type': 'search',
+        'placeholder': _("Narrow by tag names"),
+    }))
 
 class CreateForm(forms.ModelForm):
     # Not required if image_raw is sent
