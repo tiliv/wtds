@@ -6,6 +6,7 @@ from django import forms
 from django.forms import ValidationError
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import UploadedFile
+from django.utils.translation import ugettext as _
 
 from .models import Wallpaper
 from .widgets import TagListInput, DragAndDropImageProcesserWidget, ClearableThumbnailImageWidget
@@ -35,7 +36,7 @@ class CreateForm(forms.ModelForm):
         model = Wallpaper
         fields = ('tags', 'name', 'author', 'license', 'purity_rating', 'image')
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'optional'}),
+            'name': forms.TextInput(attrs={'placeholder': _("optional")}),
             'tags': TagListInput,
         }
     
@@ -55,7 +56,7 @@ class CreateForm(forms.ModelForm):
         data = self.cleaned_data['image_raw']
         match = BASE64_CONTENT_PATTERN.match(data)
         if not match:
-            raise ValidationError("Not a valid image file.")
+            raise ValidationError(_("Not a valid image file."))
 
         # Extract identifying information from the content string
         content_type = match.group('content_type')
@@ -80,7 +81,7 @@ class CreateForm(forms.ModelForm):
         if image_raw:
             cleaned_data['image'] = image_raw
         elif not image:
-            raise ValidationError("File-picker image or drag-and-drop image is required.")
+            raise ValidationError(_("File-picker image or drag-and-drop image is required."))
 
         return cleaned_data
 
@@ -90,8 +91,8 @@ class UpdateForm(forms.ModelForm):
         fields = ('tags', 'name', 'author', 'license', 'purity_rating', 'image', 'uploader',
                 'duplicate_of', 'is_public', 'views', 'tags')
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'optional'}),
-            'duplicate_of': forms.TextInput(attrs={'placeholder': 'wallpaper id'}),
+            'name': forms.TextInput(attrs={'placeholder': _('optional')}),
             'tags': TagListInput,
+            'duplicate_of': forms.TextInput(attrs={'placeholder': _('wallpaper id')}),
             'image': ClearableThumbnailImageWidget,
         }
