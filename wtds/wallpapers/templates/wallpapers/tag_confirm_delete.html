@@ -1,7 +1,7 @@
 {% extends "wallpapers/base.html" %}
 {% load i18n %}
 
-{% block title %}Delete tag '{{ object }}'?{% endblock title %}
+{% block title %}{% blocktrans %}Delete tag '{{ object }}'?{% endblocktrans %}{% endblock title %}
 {% block css %}
     {{ block.super }}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/form.css" type="text/css" />
@@ -15,36 +15,52 @@
         {{ form.as_p }}
         {% if wallpapers %}
             <p class="message warning">
-                Deleting this tag will remove it from the {{ wallpapers|length }}
-                wallpaper{{ wallpapers|pluralize }} shown below.
+                {% blocktrans count counter=wallpapers|length %}
+                Deleting this tag will remove it from the {{ counter }} wallpaper shown below.
+                {% plural %}
+                Deleting this tag will remove it from the {{ counter }} wallpapers shown below.
+                {% endblocktrans %}
             </p>
-            
+
             {% if orphaned %}
                 <p class="message warning">
                     {% blocktrans count counter=orphaned|length %}
                     One wallpaper is using this as its only tag.
                     This tag cannot be deleted until this wallpaper is given an additional tag.
+                    The wallpaper is found here:
                     {% plural %}
                     {{ counter }} wallpapers are using this as their only tag.
                     This tag cannot be deleted until these wallpapers are given an additional tag.
+                    The wallpapers are found here:
                     {% endblocktrans %}
-                    The wallpaper{{ orphaned|pluralize }} {{ orphaned|pluralize:"is,are" }}
-                    listed <a href="{% url 'wallpapers:in_danger' tag.slug %}">here</a>.
+                    {% url 'wallpapers:in_danger' tag.slug as danger_url %}
+                    <a href="{{ danger_url }}">{{ danger_url }}</a>
                 </p>
             {% endif %}
         {% else %}
             <p class="message info">
-                This tag is unused, and deleting it will have no outside consequences.
+                {% trans "This tag is unused, and deleting it will have no side effects." %}
             </p>
         {% endif %}
+        <p>
+            {% blocktrans %}Are you sure you want to delete the '{{ tag }}' tag?{% endblocktrans %}
+        </p>
         <p>
             <input type="submit" value="Delete"{% if orphaned %} disabled="disabled"{% endif %} />
         </p>
     </form>
 
-    <h2>{{ wallpapers|length }} wallpaper{{ wallpapers|length|pluralize }} currently tagged:</h2>
-    {% for wallpaper in wallpapers %}
-        {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
-    {% endfor %}
+    {% if wallpapers %}
+        <h2>
+            {% blocktrans count counter=wallpapers|length %}
+                {{ counter }} wallpaper currently tagged:
+            {% plural %}
+                {{ counter }} wallpapers currently tagged:
+            {% endblocktrans %}
+        </h2>
+        {% for wallpaper in wallpapers %}
+            {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
+        {% endfor %}
+    {% endif %}
 {% endwith %}
 {% endblock content %}
