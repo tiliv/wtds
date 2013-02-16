@@ -1,11 +1,22 @@
 {% extends "wallpapers/base.html" %}
 
-{% block title %}All Tags{% endblock title %}
+{% block title %}{% spaceless %}
+    {% if view.orphaned %}
+        Orphaned tags
+    {% else %}
+        All tags
+    {% endif %}
+{% endspaceless %}{% endblock title %}
+
+{% block toolbar %}
+    {{ block.super }}
+    <li><a href="{% url 'tags:orphaned' %}">View orphaned tags</a></li>
+{% endblock toolbar %}
 
 {% block content %}
     {{ block.super }}
 
-    <h2>Tags</h2>
+    <h2>{% if view.orphaned %}Orphaned {% endif %}Tags</h2>
 
     <ul>
         {% regroup object_list by get_purity_rating_display as tag_groups %}

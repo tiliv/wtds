@@ -5,6 +5,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, DeleteView,
 from django.http import StreamingHttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelform_factory
+from django.db.models import Count
 
 from taggit.utils import parse_tags
 
@@ -129,10 +130,25 @@ class TagMixin(object):
     model = Tag
 
 class TagListView(TagMixin, ListView):
-    queryset = Tag.objects.order_by('purity_rating', 'name')
+    queryset = Tag.objects.order_by('purity_rating', 'name').annotate(
+            num_wallpapers=Count('wallpapers_taggedwallpaper_items__wallpaper'))
+
+    profile_filtering = True
 
     def get_queryset(self):
-        return self.queryset.filter_for_user(self.request.user)
+        queryset = self.queryset
+        if self.profile_filtering:
+            queryset = queryset.filter_for_user(self.request.user)
+        return queryset
+
+class TagOrphanedListView(AuthenticationMixin, TagListView):
+    permissions_required = ['wallpaper.delete_tag']
+
+    orphaned = True # Flag for template rendering
+
+    def get_queryset(self):
+        queryset = super(TagOrphanedListView, self).get_queryset()
+        return queryset.filter(num_wallpapers=0)
 
 class TagUpdateView(AuthenticationMixin, TagMixin, UpdateView):
     permissions_required = ['wallpapers.change_tag']
