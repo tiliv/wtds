@@ -21,7 +21,6 @@ class HomeView(TemplateView):
 
         context.update({
             'tags': {
-                # 'popular': ,
                 'most_used': most_used_tags,
                 'recent': recently_used_tags,
                 'new': new_tags,

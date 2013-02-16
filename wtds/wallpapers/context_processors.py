@@ -1,4 +1,5 @@
 from .models import Wallpaper
+from .forms import SearchForm
 
 def random_logo_wallpapers(request):
     try:
@@ -8,4 +9,9 @@ def random_logo_wallpapers(request):
         wallpaper = Wallpaper.objects.filter_clean().order_by('?')[0]
     return {
         'logo_wallpaper': wallpaper,
+    }
+
+def search_form(request):
+    return {
+        'search_form': SearchForm(request.GET),
     }

@@ -99,6 +99,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "wtds.core.context_processors.tips",
     "wtds.profile.context_processors.profile_switching",
     "wtds.wallpapers.context_processors.random_logo_wallpapers",
+    "wtds.wallpapers.context_processors.search_form",
 )
 
 ROOT_URLCONF = 'wtds.urls'
