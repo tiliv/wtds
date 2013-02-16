@@ -140,6 +140,7 @@ class TagUpdateView(AuthenticationMixin, TagMixin, UpdateView):
 
 class TagDeleteView(AuthenticationMixin, TagMixin, DeleteView):
     permissions_required = ['wallpapers.delete_tag']
+    success_url = reverse_lazy('tags:list')
 
     def post(self, request, *args, **kwargs):
         if self.get_object().get_wallpapers_with_this_tag_only().count():
