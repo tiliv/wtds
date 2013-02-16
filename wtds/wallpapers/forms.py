@@ -1,5 +1,3 @@
-# coding=utf-8
-
 import re
 from base64 import b64decode
 import uuid
@@ -20,7 +18,6 @@ IMAGE_TYPE_EXTENSION_MAP = {
 BASE64_CONTENT_PATTERN = re.compile(r'^data:(?P<content_type>image/(?P<type>{}));base64,(?P<data>.*)$'.format(
         r'|'.join(IMAGE_TYPE_EXTENSION_MAP.keys())))
 
-_tags_widget = TagListInput(tagsInput_options={'defaultText': '', 'removeText': '◉'})
 
 class CreateForm(forms.ModelForm):
     # Not required if image_raw is sent
@@ -34,7 +31,7 @@ class CreateForm(forms.ModelForm):
         fields = ('tags', 'name', 'author', 'license', 'purity_rating', 'image')
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'optional'}),
-            'tags': _tags_widget,
+            'tags': TagListInput,
         }
     
     def clean_image_raw(self):
@@ -89,7 +86,7 @@ class UpdateForm(forms.ModelForm):
                 'duplicate_of', 'is_public', 'views', 'tags')
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'optional'}),
-            'tags': _tags_widget,
             'duplicate_of': forms.TextInput(attrs={'placeholder': 'wallpaper id'}),
+            'tags': TagListInput,
             'image': ClearableThumbnailImageWidget,
         }

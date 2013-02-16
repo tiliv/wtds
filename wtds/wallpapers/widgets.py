@@ -7,6 +7,8 @@ from django.template.loader import render_to_string
 
 from sorl.thumbnail.shortcuts import get_thumbnail
 
+DEFAULT_TAGSINPUT_OPTIONS = {'defaultText': '', 'removeText': u'\u25c9'}
+
 class DragAndDropImageProcesserWidget(forms.FileInput):
     class Media:
         css = {'all': ('css/image-processor.css',)}
@@ -21,13 +23,15 @@ class DragAndDropImageProcesserWidget(forms.FileInput):
             u'</div>')
         return s
 
-
 class TagListInput(forms.TextInput):
     class Media:
         css = {'all': ('lib/tagsinput/jquery.tagsinput.css',)}
         js = ('lib/tagsinput/jquery.tagsinput.js',)
 
-    def __init__(self, attrs=None, tagsInput_options={}):
+    def __init__(self, attrs=None, tagsInput_options=None):
+        if tagsInput_options is None:
+            tagsInput_options = {}
+        tagsInput_options = dict(DEFAULT_TAGSINPUT_OPTIONS, **tagsInput_options)
         self.tagsInput_options = tagsInput_options
         super(TagListInput, self).__init__(attrs=attrs)
 
