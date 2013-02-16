@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'taggit',
     'south',
     'sorl.thumbnail',
+    'wtds.core',
     'wtds.wallpapers',
     'wtds.profile',
 )

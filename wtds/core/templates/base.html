@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load core_tags i18n %}
 <!doctype html>
 <html>
 <head>
@@ -26,7 +26,7 @@
     </script>
     {% endblock javascript %}
     {% block extra_head %}
-        {{ form.media }}
+        {% combine_forms_media form search_form %}
     {% endblock extra_head %}
 </head>
 <body>
@@ -76,6 +76,8 @@
                     </p>
                 {% endfor %}
             {% endblock messages %}
+
+            {% block search %}{% endblock search %}
             {% block content %}{% endblock content %}
         </div>
         <footer>

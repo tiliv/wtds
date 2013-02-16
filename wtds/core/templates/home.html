@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block search %}
+    {% include "wallpapers/includes/search_bar.html" %}
+{% endblock search %}
+
 {% block content %}
     <div id="lineup">
         {% for wallpaper in wallpapers.recent %}

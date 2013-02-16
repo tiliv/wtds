@@ -2,6 +2,10 @@
 
 {% block title %}Wallpapers{% if tags %} by tag{{ tags|pluralize }}: {{ tags|join:', ' }}{% endif %}{% endblock title %}
 
+{% block search %}
+    {% include "wallpapers/includes/search_bar.html" %}
+{% endblock search %}
+
 {% block content %}
     {{ block.super }}
     

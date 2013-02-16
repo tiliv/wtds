@@ -55,6 +55,14 @@ menu#tile-options {
     display: none;
 }
 
+#search-bar {
+    text-align: center;
+    margin: 1em auto;
+}
+input[type="search"] {
+    width: 35%;
+}
+
 .hidden {
     display: none;
 }
