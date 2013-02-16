@@ -47,6 +47,11 @@ class WallpaperUpdateView(AuthenticationMixin, WallpaperMixin, UpdateView):
     permissions_required = ['wallpapers.change_wallpaper']
     form_class = UpdateForm
 
+    def form_valid(self, form):
+        response = super(WallpaperUpdateView, self).form_valid(form)
+        self.object.assess_tag_purity()
+        return response
+
 class WallpaperDetailView(WallpaperMixin, DetailView):
     download = False
 
