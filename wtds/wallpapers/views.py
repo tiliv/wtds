@@ -1,8 +1,10 @@
 import os.path
 import mimetypes
+import json
 
-from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
-from django.http import StreamingHttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.views.generic import View, CreateView, UpdateView, DetailView, DeleteView, ListView
+from django.http import (StreamingHttpResponse, HttpResponse, HttpResponseRedirect,
+        HttpResponseForbidden)
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelform_factory
 from django.db.models import Count
@@ -161,3 +163,9 @@ class TagDeleteView(AuthenticationMixin, TagMixin, DeleteView):
         if self.get_object().get_wallpapers_with_this_tag_only().count():
             return HttpResponseForbidden()
         return super(TagDeleteView, self).post(request, *args, **kwargs)
+
+class TagAutocompleteView(TagMixin, View):
+    def get(self, request, *args, **kwargs):
+        term = request.GET.get('term', "").strip()
+        choices = list(Tag.objects.filter(name__istartswith=term).values_list('name', flat=True))
+        return HttpResponse(json.dumps(choices), content_type="text/json")

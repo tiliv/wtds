@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url, include
 
 from .views import (WallpaperCreateView, WallpaperUpdateView, WallpaperDetailView,
         WallpaperDeleteView, WallpaperListView, TagListView, TagOrphanedListView, TagUpdateView,
-        TagDeleteView)
+        TagDeleteView, TagAutocompleteView)
 
 urlpatterns = patterns('',
     url(r'^wallpapers/', include(patterns('',
@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^tags/', include(patterns('',
         url(r'^$', TagListView.as_view(), name='list'),
         url(r'^orphaned/$', TagOrphanedListView.as_view(), name='orphaned'),
+        url(r'^autocomplete/$', TagAutocompleteView.as_view(), name='autocomplete'),
         url(r'^inspect/(?P<slug>[\w-]+)/', include(patterns('',
             url(r'^edit/$', TagUpdateView.as_view(), name='edit'),
             url(r'^delete/$', TagDeleteView.as_view(), name='delete'),

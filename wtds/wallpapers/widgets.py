@@ -4,11 +4,21 @@ from operator import attrgetter
 from django import forms
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
+from django.core.urlresolvers import reverse_lazy
 
 from sorl.thumbnail.shortcuts import get_thumbnail
 
 # This will be serialized by the json module
-DEFAULT_TAGSINPUT_OPTIONS = {'defaultText': '', 'removeText': u'\u25c9'}
+DEFAULT_TAGSINPUT_OPTIONS = {
+    'defaultText': '',
+    'removeText': u'\u25c9', # circle thingy
+    'autocomplete_url': reverse_lazy('tags:autocomplete'),
+    'autocomplete': {
+        'selectFirst': True,
+        'width': '100px',
+        'autoFill': True,
+    },
+}
 
 class DragAndDropImageProcesserWidget(forms.FileInput):
     class Media:
