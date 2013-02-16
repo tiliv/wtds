@@ -218,11 +218,7 @@
 			var markup = '<div id="'+id+'_tagsinput" class="tagsinput"><div id="'+id+'_addTag">';
 			
 			if (settings.interactive) {
-				markup = markup + $(this).clone().attr({
-				    'id': id + '_tag',
-                    'data-default': settings.defaultText
-				}).css('display', 'inline-block')[0].outerHTML;
-                // '<input id="'+id+'_tag" value="" data-default="'+settings.defaultText+'" />'
+				markup = markup + '<input id="'+id+'_tag" value="" data-default="'+settings.defaultText+'" />';
 			}
 			
 			markup = markup + '</div><div class="tags_clear"></div></div>';
