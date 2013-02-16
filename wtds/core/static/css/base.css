@@ -264,6 +264,11 @@ a.button {
         border-color: #dd6f6f;
     }
 
+.tag.orphaned {
+    background-color: transparent !important;
+    border-style: dashed;
+}
+
 /* Some firefox blemishes */
 a img {
     border: none;
