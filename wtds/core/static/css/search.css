@@ -1,6 +1,7 @@
 .buttons-strip {
     display: inline-block;
-    background: linear-gradient(to bottom, #f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
+    background-image: -webkit-linear-gradient(#f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
+    background-image: linear-gradient(to bottom, #f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
     height: 26px; /* 28 with borders */
     border: 1px solid #aaa;
     border-radius: 15px;
@@ -46,7 +47,8 @@
     }
     .buttons-strip button:active {
         box-shadow: inset 0 2px 5px #dfdfdf;
-        background: linear-gradient(to top, #f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
+        background-image: -webkit-linear-gradient(#f0f0f0, #f8f8f8, #f8f8f8, #f8f8f8);
+        background-image: linear-gradient(to top, #f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
     }
 
 button[rel="search"] span {
@@ -118,6 +120,7 @@ button[rel="clear"] span {
             border-bottom: 1px solid transparent;
         }
         .ui-menu li a.ui-state-focus {
+            background-image: -webkit-linear-gradient(#74bae8, #3a88cf);
             background-image: linear-gradient(to bottom, #74bae8, #3a88cf);
             border-top-color: #5fa5dd;
             border-bottom-color: #367cc0;
