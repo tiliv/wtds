@@ -93,7 +93,6 @@ class Wallpaper(models.Model):
         self.raw_ratio = self.get_aspect_ratio()
         self.fractional_ratio = self.get_fractional_aspect_ratio()
         super(Wallpaper, self).save(*args, **kwargs)
-        self.assess_tag_purity()
 
     def assess_tag_purity(self):
         """ Visits each tag and crunches the average purity rating of its wallpapers. """
