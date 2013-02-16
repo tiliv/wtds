@@ -145,24 +145,16 @@ class Wallpaper(models.Model):
         return x / y
 
     def get_similar_by_size(self, variation=0.1):
-        """ This is primarily a discovery mechanism, so the list is randomized. """
-
-        queryset = Wallpaper.objects.filter(**{
-            'width__gte': self.width - self.width * variation,
-            'width__lte': self.width + self.width * variation,
-            'height__gte': self.height - self.height * variation,
-            'height__lte': self.height + self.height * variation,
-        })
-
-        return queryset.exclude(pk=self.pk).order_by('?')
+        """ Forwards to the queryset method. """
+        return Wallpaper.objects.filter_similar_by_size(self.width, self.height, variation=variation)
 
     def get_similar_by_color(self):
+        """ Forwards to the queryset method. """
         # TODO: Implement this
-        return Wallpaper.objects.exclude(pk=self.pk).order_by('?')
+        return Wallpaper.objects.filter_similar_by_color(None)
 
     def get_random_stack_tilt(self):
         """ Template UI function that generates a degree rotation value for a "stack". """
-
         return random.choice(RANDOM_STACK_TILT_ANGLES)
 
     # def calculate_purity_rating(self, escalate=True):
