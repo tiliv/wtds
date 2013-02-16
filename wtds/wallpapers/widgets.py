@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 
 from sorl.thumbnail.shortcuts import get_thumbnail
 
+# This will be serialized by the json module
 DEFAULT_TAGSINPUT_OPTIONS = {'defaultText': '', 'removeText': u'\u25c9'}
 
 class DragAndDropImageProcesserWidget(forms.FileInput):
@@ -33,6 +34,10 @@ class TagListInput(forms.TextInput):
             tagsInput_options = {}
         tagsInput_options = dict(DEFAULT_TAGSINPUT_OPTIONS, **tagsInput_options)
         self.tagsInput_options = tagsInput_options
+        if attrs is None:
+            attrs = {}
+        if 'placeholder' in attrs and not self.tagsInput_options.get('defaultText'):
+            self.tagsInput_options['defaultText'] = attrs.pop('placeholder')
         super(TagListInput, self).__init__(attrs=attrs)
 
     def render(self, name, value, attrs=None):
