@@ -18,6 +18,12 @@ class TagManager(Manager):
         """ User might be anonymous, so let the profile manager handle it. """
         return self.get_query_set().filter_for_user(user)
 
+    def filter_orphaned(self):
+        return self.get_query_set().filter_orphaned()
+
+    def annotate_wallpaper_counter(self):
+        return self.get_query_set().annotate_wallpaper_counter()
+
 class TagQuerySet(QuerySet):
     def filter_through_profile(self, profile):
         terms = {
@@ -28,6 +34,12 @@ class TagQuerySet(QuerySet):
     def filter_for_user(self, user):
         """ User might be anonymous, so let the profile manager handle it. """
         return self.filter_through_profile(Profile.objects.get_active(user))
+
+    def filter_orphaned(self):
+        return self.annotate_wallpaper_counter().filter(num_wallpapers=0)
+
+    def annotate_wallpaper_counter(self):
+        return self.annotate(num_wallpapers=Count('wallpapers_taggedwallpaper_items__wallpaper'))
 
 class WallpaperManager(Manager):
     def get_query_set(self):

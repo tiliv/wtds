@@ -130,8 +130,7 @@ class TagMixin(object):
     model = Tag
 
 class TagListView(TagMixin, ListView):
-    queryset = Tag.objects.order_by('purity_rating', 'name').annotate(
-            num_wallpapers=Count('wallpapers_taggedwallpaper_items__wallpaper'))
+    queryset = Tag.objects.annotate_wallpaper_counter().order_by('purity_rating', 'name')
 
     profile_filtering = True
 
