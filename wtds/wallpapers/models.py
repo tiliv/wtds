@@ -5,6 +5,7 @@ import logging
 from decimal import Decimal
 
 from django.db import models
+from django.db.models import Avg, F
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 
@@ -96,8 +97,8 @@ class Wallpaper(models.Model):
 
     def assess_tag_purity(self):
         """ Visits each tag and crunches the average purity rating of its wallpapers. """
-        AVG = models.Avg('wallpapers_taggedwallpaper_items__wallpaper__purity_rating')
-        tags = self.tags.annotate(purity_avg=AVG).exclude(purity_avg=models.F('purity_rating'))
+        AVG = Avg('wallpapers_taggedwallpaper_items__wallpaper__purity_rating')
+        tags = self.tags.annotate(purity_avg=AVG).exclude(purity_avg=F('purity_rating'))
         for tag in tags:
             logger.info("Tag %r changing purity rating from %r to %r", tag, tag.purity_rating,
                     tag.purity_avg)
