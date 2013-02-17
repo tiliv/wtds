@@ -124,6 +124,9 @@
 					{
 						var i = tagslist.length;
 						var f = tags_callbacks[id]['onChange'];
+                        if (typeof f === "string") {
+                            f = window[f];
+                        }
 						f.call(this, $(this), tagslist[i-1]);
 					}					
 				}
