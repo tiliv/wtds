@@ -18,12 +18,12 @@ $(function(){
     // });
 
     search_input.on('search.wtds', function(){
-        var tags = search_input.val().split(',');
-        var terms = [];
-        for (var i in tags) {
-            terms.push({'name': 'tag', 'value': tags[i]});
+        var terms = search_input.val().split(',');
+        var tags = [];
+        for (var i in terms) {
+            tags.push({'name': 'tag', 'value': terms[i]});
         }
-        var url = search_url + '?' + $.param(terms);
+        var url = search_url + '?' + $.param(tags);
         window.location = url;
     });
 });
