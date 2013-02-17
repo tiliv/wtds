@@ -1,6 +1,7 @@
 import os.path
 import mimetypes
 import json
+import logging
 
 from django.views.generic import View, CreateView, UpdateView, DetailView, DeleteView, ListView
 from django.http import (StreamingHttpResponse, HttpResponse, HttpResponseRedirect,
@@ -12,7 +13,9 @@ from django.db.models import Count
 from taggit.utils import parse_tags
 
 from .models import Wallpaper, Tag
-from .forms import CreateForm, UpdateForm
+from .forms import CreateForm, UpdateForm, SearchForm
+
+log = logging.getLogger(__name__)
 
 class AuthenticationMixin(object):
     login_required = True
@@ -92,18 +95,13 @@ class WallpaperDeleteView(AuthenticationMixin, WallpaperMixin, DeleteView):
     success_url = reverse_lazy('home')
 
 class WallpaperListView(WallpaperMixin, ListView):
-    _tags = None
-
     # If set, a single-tag filter will only show results that have that tag as their only tag.
     in_danger = False
 
     def get_filter_tags(self):
-        if self._tags is None:
-            slugs = self.request.GET.getlist('tag')
-            if 'slug' in self.kwargs:
-                slugs.append(self.kwargs['slug'])
-            self._tags = Tag.objects.filter(slug__in=slugs)
-        return self._tags
+        search_form = SearchForm(self.request.GET)
+        search_form.full_clean()
+        return search_form.cleaned_data['terms']
 
     # TODO: Sorting
     def get_queryset(self):

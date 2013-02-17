@@ -9,7 +9,7 @@ from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import UploadedFile
 from django.utils.translation import ugettext as _
 
-from .models import Wallpaper
+from .models import Wallpaper, Tag
 from .widgets import TagListInput, DragAndDropImageProcesserWidget, ClearableThumbnailImageWidget
 
 log = logging.getLogger(__name__)
@@ -32,8 +32,13 @@ class SearchForm(forms.Form):
         js = ('js/search.js',)
 
     def __init__(self, data, *args, **kwargs):
-        data = {'terms': ','.join(data.getlist('tag'))}
+        self._slugs = data.getlist('tag')
+        data = {'terms': ','.join(self._slugs)}
         super(SearchForm, self).__init__(data, *args, **kwargs)
+
+    def clean_terms(self):
+        # This technically matches tags that might be excluded by the user's profile settings, but any use of the queryset should be considered internal and not front-end ready.
+        return Tag.objects.filter(slug__in=self._slugs)
     
 
 class CreateForm(forms.ModelForm):
