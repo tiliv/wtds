@@ -115,9 +115,9 @@ class WallpaperListView(WallpaperMixin, ListView):
             if self.in_danger:
                 queryset = Wallpaper.objects.filter_by_orphan_danger(tags=tags)
             else:
-                if tags:
-                    queryset = queryset.filter(tags__in=tags).distinct()
-        return queryset
+                # Do an AND search on all tags (chaining filters together)
+                queryset = reduce(lambda qs, tag: qs.filter(tags=tag), tags, queryset)
+        return queryset.distinct()
 
     def get_context_data(self, **kwargs):
         context = super(WallpaperListView, self).get_context_data(**kwargs)
