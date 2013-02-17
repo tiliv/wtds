@@ -99,10 +99,10 @@ class WallpaperListView(WallpaperMixin, ListView):
 
     def get_filter_tags(self):
         if self._tags is None:
+            slugs = self.request.GET.getlist('tag')
             if 'slug' in self.kwargs:
-                self._tags = Tag.objects.filter(slug=self.kwargs['slug']) # yields queryset
-            else:
-                self._tags = Tag.objects.filter(slug__in=self.request.GET.getlist('tag'))
+                slugs.append(self.kwargs['slug'])
+            self._tags = Tag.objects.filter(slug__in=slugs)
         return self._tags
 
     # TODO: Sorting
