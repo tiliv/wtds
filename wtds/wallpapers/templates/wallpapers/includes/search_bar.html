@@ -1,7 +1,7 @@
-<div id="search-bar">
+<form id="search-bar" action="{% url 'wallpapers:list' %}">
     <div class="buttons-strip">{% spaceless %}
         <button rel="clear" title="Clear"><span></span></button>
         <button rel="search" title="Run search"><span></span></button>
     {% endspaceless %}</div>
     {{ search_form.terms }}
-</div>
+</form>
