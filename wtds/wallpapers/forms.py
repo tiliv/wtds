@@ -24,6 +24,11 @@ class SearchForm(forms.Form):
         'placeholder': _("Narrow by tag names"),
     }))
 
+    class Media:
+        css = {'screen': ('css/search.css',)}
+        js = ('js/search.js',)
+    
+
 class CreateForm(forms.ModelForm):
     # Not required if image_raw is sent
     image = forms.ImageField(widget=DragAndDropImageProcesserWidget, required=False)
