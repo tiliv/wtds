@@ -168,5 +168,6 @@ class TagAutocompleteView(TagMixin, View):
     def get(self, request, *args, **kwargs):
         term = request.GET.get('term', "").strip()
         tags = Tag.objects.filter_for_user(self.request.user)
-        choices = list(tags.filter(name__istartswith=term).values_list('name', flat=True))
+        choices = list(tags.filter(name__istartswith=term).values_list('name', 'slug'))
+        choices = map(lambda (name, slug): {'label': name, 'value': slug}, choices)
         return HttpResponse(json.dumps(choices), content_type="text/json")
