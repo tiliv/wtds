@@ -1,6 +1,7 @@
 import re
 from base64 import b64decode
 import uuid
+import logging
 
 from django import forms
 from django.forms import ValidationError
@@ -10,6 +11,8 @@ from django.utils.translation import ugettext as _
 
 from .models import Wallpaper
 from .widgets import TagListInput, DragAndDropImageProcesserWidget, ClearableThumbnailImageWidget
+
+log = logging.getLogger(__name__)
 
 # For base64 generated uploads (drag-and-drop API), this map converts the inline content type to a nice usable extension for automatic file name generation.
 IMAGE_TYPE_EXTENSION_MAP = {
@@ -27,6 +30,10 @@ class SearchForm(forms.Form):
     class Media:
         css = {'screen': ('css/search.css',)}
         js = ('js/search.js',)
+
+    def __init__(self, data, *args, **kwargs):
+        data = {'terms': ','.join(data.getlist('tag'))}
+        super(SearchForm, self).__init__(data, *args, **kwargs)
     
 
 class CreateForm(forms.ModelForm):
