@@ -124,9 +124,6 @@
 					{
 						var i = tagslist.length;
 						var f = tags_callbacks[id]['onChange'];
-                        if (typeof f === "string") {
-                            f = window[f];
-                        }
 						f.call(this, $(this), tagslist[i-1]);
 					}					
 				}
@@ -213,9 +210,9 @@
 			
 			if (settings.onAddTag || settings.onRemoveTag || settings.onChange) {
 				tags_callbacks[id] = new Array();
-				tags_callbacks[id]['onAddTag'] = settings.onAddTag;
-				tags_callbacks[id]['onRemoveTag'] = settings.onRemoveTag;
-				tags_callbacks[id]['onChange'] = settings.onChange;
+				tags_callbacks[id]['onAddTag'] = (typeof settings.onAddTag === "string" ? window[settings.onAddTag] : settings.onAddTag);
+				tags_callbacks[id]['onRemoveTag'] = (typeof settings.onRemoveTag === "string" ? window[settings.onRemoveTag] : settings.onRemoveTag);
+				tags_callbacks[id]['onChange'] = (typeof settings.onChange === "string" ? window[settings.onChange] : settings.onChange);
 			}
 	
 			var markup = '<div id="'+id+'_tagsinput" class="tagsinput"><div id="'+id+'_addTag">';
