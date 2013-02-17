@@ -19,6 +19,7 @@ DEFAULT_TAGSINPUT_OPTIONS = {
         'width': '100px',
         'autoFill': True,
     },
+    'onChange': 'trigger_filter', # function name supplied by search.js media
 }
 
 class DragAndDropImageProcesserWidget(forms.FileInput):
