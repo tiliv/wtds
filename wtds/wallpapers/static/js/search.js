@@ -2,7 +2,7 @@ var search_input;
 
 function trigger_filter() {
     if (search_input) { // ignore the initial tagsinput construction
-        search_input.trigger('change');
+        search_input.trigger('search.wtds');
     }
 }
 
@@ -13,13 +13,17 @@ $(function(){
     search_bar.find('button[rel=clear]').on('click', function(){
         search_input.importTags('');
     });
-    search_bar.find('button[rel=search]').on('click', function(){
-        search_input.trigger('change');
-    });
+    // search_bar.find('button[rel=search]').on('click', function(){
+    //     search_input.trigger('change');
+    // });
 
-    search_input.on('change', function(){
-        $(this).trigger('search.wtds');
-    }).on('search.wtds', function(){
-        search_bar.submit();
+    search_input.on('search.wtds', function(){
+        var tags = search_input.val().split(',');
+        var terms = [];
+        for (var i in tags) {
+            terms.push({'name': 'tag', 'value': tags[i]});
+        }
+        var url = search_url + '?' + $.param(terms);
+        window.location = url;
     });
 });
