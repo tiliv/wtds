@@ -11,12 +11,6 @@
     
     <h2>Wallpapers</h2>
     
-    {% if tags %}
-    <p>Filtering by tag{{ tags|pluralize }}:
-        {% include "wallpapers/includes/tags_as_links.html" with tags=tags only %}
-    </p>
-    {% endif %}
-    
     {% if in_danger and object_list %}
         <p class="message warning">
             The wallpaper{{ object_list|pluralize }} shown here {{ object_list|pluralize:"is,are" }}
@@ -28,7 +22,7 @@
         </p>
     {% endif %}
     
-    <div>
+    <div id="lineup">
         {% for wallpaper in object_list %}
             {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
         {% endfor %}
