@@ -11,7 +11,10 @@ $(function(){
     var search_url = search_bar.attr('action');
     search_input = search_bar.find('input[name=terms]');
     search_bar.find('button[rel=clear]').on('click', function(){
-        search_input.importTags('');
+        if (search_input.val() != '') {
+            search_input.importTags('');
+        }
+        return false;
     });
     // search_bar.find('button[rel=search]').on('click', function(){
     //     search_input.trigger('change');
