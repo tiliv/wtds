@@ -2,6 +2,8 @@ import logging
 
 from django.db.models import Manager, Count, Avg, Max
 from django.db.models.query import QuerySet
+from django.core.urlresolvers import reverse
+from urllib import urlencode
 
 from wtds.profile.models import Profile
 
@@ -24,6 +26,9 @@ class TagManager(Manager):
     def annotate_wallpaper_counter(self):
         return self.get_query_set().annotate_wallpaper_counter()
 
+    def get_search_url(self):
+        return self.get_query_set().get_search_url()
+
 class TagQuerySet(QuerySet):
     def filter_through_profile(self, profile):
         terms = {
@@ -40,6 +45,12 @@ class TagQuerySet(QuerySet):
 
     def annotate_wallpaper_counter(self):
         return self.annotate(num_wallpapers=Count('wallpapers_taggedwallpaper_items__wallpaper'))
+
+    def get_search_url(self):
+        """ Returns a URL to a wallpaper search using all of the tags in the queryset. """
+        data = [('tag', self.values_list('slug', flat=True))]
+        return reverse('wallpapers:list') + "?" + urlencode(data, doseq=True)
+        
 
 class WallpaperManager(Manager):
     def get_query_set(self):
