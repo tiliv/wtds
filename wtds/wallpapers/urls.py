@@ -8,7 +8,6 @@ urlpatterns = patterns('',
     url(r'^wallpapers/', include(patterns('',
         # Filtered views
         url(r'^$', WallpaperListView.as_view(), name='list'),
-        url(r'^tag/(?P<slug>[\w-]+)/$', WallpaperListView.as_view(), name='list'),
         url(r'^(?P<ratio>\d+:\d+)/$', WallpaperListView.as_view(), name='list'),
 
         # Special filtered views

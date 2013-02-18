@@ -28,7 +28,7 @@ class Tag(TagBase):
         ordering = ('name',)
 
     def get_absolute_url(self):
-        return reverse('wallpapers:list', kwargs={'slug': self.slug})
+        return reverse('wallpapers:list') + "?tag={}".format(self.slug)
     
     def get_wallpapers(self):
         """ Due to the generic relation between this and ``Wallpaper`` this method eases lookup. """
