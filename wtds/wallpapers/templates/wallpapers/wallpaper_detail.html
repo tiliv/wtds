@@ -1,6 +1,7 @@
 {% extends "wallpapers/base.html" %}
+{% load i18n %}
 
-{% block title %}Wallpaper: {{ object }}{% endblock title %}
+{% block title %}{% trans "Wallpaper" %}: {{ object }}{% endblock title %}
 
 {% block css %}
     {{ block.super }}
@@ -15,49 +16,64 @@
 
 {% block content %}
     <aside id="details">
+        {% if perms.wallpaper.change_wallpaper and object.tags.all|length == 1 %}
+            <p class="message warning">{% trans "This wallpaper has only one tag." %}</p>
+        {% endif %}
         {% if perms.wallpaper.change_wallpaper %}
-        <a class="button edit" href="{% url 'wallpapers:edit' object.pk %}">Edit</a>
+        <a class="button edit" href="{% url 'wallpapers:edit' object.pk %}">{% trans "Edit" %}</a>
         {% endif %}
         {% if perms.wallpaper.delete_wallpaper %}
-        <a class="button delete" href="{% url 'wallpapers:delete' object.pk %}">Delete</a>
+        <a class="button delete" href="{% url 'wallpapers:delete' object.pk %}">{% trans "Delete" %}</a>
         {% endif %}
 
         <p class="name{% if not object.name %} hidden{% endif %}">
-            <label title="Name"></label>
+            <label title="{% trans "Name" %}"></label>
             <span>{{ object.name }}</span>
         </p>
         <p class="tags">
-            <label title="Tags"></label>
+            <label title="{% trans "Tags" %}"></label>
             <span>{% include "wallpapers/includes/tags_as_links.html" with tags=object.tags.all only %}</span>
         </p>
         <p class="purity {{ wallpaper.get_purity_rating_display|slugify }}">
-            <label title="Purity"></label>
+            <label title="{% trans "Purity" %}"></label>
             <span>{{ wallpaper.get_purity_rating_display }}</span>
         </p>
         <p class="size">
-            <label title="Dimensions"></label>
-            <span>{{ object.width }} &times; {{ object.height }}</span> (<span class="showing"></span>% actual size)
+            <label title="{% trans "Dimensions" %}"></label>
+            <span>{{ object.width }} &times; {{ object.height }}</span>
+            (<span class="showing"></span>% {% trans "actual size" %})
         </p>
         <p class="aspect-ratio">
-            <label title="Aspect ratio"></label>
+            <label title="{% trans "Aspect ratio" %}"></label>
             <span>{{ object.aspect_ratio }}</span>
         </p>
-        {% if perms.wallpaper.change_wallpaper and object.tags.all|length == 1 %}
-            <p class="message warning">This wallpaper has only one tag.</p>
-        {% endif %}
+        <p class="uploader">
+            <label title="{% trans "Uploader" %}"></label>
+            <span>{{ object.uploader }}</span>
+        </p>
+        <p class="author">
+            <label title="{% trans "Author" %}"></label>
+            {% if object.author %}
+                <span>{{ object.author }}</span>
+            {% else %}
+                <span>{% trans "Unknown" %}</span>
+                {# <a href="{{ object.reports.get_creation_url }}">Tip us off if you know!</a> #}
+                <a href="{% url 'wallpapers:reports:create' object.pk %}">Tip us off if you know!</a>
+            {% endif %}
+        </p>
 
         <div id="similar">
-            <h4>Similar by:</h4>
+            <h4>{% trans "Similar by:" %}</h4>
             <div class="related tags">
-                <h5>tags</h5>
+                <h5>{% trans "tags" %}</h5>
                 {% include "wallpapers/includes/tile.html" with wallpaper=similar.tags.0 stack=similar.tags.1 only %}
             </div>
             <div class="related color">
-                <h5>color</h5>
+                <h5>{% trans "color" %}</h5>
                 {% include "wallpapers/includes/tile.html" with wallpaper=similar.color.0 stack=similar.color.1 only %}
             </div>
             <div class="related size">
-                <h5>size</h5>
+                <h5>{% trans "size" %}</h5>
                 {% include "wallpapers/includes/tile.html" with wallpaper=similar.size.0 stack=similar.size.1 only %}
             </div>
             <div class="clear">&nbsp;</div>

@@ -39,6 +39,12 @@
     #details .aspect-ratio label {
         background-image: url(../img/aspect-ratio.png);
     }
+    #details .uploader label {
+        background-image: url(../img/uploader.png);
+    }
+    #details .author label {
+        background-image: url(../img/author.png);
+    }
 
 #similar {
     /* Can't code "transparent" into this, or else the gradient gets weird and dark. */
