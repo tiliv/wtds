@@ -8,14 +8,15 @@ from .views import HomeView
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^$', HomeView.as_view(), name="home"),
     url(r'^', include('wtds.wallpapers.urls')),
-    url(r'^account/', include('wtds.profile.urls', namespace='profile')),
+    url(r'^account/', include('wtds.profile.urls', namespace="profile")),
+    url(r'^reports/', include('wtds.reports.management_urls', namespace="reports")),
     
     # auth
     url(r'^', include(patterns('',
-        url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
-        url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': reverse_lazy('home')}, name='logout'),
+        url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
+        url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': reverse_lazy('home')}, name="logout"),
         url(r'^', include('django.contrib.auth.urls')),
     ), namespace='auth')),
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

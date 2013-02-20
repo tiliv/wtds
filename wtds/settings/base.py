@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'south',
     'sorl.thumbnail',
     'wtds.core',
+    'wtds.reports',
     'wtds.wallpapers',
     'wtds.profile',
 )

@@ -25,6 +25,10 @@ urlpatterns = patterns('',
         ))),
     ), namespace='wallpapers')),
 
+        # Reports
+        include_reports_urls('wallpaper'),
+        # url(r'^reports/', include('wtds.reports.urls', namespace="reports", app_name='wallpapers')),
+
     url(r'^tags/', include(patterns('',
         url(r'^$', TagListView.as_view(), name='list'),
         url(r'^orphaned/$', TagOrphanedListView.as_view(), name='orphaned'),
