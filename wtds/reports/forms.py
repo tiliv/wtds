@@ -31,7 +31,6 @@ class ReportForm(forms.ModelForm):
         for field_name, value in self.initial.items():
             self.fields[field_name].widget = forms.HiddenInput()
 
-        logger.info(self.initial)
         if 'object_fieldname' in self.initial:
             field = getattr(model, self.initial['object_fieldname'])
             try:

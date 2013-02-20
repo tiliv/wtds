@@ -101,7 +101,6 @@ class ReportMixin(AuthenticationMixin):
                 'reports/{}{}.html'.format(self.target_model_class._meta.module_name, self.template_name_suffix),
                 '{}/report{}.html'.format(self.target_model_class._meta.module_name + 's', self.template_name_suffix),
             ] + template_names
-        logger.error(template_names)
         return template_names
 
 class ReportListView(ReportMixin, ListView):
