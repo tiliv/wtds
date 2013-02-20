@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>
+        {% if instance %}
+            <img src="{{ instance.image.url }}" width="140" style="float: left; margin-right: 1em" />
+        {% elif model %}
+            {{ model|capfirst }}
+        {% endif %}
+        Reports
+    </h2>
+
+    {% if content_type %}
+        {% if instance %}
+            {% if field_name %}
+                {% url 'reports:create' contenttype=content_type.model model_pk=instance.pk field_name=field_name as report_url %}
+            {% else %}
+                {% url 'reports:create' contenttype=content_type.model model_pk=instance.pk as report_url %}
+            {% endif %}
+        {% else %}
+            {% url 'reports:create' contenttype=content_type.model as report_url %}
+        {% endif %}
+    {% else %}
+        {% url 'reports:create' as report_url %}
+    {% endif %}
+    <a href="{{ report_url }}">Add new report</a>
+
+    <ul>
+        {{ object_list|unordered_list }}
+    </ul>
+{% endblock content %}

@@ -8,10 +8,14 @@ from django.db import models
 from django.db.models import Avg, F
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.generic import GenericRelation
+from django.utils.translation import ugettext as _
+from django.conf import settings
 
 from taggit.models import TagBase, GenericTaggedItemBase
 from taggit.managers import TaggableManager
 
+from wtds.reports import ReportsManager
 from .managers import TagManager, WallpaperManager
 from .constants import (COMMON_ASPECT_RATIOS, FRIENDLY_ASPECT_RATIOS, RANDOM_STACK_TILT_ANGLES,
         PURITY_CHOICES, MIN_PURITY_RATING, MAX_PURITY_RATING)
@@ -20,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 class Tag(TagBase):
     """ Adds a purity rating to the existing taggit ``Tag`` model. """
-    purity_rating = models.FloatField(default=0, editable=False)
+    purity_rating = models.FloatField(_('purity rating'), default=0, editable=False)
 
     objects = TagManager()
 
@@ -57,25 +61,30 @@ class TaggedWallpaper(GenericTaggedItemBase):
 class Wallpaper(models.Model):
     objects = WallpaperManager()
 
-    name = models.CharField(max_length=100, blank=True,
-            help_text="If left blank, the tags will be shown.")
-    image = models.ImageField(upload_to='%Y/%m/%d', height_field='height', width_field='width')
-    height = models.PositiveIntegerField()
-    width = models.PositiveIntegerField()
+    name = models.CharField(_('Name'), max_length=100, blank=True,
+            help_text=_("If left blank, the tags will be shown."))
+    image = models.ImageField(_('Image'), upload_to='%Y/%m/%d', height_field='height',
+            width_field='width')
+    height = models.PositiveIntegerField(_('Height'))
+    width = models.PositiveIntegerField(_('Width'))
     raw_ratio = models.CharField(max_length=50)
     fractional_ratio = models.DecimalField(max_digits=11, decimal_places=10)
     # color_profile = models.CharField()
 
-    uploader = models.ForeignKey('auth.User', help_text="Contributing user account")
-    author = models.ForeignKey('Author', blank=True, null=True, help_text="Original creator")
-    license = models.ForeignKey('License', default=8)
-    duplicate_of = models.ForeignKey('self', blank=True, null=True)
-    date_created = models.DateTimeField(auto_now_add=True)
-    is_public = models.BooleanField(default=True)
-    purity_rating = models.IntegerField('purity', choices=PURITY_CHOICES, default=0)
+    uploader = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('uploader'),
+            help_text=_("Contributing user account"))
+    author = models.ForeignKey('Author', verbose_name=_('Author'), blank=True, null=True,
+            help_text=_("Original creator"))
+    license = models.ForeignKey('License', verbose_name=_('License'), default=8)
+    duplicate_of = models.ForeignKey('self', verbose_name=_('Duplicate'), blank=True, null=True)
+    date_created = models.DateTimeField(_('Date created'), auto_now_add=True)
+    is_public = models.BooleanField(_('Public'), default=True)
+    purity_rating = models.IntegerField(_('Purity'), choices=PURITY_CHOICES, default=0)
 
-    views = models.PositiveIntegerField(default=0)
-    tags = TaggableManager(blank=False, through=TaggedWallpaper)
+    views = models.PositiveIntegerField(_('Views'), default=0)
+    tags = TaggableManager(_('Tags'), blank=False, through=TaggedWallpaper)
+
+    reports = ReportsManager()
 
     class Meta:
         get_latest_by = 'date_created'
@@ -145,42 +154,38 @@ class Wallpaper(models.Model):
         x, y = map(Decimal, ratio.split(':'))
         return x / y
 
-    # def get_similar_by_size(self, variation=0.1):
-    #     """ Forwards to the queryset method. """
-    #     return Wallpaper.objects.filter_by_size(self.width, self.height, variation=variation)
-    # 
-    # def get_similar_by_color(self):
-    #     """ Forwards to the queryset method. """
-    #     # TODO: Implement this
-    #     return Wallpaper.objects.filter_by_color(None)
-
     def get_random_stack_tilt(self):
         """ Template UI function that generates a degree rotation value for a "stack". """
         return random.choice(RANDOM_STACK_TILT_ANGLES)
 
+    # Support for wtds.reports app
+    @classmethod
+    def get_reportable_fields(cls):
+        return ('name', 'author', 'license', 'duplicate_of', 'is_public', 'purity_rating', 'tags')
 
 class Author(models.Model):
-    user = models.OneToOneField('auth.User', blank=True, null=True)
-    name = models.CharField(max_length=100, blank=True)
-    url = models.URLField(max_length=500, blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True, null=True)
+    name = models.CharField(_('name'), max_length=100, blank=True)
+    url = models.URLField(_('url'), max_length=500, blank=True)
 
-    # class Meta:
-    #     unique_together = ('name', 'url')
-    #
+    reports = ReportsManager()
+
     def __unicode__(self):
-        return (self.user.get_full_name() if self.user else self.name) or self.url
+        if self.user:
+            return unicode(self.user)
+        return self.name or self.url
 
 class License(models.Model):
-    name = models.CharField(max_length=100)
-    short_name = models.CharField(max_length=20)
-    summary = models.CharField(max_length=400)
+    name = models.CharField(_('name'), max_length=100)
+    short_name = models.CharField(_('short name'), max_length=20)
+    summary = models.CharField(_('summary'), max_length=400)
 
-    url = models.URLField(max_length=400, blank=True)
+    url = models.URLField(_('url'), max_length=400, blank=True)
 
-    attribute_author = models.BooleanField()
-    allow_derivatives = models.BooleanField()
-    allow_commercial_use = models.BooleanField()
-    persist_license = models.BooleanField()
+    attribute_author = models.BooleanField(_('attribute author'))
+    allow_derivatives = models.BooleanField(_('allow derivatives'))
+    allow_commercial_use = models.BooleanField(_('allow commercial use'))
+    persist_license = models.BooleanField(_('persist license'))
 
     def __unicode__(self):
         return self.name
