@@ -15,7 +15,6 @@ from taggit.utils import parse_tags
 from .models import Wallpaper, Tag
 from .forms import CreateForm, UpdateForm, SearchForm
 
-log = logging.getLogger(__name__)
 
 class AuthenticationMixin(object):
     login_required = True
@@ -30,6 +29,7 @@ class AuthenticationMixin(object):
                     return HttpResponseForbidden("Sorry! You don't have permission to go there.")
         return super(AuthenticationMixin, self).dispatch(request, *args, **kwargs)
 
+logger = logging.getLogger(__name__)
 
 class WallpaperMixin(object):
     model = Wallpaper

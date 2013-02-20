@@ -12,7 +12,7 @@ from django.utils.translation import ugettext as _
 from .models import Wallpaper, Tag
 from .widgets import TagListInput, DragAndDropImageProcesserWidget, ClearableThumbnailImageWidget
 
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 # For base64 generated uploads (drag-and-drop API), this map converts the inline content type to a nice usable extension for automatic file name generation.
 IMAGE_TYPE_EXTENSION_MAP = {
