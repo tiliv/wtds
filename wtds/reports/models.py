@@ -13,8 +13,8 @@ class Report(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
 
-    object_fieldname = models.CharField(_('field'), max_length=50, help_text=_("Specifies the reported field."))
-    description = models.CharField(_('description'), max_length=500)
+    object_fieldname = models.CharField(_('Field'), max_length=50, help_text=_("Specifies the reported field."))
+    description = models.CharField(_('Reason'), max_length=500)
 
     def __unicode__(self):
         return ':'.join((
