@@ -2,11 +2,18 @@
 
 {% block css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/form.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/report.css" type="text/css" />
 {% endblock css %}
 
 {% block content %}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-    </form>
+    <div id="report" class="report-{{ content_type.model|slugify }}">
+        <div id="preview">
+            {% block reported_object_preview %}
+            {% endblock reported_object_preview %}
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </form>
+    </div>
 {% endblock content %}

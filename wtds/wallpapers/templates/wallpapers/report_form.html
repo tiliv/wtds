@@ -1,0 +1,5 @@
+{% extends "reports/report_form.html" %}
+
+{% block reported_object_preview %}
+    {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
+{% endblock reported_object_preview %}

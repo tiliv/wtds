@@ -48,7 +48,7 @@ class ReportMixin(AuthenticationMixin):
             # Model field
             if 'field_name' in kwargs:
                 # TODO: Catch abuse of field lookups
-                field, _, _, _ = model_class._meta.get_field_by_name(kwargs['field_name'])
+                field = self.target_model_class._meta.get_field_by_name(kwargs['field_name'])[0]
                 self.target_model_field_name = field.name
 
             # Model instance
@@ -82,8 +82,31 @@ class ReportMixin(AuthenticationMixin):
     def get_object(self):
         return self.target_model_instance
 
+    def get_context_data(self, **kwargs):
+        context = super(ReportMixin, self).get_context_data(**kwargs)
+        if self.target_model_instance:
+            context[self.target_model_class._meta.module_name] = self.target_model_instance
+            context.update({
+                'content_type': self.target_content_type,
+                'model': self.target_model_class,
+                'field_name': self.target_model_field_name,
+                'instance': self.target_model_instance,
+            })
+        return context
+
+    def get_template_names(self):
+        template_names = [self.template_name]
+        if self.target_model_class:
+            template_names = [
+                'reports/{}{}.html'.format(self.target_model_class._meta.module_name, self.template_name_suffix),
+                '{}/report{}.html'.format(self.target_model_class._meta.module_name + 's', self.template_name_suffix),
+            ] + template_names
+        logger.error(template_names)
+        return template_names
+
 class ReportListView(ReportMixin, ListView):
     permissions_required = ['reports.change_report']
+    template_name = 'reports/report_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReportListView, self).get_context_data(**kwargs)
@@ -96,23 +119,30 @@ class ReportListView(ReportMixin, ListView):
 
 class ReportDetailView(ReportMixin, DetailView):
     permissions_required = ['reports.change_report']
+    template_name = 'reports/report_detail.html'
 
-class ReportCreateView(ReportMixin, CreateView):
-    # permissions_required = ['reports.add_report']
+
+class ReportFormMixin(object):
     form_class = ReportForm
+    template_name = 'reports/report_form.html'
 
     def get_initial(self):
         return {
             'content_type': self.target_content_type,
             'object_id': self.target_model_instance_pk,
+            'object_fieldname': self.target_model_field_name,
         }
 
     def get_form_kwargs(self):
-        kwargs = super(ReportCreateView, self).get_form_kwargs()
+        kwargs = super(ReportFormMixin, self).get_form_kwargs()
         kwargs.update({
             'model': self.target_model_class,
         })
         return kwargs
+    
+class ReportCreateView(ReportMixin, ReportFormMixin, CreateView):
+    # permissions_required = ['reports.add_report']
+    pass
 
-class ReportUpdateView(ReportMixin, UpdateView):
+class ReportUpdateView(ReportMixin, ReportFormMixin, UpdateView):
     permissions_required = ['reports.change_report']

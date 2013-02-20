@@ -14,7 +14,7 @@ urlpatterns = patterns('',
         url(r'^$', ReportListView.as_view(), name="list"),
         url(r'^new/$', ReportCreateView.as_view(), name="create"),
         url(r'^(?P<field_name>[a-z_][a-zA-Z\d_]*)/', include(patterns('',
-            url(r'$', ReportListView.as_view(), name="list"),
+            url(r'^$', ReportListView.as_view(), name="list"),
             url(r'^new/$', ReportCreateView.as_view(), name="create"),
         )))
     ))),
