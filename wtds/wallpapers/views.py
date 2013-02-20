@@ -12,22 +12,9 @@ from django.db.models import Count
 
 from taggit.utils import parse_tags
 
+from wtds.core.views import AuthenticationMixin
 from .models import Wallpaper, Tag
 from .forms import CreateForm, UpdateForm, SearchForm
-
-
-class AuthenticationMixin(object):
-    login_required = True
-    permissions_required = []
-
-    def dispatch(self, request, *args, **kwargs):
-        if self.login_required and not request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('auth:login'))
-        if self.permissions_required:
-            for permission in self.permissions_required:
-                if not self.request.user.has_perm(permission):
-                    return HttpResponseForbidden("Sorry! You don't have permission to go there.")
-        return super(AuthenticationMixin, self).dispatch(request, *args, **kwargs)
 
 logger = logging.getLogger(__name__)
 
