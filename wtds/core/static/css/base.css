@@ -35,6 +35,9 @@ header menu {
 #content #lineup {
     text-align: center;
 }
+#content #lineup .tile-wrapper {
+    margin: 0.5em;
+}
 
 #sitename,
 #logo {
@@ -63,6 +66,7 @@ menu#tile-options {
 }
 
 a.button {
+    background-image: -webkit-linear-gradient(#dfdfdf, #dfdfdf, #d5d5d5, #ccc);
     background-image: linear-gradient(to bottom, #dfdfdf, #dfdfdf, #d5d5d5, #ccc);
     font-size: 0.8em;
     color: inherit;
@@ -75,10 +79,10 @@ a.button {
     box-shadow: 0 1px 1px #dfdfdf;
     text-shadow: 0 -1px 1px #f0f0f0;
 
-    transition: border-bottom 0.2s, color 0.2s, box-shadow 0.2s, text-shadow 0.2s;
     -webkit-transition: border-bottom 0.2s, color 0.2s, box-shadow 0.2s, text-shadow 0.2s;
-    -moz-transition: border-bottom 0.2s, color 0.2s, box-shadow 0.2s, text-shadow 0.2s;
-    -o-transition: border-bottom 0.2s, color 0.2s, box-shadow 0.2s, text-shadow 0.2s;
+    transition: border-bottom 0.2s, color 0.2s, box-shadow 0.2s, text-shadow 0.2s;
+/*    -moz-transition: border-bottom 0.2s, color 0.2s, box-shadow 0.2s, text-shadow 0.2s;*/
+/*    -o-transition: border-bottom 0.2s, color 0.2s, box-shadow 0.2s, text-shadow 0.2s;*/
 }
     a.button:hover {
         box-shadow: 0 1px 2px #1e90ff;
@@ -97,6 +101,7 @@ a.button {
     border-width: 1px;
     border-style: solid;
     border-radius: 4px;
+    background-image: -webkit-linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0));
     background-image: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0));
     box-shadow: 0 1px 1px #aaa;
     text-shadow: 0 1px 0 #dfdfdf;
@@ -159,6 +164,8 @@ a.button {
     border-style: solid;
     border-color: #333;
     box-shadow: 0 1px 3px #666;
+    -webkit-transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .wallpaper.tile .sleeve {
     position: absolute;
@@ -167,6 +174,8 @@ a.button {
     background-position: bottom right;
     background-repeat: no-repeat;
     background-size: 16px 16px;
+    -webkit-transition: box-shadow 0.2s ease;
+    transition: box-shadow 0.2s ease;
 }
 .wallpaper.tile.sketchy .sleeve {
     background-image: url(../img/sketchy-ribbon.png);
@@ -201,7 +210,48 @@ a.button {
     display: inline-block;
 }
 .tile-wrapper .tags {
-    display: none !important;
+    position: absolute;
+    display: none; /* manipulated by base.js to avoid abrupt "transition" property behavior */
+    background-image: -webkit-linear-gradient(#111, #333);
+    background-image: linear-gradient(to bottom, #111, #333);
+    text-align: left;
+    border: 1px solid black;
+    border-top-color: #555;
+    border-bottom-color: #555;
+    border-radius: 0 2px 2px 2px;
+    box-shadow: 0 -1px 0 black, 0 1px 0 black, 0 2px 10px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    -webkit-transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease;
+}
+.tile-wrapper .show-tags-button {
+    position: relative;
+    z-index: 1px;
+    left: 1px;
+    opacity: 0;
+    background-image: url(../img/tags-ribbon.png);
+    background-size: cover;
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    -webkit-transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease;
+    margin-top: -31px;
+}
+.tile-wrapper .tags.showing {
+    opacity: 1;
+    z-index: 1; /* display over top of other tile sleeves */
+}
+.tile-wrapper:hover .sleeve {
+    box-shadow: inset 0 0 30px #1e90ff;
+}
+.tile-wrapper:hover .tile img {
+    border-color: white;
+    box-shadow: 0 1px 7px #444; /* slightly larger and darker */
+}
+.tile-wrapper .show-tags-button.showing,
+.tile-wrapper:hover .show-tags-button {
+    opacity: 1;
 }
 
 .tag {

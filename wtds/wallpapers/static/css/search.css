@@ -18,8 +18,8 @@
         border-bottom: 1px solid transparent;
         transition: border-bottom 0.2s;
         -webkit-transition: border-bottom 0.2s;
-        -moz-transition: border-bottom 0.2s;
-        -o-transition: border-bottom 0.2s;
+/*        -moz-transition: border-bottom 0.2s;*/
+/*        -o-transition: border-bottom 0.2s;*/
     }
     .buttons-strip button:first-child {
         border-left: none;
