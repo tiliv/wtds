@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}{% trans "Permission denied" %}{% endblock title %}
+
 {% block body_classes %}narrow{% endblock body_classes %}
 {% block content %}
     <h2>{% trans "Permission denied" %}</h2>
