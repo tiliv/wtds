@@ -59,6 +59,9 @@
                 </form>
             {% endif %}
             </div>
+            <div id="actions" class="buttons-strip">
+                {% spaceless %}{% block actions %}{% endblock actions %}{% endspaceless %}
+            </div>
 
             <div id="sitename" style="background-image: url({{ logo_wallpaper.image.url }})">
                 <a id="logo" href="{% url 'home' %}"></a>

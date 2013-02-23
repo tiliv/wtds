@@ -14,16 +14,22 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/viewing.js"></script>
 {% endblock javascript %}
 
+
+{% block actions %}
+{% if perms.wallpaper.change_wallpaper %}
+<a rel="edit" href="{% url 'wallpapers:edit' object.pk %}" title="{% trans "Edit" %}"><span /></a>
+{% endif %}
+{% if perms.wallpaper.delete_wallpaper %}
+<a rel="delete" href="{% url 'wallpapers:delete' object.pk %}" title="{% trans "Delete" %}"><span /></a>
+{% endif %}
+<a rel="download" href="{% url "wallpapers:download" object.pk %}" title="{% trans "Download" %}"><span /></a>
+<a rel="favorite" href="" title="{% trans "Add to favorites" %}"><span /></a>
+{% endblock actions %}
+
 {% block content %}
     <aside id="details">
         {% if perms.wallpaper.change_wallpaper and object.tags.all|length == 1 %}
             <p class="message warning">{% trans "This wallpaper has only one tag." %}</p>
-        {% endif %}
-        {% if perms.wallpaper.change_wallpaper %}
-        <a class="button edit" href="{% url 'wallpapers:edit' object.pk %}">{% trans "Edit" %}</a>
-        {% endif %}
-        {% if perms.wallpaper.delete_wallpaper %}
-        <a class="button delete" href="{% url 'wallpapers:delete' object.pk %}">{% trans "Delete" %}</a>
         {% endif %}
 
         <p class="name{% if not object.name %} hidden{% endif %}">
