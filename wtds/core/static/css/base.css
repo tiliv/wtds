@@ -155,6 +155,96 @@ a.button {
         content: url(../img/error.png);
     }
 
+/* Page actions */
+.buttons-strip {
+    display: inline-block;
+    background-image: -webkit-linear-gradient(#f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
+    background-image: linear-gradient(to bottom, #f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
+    height: 26px; /* 28 with borders */
+    border: 1px solid #aaa;
+    border-radius: 15px;
+}
+    .buttons-strip > * {
+        display: inline-block;
+        background: none;
+        height: 26px;
+        text-align: center;
+        padding: 0 0.5em;
+        border: none;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #fafafa;
+        border-bottom: 1px solid transparent;
+        margin: 0;
+        transition: border-bottom 0.2s;
+        -webkit-transition: border-bottom 0.2s;
+    }
+    .buttons-strip > *:first-child {
+        border-left: none;
+        border-radius: 15px 0 0 15px;
+        padding-left: 1em;
+    }
+    .buttons-strip > *:last-child {
+        border-right: none;
+        border-radius: 0 15px 15px 0;
+        padding-right: 1em;
+    }
+        .buttons-strip > * span {
+            display: inline-block;
+            vertical-align: bottom;
+            background-color: transparent;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 16px;
+            height: 100%;
+        }
+
+    .buttons-strip > *:hover {
+        border-bottom: 1px solid #1e90ff;
+    }
+    .buttons-strip > *:active {
+        box-shadow: inset 0 2px 5px #dfdfdf;
+        background-image: -webkit-linear-gradient(#f0f0f0, #f8f8f8, #f8f8f8, #f8f8f8);
+        background-image: linear-gradient(to top, #f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
+    }
+#actions {
+    float: right;
+    clear: right;
+    margin-top: 70px;
+    text-align: right;
+}
+/*    #actions a {
+        display: inline-block;
+        background-image: linear-gradient(to bottom, rgba(255,255,255, 0.4), rgba(0, 0, 0, 0.3));
+        text-decoration: none;
+        color: #333;
+        text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+        padding: 0.2em 0.5em;
+        border: 1px solid black;
+        border-radius: 3px;
+        margin: 0 0.2em;
+        box-shadow: 0 2px 5px #555;
+    }
+        #actions a span {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-size: cover;
+        }
+*/
+    #actions a[rel="edit"] span {
+        background-image: url(../img/edit.png);
+    }
+    #actions a[rel="delete"] span {
+        background-image: url(../img/delete.png);
+    }
+    #actions a[rel="download"] span {
+        background-image: url(../img/download.png);
+    }
+    #actions a[rel="favorite"] span {
+        background-image: url(../img/favorite.png);
+    }
+
 /* Wallpaper tiles */
 .wallpaper.tile {
     display: inline-block;
