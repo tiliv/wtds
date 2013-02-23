@@ -1,14 +1,12 @@
-{% extends "base.html" %}
+{% extends "base_error.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "Not found" %}{% endblock title %}
-
-{% block body_classes %}narrow{% endblock body_classes %}
-{% block content %}
-    <h2>{% trans "Not found" %}</h2>
+{% block error_title %}{% trans "Not found" %}{% endblock error_title %}
+{% block error_content %}
     <p>
         {% blocktrans %}
         Eeehh, this is awkward, but&mdash;that's not a URL we recognize.
         {% endblocktrans %}
     </p>
-{% endblock content %}
+{% endblock error_content %}

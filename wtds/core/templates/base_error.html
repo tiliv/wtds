@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body_classes %}narrow{% endblock body_classes %}
+
+{% block content %}
+    {% if fake %}
+        (Faked error)
+    {% endif %}
+    <h2>{% block error_title %}{% endblock error_title %}</h2>
+    {% block error_content %}{% endblock error_content %}
+{% endblock content %}

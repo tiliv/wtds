@@ -17,13 +17,15 @@ class AuthenticationMixin(object):
                 return HttpResponseForbidden()
         return super(AuthenticationMixin, self).dispatch(request, *args, **kwargs)
 
-def _base_error(request, template_name=None):
+def _base_error(request, template_name=None, fake=False):
+    context = {'fake': fake}
     try:
-        context = RequestContext(request)
+        context = RequestContext(request, context)
         print context
     except Exception as e:
-        context = Context()
+        context = Context(context)
     return render_to_response(template_name, context)
 
+handler403 = partial(_base_error, template_name='403.html')
 handler404 = partial(_base_error, template_name='404.html')
 handler500 = partial(_base_error, template_name='500.html')

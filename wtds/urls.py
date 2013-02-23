@@ -7,6 +7,10 @@ from .views import HomeView
 
 # admin.autodiscover()
 
+handler403 = 'wtds.core.views.handler403'
+handler404 = 'wtds.core.views.handler404'
+handler500 = 'wtds.core.views.handler500'
+
 urlpatterns = patterns('',
     url(r'^$', HomeView.as_view(), name="home"),
     url(r'^', include('wtds.wallpapers.urls')),
@@ -21,6 +25,9 @@ urlpatterns = patterns('',
     ), namespace='auth')),
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # url(r'^admin/', include(admin.site.urls)),
+    url(r'^~/403/$', handler403, {'fake': True}),
+    url(r'^~/404/$', handler404, {'fake': True}),
+    url(r'^~/500/$', handler500, {'fake': True}),
 )
 
 if settings.DEBUG:
@@ -29,6 +36,3 @@ if settings.DEBUG:
             'document_root': settings.MEDIA_ROOT,
         })
     )
-
-handler404 = 'wtds.core.views.handler404'
-handler500 = 'wtds.core.views.handler500'

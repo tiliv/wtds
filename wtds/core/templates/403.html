@@ -1,11 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_error.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "Permission denied" %}{% endblock title %}
-
-{% block body_classes %}narrow{% endblock body_classes %}
-{% block content %}
-    <h2>{% trans "Permission denied" %}</h2>
+{% block error_title %}{% trans "Permission denied" %}{% endblock error_title %}
+{% block error_content %}
     <p>
         {% blocktrans %}
         Weeeeellll, there's good news and bad news. The good news is that you're a smart cookie,
@@ -20,4 +18,4 @@
         that won't forget until months and months go by.
         {% endblocktrans %}
     </p>
-{% endblock content %}
+{% endblock error_content %}
