@@ -30,5 +30,5 @@ if settings.DEBUG:
         })
     )
 
-handler404 = 'core.views.handler404'
-handler500 = 'core.views.handler500'
+handler404 = 'wtds.core.views.handler404'
+handler500 = 'wtds.core.views.handler500'
