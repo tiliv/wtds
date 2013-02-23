@@ -37,27 +37,33 @@
         <header>
             <menu type="toolbar">
                 {% block toolbar %}
-                {% if perms.wallpapers.add_wallpaper %}
-                <li><a href="{% url 'wallpapers:upload' %}">{% trans "Upload" noop %}</a></li>
-                {% endif %}
                 <li><a href="{% url 'tags:list' %}">{% trans "All tags" noop %}</a></li>
-                {% if not user.is_authenticated %}
-                    <li><a href="{% url 'auth:login' %}?next={{ request.path }}">Log in</a></li>
-                {% else %}
-                    <li><a href="{% url 'profile:view' %}">{% trans "Account" noop %}</a></li>
-                    <li><a href="{% url 'auth:logout' %}">{% trans "Log out" noop %}</a></li>
-                {% endif %}
                 {% endblock toolbar %}
             </menu>
 
             <div id="settings">
-            {% if user.is_authenticated %}
-                <form id="profile-switch-form" action="{% url 'profile:switch' %}?next={{ request.path }}" method="post">
-                    {% csrf_token %}
-                    {{ profile_switch_form.profile.label_tag }}
-                    {{ profile_switch_form.profile }}
-                </form>
-            {% endif %}
+                {% if user.is_authenticated %}
+                    <form id="account-control" action="{% url 'profile:switch' %}?next={{ request.path }}" method="post">
+                        {% csrf_token %}
+                        {{ profile_switch_form.profile.label_tag }}
+                        {{ profile_switch_form.profile }}
+                        {% if perms.wallpapers.add_wallpaper %}
+                            <a id="upload" class="tooltip" href="{% url 'wallpapers:upload' %}">
+                                <span>{% trans "Upload" %}</span>
+                            </a>
+                        {% endif %}
+                        <a id="account" class="tooltip" href="{% url 'profile:view' %}">
+                            <span>{% trans "Account" %}</span>
+                        </a>
+                        <a id="logout" class="tooltip" href="{% url 'auth:logout' %}">
+                            <span>{% trans "Logout" %}</span>
+                        </a>
+                    </form>
+                {% else %}
+                    <div id="account-control">
+                        <a href="{% url 'auth:login' %}?next={{ request.path }}">{% trans "Log in" %}</a>
+                    </div>
+                {% endif %}
             </div>
             <div id="sitename" style="background-image: url({{ logo_wallpaper.image.url }})">
                 <a id="logo" href="{% url 'home' %}"></a>
