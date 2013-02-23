@@ -1,7 +1,8 @@
+{% load i18n %}
 <form id="search-bar" action="{% url 'wallpapers:list' %}">
     <div class="buttons-strip">{% spaceless %}
-        <button rel="clear" title="Clear"><span></span></button>
-        <button rel="search" title="Run search"><span></span></button>
+        <button rel="clear" title="{% trans "Clear" %}"><span></span></button>
+        <button rel="search" title="{% trans "Run search" %}"><span></span></button>
     {% endspaceless %}</div>
     {{ search_form.terms }}
 </form>
