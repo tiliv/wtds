@@ -1,11 +1,14 @@
 #user-data {
-    margin-right: 620px;
+    margin-right: 520px;
 }
 
 #profiles {
     float: right;
-    width: 600px;
+    width: 500px;
 }
+    #profiles h2 {
+        margin-top: 0;
+    }
 
 fieldset {
     border-width: 2px;
