@@ -60,7 +60,14 @@
 
     <div id="user-data">
         <div id="uploads">
-            <h2>{% trans "Your uploads" %}</h2>
+            <h2>
+                {% trans "Your uploads" %}
+                {% if total_uploads == uploads|length %}
+                    ({{ uploads|length }})
+                {% else %}
+                    (profile filtered: {{ uploads|length }}/{{ total_uploads }})
+                {% endif %}
+            </h2>
             {% for wallpaper in uploads %}
                 {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
             {% endfor %}

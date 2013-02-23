@@ -63,6 +63,7 @@ class AccountView(InlineFormSetView):
     def get_context_data(self, **kwargs):
         context = super(AccountView, self).get_context_data(**kwargs)
         context.update({
+            'total_uploads': self.request.user.wallpaper_set.count(),
             'uploads': self.request.user.wallpaper_set.filter_for_user(self.request.user),
         })
         return context
