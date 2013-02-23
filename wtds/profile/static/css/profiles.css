@@ -1,6 +1,10 @@
-#content {
+#user-data {
+    margin-right: 620px;
+}
+
+#profiles {
+    float: right;
     width: 600px;
-    margin: auto;
 }
 
 fieldset {

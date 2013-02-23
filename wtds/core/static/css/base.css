@@ -65,6 +65,15 @@ menu#tile-options {
     clear: left;
 }
 
+h2 {
+    font-family: Verdana;
+    text-transform: uppercase;
+    color: #888;
+    font-size: 10pt;
+    text-shadow: 0 1px 0 #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+}
+
 a.button {
     background-image: -webkit-linear-gradient(#dfdfdf, #dfdfdf, #d5d5d5, #ccc);
     background-image: linear-gradient(to bottom, #dfdfdf, #dfdfdf, #d5d5d5, #ccc);
@@ -156,6 +165,10 @@ a.button {
     }
 
 /* Page actions */
+#actions {
+    margin: 0 auto;
+    text-align: center;
+}
 .buttons-strip {
     display: inline-block;
     background-image: -webkit-linear-gradient(#f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
@@ -168,6 +181,7 @@ a.button {
         display: inline-block;
         background: none;
         height: 26px;
+        line-height: 26px;
         text-align: center;
         padding: 0 0.5em;
         border: none;
@@ -180,17 +194,19 @@ a.button {
     }
     .buttons-strip > *:first-child {
         border-left: none;
-        border-radius: 15px 0 0 15px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
         padding-left: 0.8em;
     }
     .buttons-strip > *:last-child {
         border-right: none;
-        border-radius: 0 15px 15px 0;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
         padding-right: 0.8em;
     }
         .buttons-strip > * span {
             display: inline-block;
-            vertical-align: bottom;
+            vertical-align: top;
             background-color: transparent;
             background-position: center center;
             background-repeat: no-repeat;
@@ -207,17 +223,20 @@ a.button {
         background-image: -webkit-linear-gradient(#f0f0f0, #f8f8f8, #f8f8f8, #f8f8f8);
         background-image: linear-gradient(to top, #f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);
     }
-    .buttons-strip a[rel="edit"] span {
+    .buttons-strip > *[rel="edit"] span {
         background-image: url(../img/edit.png);
     }
-    .buttons-strip a[rel="delete"] span {
+    .buttons-strip > *[rel="delete"] span {
         background-image: url(../img/delete.png);
     }
-    .buttons-strip a[rel="download"] span {
+    .buttons-strip > *[rel="download"] span {
         background-image: url(../img/download.png);
     }
-    .buttons-strip a[rel="favorite"] span {
+    .buttons-strip > *[rel="favorite"] span {
         background-image: url(../img/favorite.png);
+    }
+    .buttons-strip > *[rel="confirm"] span {
+        background-image: url(../img/confirm.png);
     }
 
 /* Wallpaper tiles */

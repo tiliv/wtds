@@ -60,6 +60,13 @@ class AccountView(InlineFormSetView):
         messages.error(self.request, _("Oops, something went wrong."))
         return response
 
+    def get_context_data(self, **kwargs):
+        context = super(AccountView, self).get_context_data(**kwargs)
+        context.update({
+            'uploads': self.request.user.wallpaper_set.filter_for_user(self.request.user),
+        })
+        return context
+
 class ProfileSwitchView(FormMixin, View):
     """ POST-only view for setting the profile via a ``ProfileSwitchForm`` submission. """
 

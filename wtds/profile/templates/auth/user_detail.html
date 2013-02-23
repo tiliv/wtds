@@ -8,45 +8,61 @@
 {% endblock css %}
 
 {% block content %}
-    <p class="description">
-        Select your default search settings.  If no profile is activated, the one with the cleanest
-        purity setting will automatically be used. Changing the drop-down at the upper right
-        instantly activates a new profile.
-    </p>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ formset.management_form }}
-        <p>
-            <input type="submit" value="Save" />
+    <div id="profiles">
+        <p class="description">
+            {% blocktrans %}
+            Select your default content settings. The active profile filters all wallpapers,
+            including searches, suggestions, and your own list of uploads. If no profile is
+            activated, the default clean profile is automatically be used. Changing the drop-down
+            at the upper right on any page will instantly activate a new profile.
+            {% endblocktrans %}
         </p>
-        {% for form in formset %}
-            {% with profile=form.instance %}
-            {% if forloop.counter0 == formset.initial_form_count %}
-                <h2>{% trans "Add a new profile" noop %}:</h2>
-            {% endif %}
-            <fieldset class="{{ profile.get_purity_rating_display|slugify }} {{ profile.get_purity_style_display|slugify }}{% if profile.is_active %} active{% endif %}">
-                <legend>
-                    <label for="{{ form.is_active.auto_id }}">
-                        {{ form.is_active }}
-                        {{ form.instance }}
-                    </label>
-                </legend>
-                <div class="DELETE">{{ form.DELETE.label_tag }} {{ form.DELETE }}</div>
-                {% for field in form.hidden_fields %}{{ field }}{% endfor %}
-                <p>{{ form.purity_rating.label_tag }} {{ form.purity_style }} {{ form.purity_rating }}</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <div id="actions">
+                <div class="buttons-strip">
+                    <button rel="confirm" type="submit" title="{% trans "Save" %}"><span></span> {% trans "Save" %}</button>
+                </div>
+            </div>
+            {% for form in formset %}
+                {% with profile=form.instance %}
+                {% if forloop.counter0 == formset.initial_form_count %}
+                    <h2>{% trans "Add a new profile" noop %}:</h2>
+                {% endif %}
+                <fieldset class="{{ profile.get_purity_rating_display|slugify }} {{ profile.get_purity_style_display|slugify }}{% if profile.is_active %} active{% endif %}">
+                    <legend>
+                        <label for="{{ form.is_active.auto_id }}">
+                            {{ form.is_active }}
+                            {{ form.instance }}
+                        </label>
+                    </legend>
+                    <div class="DELETE">{{ form.DELETE.label_tag }} {{ form.DELETE }}</div>
+                    {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+                    <p>{{ form.purity_rating.label_tag }} {{ form.purity_style }} {{ form.purity_rating }}</p>
 
-                {% if form.ratio.errors %}<ul class="errorlist">{{ form.ratio.errors|unordered_list }}</ul>{% endif %}
-                <p rel="ratio">{{ form.ratio.label_tag }} {{ form.ratio_style }} {{ form.ratio }}</p>
+                    {% if form.ratio.errors %}<ul class="errorlist">{{ form.ratio.errors|unordered_list }}</ul>{% endif %}
+                    <p rel="ratio">{{ form.ratio.label_tag }} {{ form.ratio_style }} {{ form.ratio }}</p>
 
-                {% if form.width.errors %}<ul class="errorlist">{{ form.width.errors|unordered_list }}</ul>{% endif %}
-                {% if form.height.errors %}<ul class="errorlist">{{ form.height.errors|unordered_list }}</ul>{% endif %}
-                <p rel="dimensions">
-                    <label for="{{ form.width.auto_id }}">Dimensions</label>
-                    {{ form.width_style }} {{ form.width }} &#x00D7; {{ form.height_style }} {{ form.height }}
-                </p>
-                <p>{{ form.name.label_tag }} {{ form.name }}</p>
-            </fieldset>
-            {% endwith %}
-        {% endfor %}
-    </form>
+                    {% if form.width.errors %}<ul class="errorlist">{{ form.width.errors|unordered_list }}</ul>{% endif %}
+                    {% if form.height.errors %}<ul class="errorlist">{{ form.height.errors|unordered_list }}</ul>{% endif %}
+                    <p rel="dimensions">
+                        <label for="{{ form.width.auto_id }}">Dimensions</label>
+                        {{ form.width_style }} {{ form.width }} &#x00D7; {{ form.height_style }} {{ form.height }}
+                    </p>
+                    <p>{{ form.name.label_tag }} {{ form.name }}</p>
+                </fieldset>
+                {% endwith %}
+            {% endfor %}
+        </form>
+    </div>
+
+    <div id="user-data">
+        <div id="uploads">
+            <h2>{% trans "Your uploads" %}</h2>
+            {% for wallpaper in uploads %}
+                {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}
