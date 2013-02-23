@@ -37,7 +37,9 @@
         <header>
             <menu type="toolbar">
                 {% block toolbar %}
+                {% if perms.wallpapers.add_wallpaper %}
                 <li><a href="{% url 'wallpapers:upload' %}">{% trans "Upload" noop %}</a></li>
+                {% endif %}
                 <li><a href="{% url 'tags:list' %}">{% trans "All tags" noop %}</a></li>
                 {% if not user.is_authenticated %}
                     <li><a href="{% url 'auth:login' %}?next={{ request.path }}">Log in</a></li>
