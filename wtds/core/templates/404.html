@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block body_classes %}narrow{% endblock body_classes %}
+{% block content %}
+    <h2>{% trans "Not found" %}</h2>
+    <p>
+        {% blocktrans %}
+        Eeehh, this is awkward, but&mdash;that's not a URL we recognize.
+        {% endblocktrans %}
+    </p>
+{% endblock content %}
