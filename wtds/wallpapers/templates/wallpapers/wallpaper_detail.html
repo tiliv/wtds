@@ -57,7 +57,6 @@
                 <span>{{ object.author }}</span>
             {% else %}
                 <span>{% trans "Unknown" %}</span>
-                {# <a href="{{ object.reports.get_creation_url }}">Tip us off if you know!</a> #}
                 <a href="{% url 'wallpapers:reports:create' pk=object.pk field_name='author' %}">Tip us off if you know!</a>
             {% endif %}
         </p>

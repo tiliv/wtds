@@ -50,7 +50,7 @@ class TagQuerySet(QuerySet):
         """ Returns a URL to a wallpaper search using all of the tags in the queryset. """
         data = [('tag', self.values_list('slug', flat=True))]
         return reverse('wallpapers:list') + "?" + urlencode(data, doseq=True)
-        
+
 
 class WallpaperManager(Manager):
     def get_query_set(self):
