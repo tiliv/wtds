@@ -15,6 +15,7 @@ from taggit.utils import parse_tags
 from wtds.core.views import AuthenticationMixin
 from .models import Wallpaper, Tag
 from .forms import CreateForm, UpdateForm, SearchForm
+from .decorators import requires_authorship
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +40,11 @@ class WallpaperCreateView(AuthenticationMixin, WallpaperMixin, CreateView):
 class WallpaperUpdateView(AuthenticationMixin, WallpaperMixin, UpdateView):
     permissions_required = ['wallpapers.change_wallpaper']
     form_class = UpdateForm
+
+    @requires_authorship
+    def dispatch(self, request, *args, **kwargs):
+        """ Adds extra verification that the wallpaper is owned by the user. """
+        return super(WallpaperUpdateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         response = super(WallpaperUpdateView, self).form_valid(form)
