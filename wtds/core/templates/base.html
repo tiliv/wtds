@@ -32,7 +32,7 @@
         {% combine_forms_media form search_form %}
     {% endblock extra_head %}
 </head>
-<body>
+<body class="{% block body_classes %}{% endblock body_classes %}">
     <div id="wrapper">
         <header>
             <menu type="toolbar">

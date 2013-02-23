@@ -32,6 +32,13 @@ header menu {
             margin: 0;
         }
 
+
+body.narrow #content {
+    width: 450px;
+    margin: auto;
+    text-align: justify;
+}
+
 #content #lineup {
     text-align: center;
 }

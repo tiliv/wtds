@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block body_classes %}narrow{% endblock body_classes %}
+{% block content %}
+    <h2>{% trans "Permission denied" %}</h2>
+    <p>
+        {% blocktrans %}
+        Weeeeellll, there's good news and bad news. The good news is that you're a smart cookie,
+        changing urls around and stuff. The bad news is that you're actually not allowed to do
+        that. Glad we had this chat, though. The worst thing we could do to you is dish out some
+        old fashioned silent treatment.
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans %}
+        We'll try to convince our logs to let it slide though. They tend to be stubborn old things
+        that won't forget until months and months go by.
+        {% endblocktrans %}
+    </p>
+{% endblock content %}
