@@ -24,10 +24,10 @@
         {% spaceless %}
         <div id="actions">
             <div class="buttons-strip">
-                {% if perms.wallpaper.change_wallpaper %}
+                {% if user.is_staff or perms.wallpapers.change_wallpaper and object.uploader == user %}
                     <a rel="edit" href="{% url 'wallpapers:edit' object.pk %}" title="{% trans "Edit" %}"><span /></a>
                 {% endif %}
-                {% if perms.wallpaper.delete_wallpaper %}
+                {% if user.is_staff or perms.wallpapers.delete_wallpaper %}
                     <a rel="delete" href="{% url 'wallpapers:delete' object.pk %}" title="{% trans "Delete" %}"><span /></a>
                 {% endif %}
                 <a rel="download" href="{% url "wallpapers:download" object.pk %}" title="{% trans "Download" %}"><span /></a>
