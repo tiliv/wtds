@@ -54,15 +54,9 @@
                     {% csrf_token %}
                     {{ profile_switch_form.profile.label_tag }}
                     {{ profile_switch_form.profile }}
-                    {# <br /> #}
-                    {# <a href="{% url 'profile:deactivate' %}?next={{ request.path }}">Turn off filters</a> #}
                 </form>
             {% endif %}
             </div>
-            <div id="actions" class="buttons-strip">
-                {% spaceless %}{% block actions %}{% endblock actions %}{% endspaceless %}
-            </div>
-
             <div id="sitename" style="background-image: url({{ logo_wallpaper.image.url }})">
                 <a id="logo" href="{% url 'home' %}"></a>
             </div>

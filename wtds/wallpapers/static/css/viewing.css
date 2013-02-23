@@ -11,6 +11,11 @@
         box-shadow: 0 5px 10px #bbb;
     }
 
+#details #actions {
+    margin: 0 auto;
+    text-align: center;
+}
+
 #details label {
     display: inline-block;
     vertical-align: bottom;

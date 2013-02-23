@@ -15,22 +15,26 @@
 {% endblock javascript %}
 
 
-{% block actions %}
-{% if perms.wallpaper.change_wallpaper %}
-<a rel="edit" href="{% url 'wallpapers:edit' object.pk %}" title="{% trans "Edit" %}"><span /></a>
-{% endif %}
-{% if perms.wallpaper.delete_wallpaper %}
-<a rel="delete" href="{% url 'wallpapers:delete' object.pk %}" title="{% trans "Delete" %}"><span /></a>
-{% endif %}
-<a rel="download" href="{% url "wallpapers:download" object.pk %}" title="{% trans "Download" %}"><span /></a>
-<a rel="favorite" href="" title="{% trans "Add to favorites" %}"><span /></a>
-{% endblock actions %}
-
 {% block content %}
     <aside id="details">
         {% if perms.wallpaper.change_wallpaper and object.tags.all|length == 1 %}
             <p class="message warning">{% trans "This wallpaper has only one tag." %}</p>
         {% endif %}
+
+        {% spaceless %}
+        <div id="actions">
+            <div class="buttons-strip">
+                {% if perms.wallpaper.change_wallpaper %}
+                    <a rel="edit" href="{% url 'wallpapers:edit' object.pk %}" title="{% trans "Edit" %}"><span /></a>
+                {% endif %}
+                {% if perms.wallpaper.delete_wallpaper %}
+                    <a rel="delete" href="{% url 'wallpapers:delete' object.pk %}" title="{% trans "Delete" %}"><span /></a>
+                {% endif %}
+                <a rel="download" href="{% url "wallpapers:download" object.pk %}" title="{% trans "Download" %}"><span /></a>
+                <a rel="favorite" href="" title="{% trans "Add to favorites" %}"><span /></a>
+            </div>
+        </div>
+        {% endspaceless %}
 
         <p class="name{% if not object.name %} hidden{% endif %}">
             <label title="{% trans "Name" %}"></label>
