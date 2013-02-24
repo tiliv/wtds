@@ -146,6 +146,7 @@ a.tooltip span {
     margin-top: 14px;
     margin-left: -17px;
     padding-top: 0.2em;
+    -webkit-transition: 0.2s ease;
     transition: 0.2s ease;
 }
 a.tooltip:hover span {
