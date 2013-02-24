@@ -111,3 +111,8 @@ class Profile(models.Model):
             else:
                 return "{}{}".format(self.get_height_style_mathematic_display(), self.height)
         return "*"
+
+class Favorite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    wallpaper = models.ForeignKey('wallpapers.Wallpaper')
+    date_created = models.DateTimeField(auto_now_add=True)
