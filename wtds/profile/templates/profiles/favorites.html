@@ -1,0 +1,17 @@
+{% extends "profiles/base.html" %}
+{% load i18n %}
+
+{% block content %}
+    {{ block.super }}
+    <h2>
+        {% trans "Your favorites" %}
+        {% if total == object_list|length %}
+            ({{ uploads|length }})
+        {% else %}
+            (profile filtered: {{ object_list|length }}/{{ total }})
+        {% endif %}
+    </h2>
+    {% for favorite in object_list %}
+        {% include "wallpapers/includes/tile.html" with wallpaper=favorite.wallpaper only %}
+    {% endfor %}
+{% endblock content %}

@@ -1,6 +1,6 @@
 import logging
 
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.views.generic.edit import FormMixin
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -23,6 +23,7 @@ class AccountView(InlineFormSetView):
     form_class = ProfileForm
 
     self_view = False
+    section = "profiles"
 
     def get_object(self):
         if self.self_view: # no 'pk' or 'slug' in the url kwargs
@@ -66,6 +67,30 @@ class AccountView(InlineFormSetView):
             'total_uploads': self.request.user.wallpaper_set.count(),
             'uploads': self.request.user.wallpaper_set.filter_for_user(self.request.user),
         })
+        return context
+
+class UploadsView(ListView):
+    template_name = "profiles/uploads.html"
+    section = "uploads"
+
+    def get_queryset(self):
+        return self.request.user.wallpaper_set.filter_for_user(self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super(UploadsView, self).get_context_data(**kwargs)
+        context['total'] = self.request.user.wallpaper_set.count()
+        return context
+
+class FavoritesView(ListView):
+    template_name = "profiles/favorites.html"
+    section = "favorites"
+
+    def get_queryset(self):
+        return self.request.user.favorite_set.all().select_related('wallpaper')
+
+    def get_context_data(self, **kwargs):
+        context = super(FavoritesView, self).get_context_data(**kwargs)
+        context['total'] = self.request.user.favorite_set.count()
         return context
 
 class ProfileSwitchView(FormMixin, View):

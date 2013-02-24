@@ -10,6 +10,41 @@
         margin-top: 0;
     }
 
+#page-changer {
+    width: 100%;
+    text-align: center;
+}
+#page-changer #page-profiles {
+    background-image: url(../img/profiles.png);
+}
+#page-changer #page-profiles.active {
+    -webkit-mask-box-image: url(../img/profiles.png);
+    -moz-mask-box-image: url(../img/profiles.png);
+    -o-mask-box-image: url(../img/profiles.png);
+    mask-box-image: url(../img/profiles.png);
+}
+
+#page-changer #page-uploads {
+    background-image: url(../img/upload.png);
+    width: 17px;
+}
+#page-changer #page-uploads.active {
+    -webkit-mask-box-image: url(../img/upload.png);
+    -moz-mask-box-image: url(../img/upload.png);
+    -o-mask-box-image: url(../img/upload.png);
+    mask-box-image: url(../img/upload.png);
+}
+#page-changer #page-favorites {
+    background-image: url(../img/favorite.png);
+}
+#page-changer #page-favorites {
+    -webkit-mask-box-image: url(../img/favorite.png);
+    -moz-mask-box-image: url(../img/favorite.png);
+    -o-mask-box-image: url(../img/favorite.png);
+    mask-box-image: url(../img/favorite.png);
+}
+
+
 fieldset {
     border-width: 2px;
     border-style: solid;

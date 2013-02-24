@@ -61,9 +61,6 @@ body.narrow #content {
     background-size: cover;
 }
 
-#account-control a {
-    margin: 0 0.5em;
-}
 #account-control #account {
     background-image: url(../img/account.png);
 }
@@ -127,13 +124,16 @@ a.button {
 a.tooltip {
     display: inline-block;
     vertical-align: middle;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
     width: 16px;
     height: 16px;
     font-size: 0.8em;
     color: #333;
     text-align: center;
     text-decoration: none;
+    margin: 0 0.5em;
 }
 a.tooltip span {
     opacity: 0;
@@ -149,9 +149,14 @@ a.tooltip span {
     -webkit-transition: 0.2s ease;
     transition: 0.2s ease;
 }
+a.tooltip.active span,
 a.tooltip:hover span {
     opacity: 1;
     margin-top: 18px;
+}
+a.tooltip.active {
+    background-image: -webkit-linear-gradient(#ffcb3f, orange) !important;
+    background-image: linear-gradient(#ffcb3f, orange) !important;
 }
 
 /* Messages */

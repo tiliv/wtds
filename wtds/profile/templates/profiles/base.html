@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/profiles.css" type="text/css" />
+{% endblock css %}
+
+{% block content %}
+    <div id="page-changer">
+        <a id="page-profiles"
+                class="tooltip{% if view.section == "profiles" %} active{% endif %}"
+                href="{% url "profile:view" %}">
+            <span>{% trans "Profiles" %}</span>
+        </a>
+        <a id="page-uploads"
+                class="tooltip{% if view.section == "uploads" %} active{% endif %}"
+                href="{% url "profile:uploads" %}">
+            <span>{% trans "Uploads" %}</span>
+        </a>
+        <a id="page-favorites"
+                class="tooltip{% if view.section == "favorites" %} active{% endif %}"
+                href="{% url "profile:favorites" %}">
+            <span>{% trans "Favorites" %}</span>
+        </a>
+    </div>
+{% endblock content %}

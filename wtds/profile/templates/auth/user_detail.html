@@ -1,13 +1,13 @@
-{% extends "base.html" %}
+{% extends "profiles/base.html" %}
 {% load i18n %}
 
 {% block css %}
     {{ block.super }}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/form.css" type="text/css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/profiles.css" type="text/css" />
 {% endblock css %}
 
 {% block content %}
+    {{ block.super }}
     <div id="profiles">
         <h2>{% trans "Profiles" %}</h2>
         <p class="description">
