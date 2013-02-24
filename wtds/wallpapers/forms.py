@@ -70,6 +70,8 @@ class CreateForm(forms.ModelForm):
         # TODO: Check performance of base64 encoded payload.  How does this compare to multipart/form-data?  Do we lose some kind of webserver chunk streaming?
 
         data = self.cleaned_data['image_raw']
+        if not data:
+            return data
         match = BASE64_CONTENT_PATTERN.match(data)
         if not match:
             raise ValidationError(_("Not a valid image file."))
