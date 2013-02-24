@@ -141,10 +141,10 @@ a.tooltip span {
     display: block;
     background-image: -webkit-radial-gradient(top center, 50% 5px, #1e90ff, #f2f2f2);
     background-image: -moz-radial-gradient(50% 4%, ellipse closest-corner, #1e90ff, #f2f2f2);
-    width: 4em;
+    width: 50px;
     text-shadow: 0 1px white;
     margin-top: 14px;
-    margin-left: -1.5em;
+    margin-left: -17px;
     padding-top: 0.2em;
     transition: 0.2s ease;
 }
