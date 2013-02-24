@@ -1,0 +1,11 @@
+#upload-form > ul,
+#upload-form > p {
+    width: 40%;
+}
+
+#preview-stage {
+    position: absolute;
+    left: 45%;
+    top: 150px;
+    width: 50%;
+}

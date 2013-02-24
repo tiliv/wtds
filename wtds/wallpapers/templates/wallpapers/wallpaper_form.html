@@ -1,9 +1,11 @@
 {% extends "wallpapers/base.html" %}
+{% load i18n %}
 
-{% block title %}{% if form.instance.id %}Edit{% else %}Upload{% endif %}{% endblock title %}
+{% block title %}{% if form.instance.id %}{% trans "Edit" %}{% else %}{% trans "Upload" %}{% endif %}{% endblock title %}
 {% block css %}
     {{ block.super }}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/form.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/upload.css" type="text/css" />
 {% endblock css %}
 {% block javascript %}
     {{ block.super }}
@@ -12,11 +14,11 @@
 
 {% block content %}
     {{ block.super }}
-    <form action="" method="post" enctype="form/multipart">
+    <form id="upload-form" action="" method="post" enctype="form/multipart">
         {% csrf_token %}
-        <p>
-            <input type="submit" value="Save" />
-        </p>
+        <div class="buttons-strip">
+            <button rel="confirm" type="submit" title="{% trans "Upload" %}"><span></span> {% trans "Upload" %}</button>
+        </div>
         {{ form.as_p }}
     </form>
 {% endblock content %}
