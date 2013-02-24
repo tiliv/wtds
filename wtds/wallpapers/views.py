@@ -2,6 +2,7 @@ import os.path
 import mimetypes
 import json
 import logging
+from operator import attrgetter
 
 from django.views.generic import View, CreateView, UpdateView, DetailView, DeleteView, ListView
 from django.http import (StreamingHttpResponse, HttpResponse, HttpResponseRedirect,
@@ -21,6 +22,9 @@ logger = logging.getLogger(__name__)
 
 class WallpaperMixin(object):
     model = Wallpaper
+
+    def get_queryset(self):
+        return self.model.objects.filter(is_public=True)
 
 class WallpaperCreateView(AuthenticationMixin, WallpaperMixin, CreateView):
     permissions_required = ['wallpapers.add_wallpaper']
@@ -69,6 +73,10 @@ class WallpaperDetailView(WallpaperMixin, DetailView):
         response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
         return response
 
+    def get_queryset(self):
+        queryset = super(WallpaperDetailView, self).get_queryset()
+        return queryset.annotate(is_favorite=Count('favorite'))
+
     def get_context_data(self, **kwargs):
         context = super(WallpaperDetailView, self).get_context_data(**kwargs)
         similar_via_tags = self.object.tags.similar_objects()
@@ -79,7 +87,7 @@ class WallpaperDetailView(WallpaperMixin, DetailView):
                 'tags': user_wallpapers.filter(id__in=map(attrgetter('id'), similar_via_tags)[:2]),
                 'size': user_wallpapers.filter_by_size(self.object.width, self.object.height)[:2],
                 'color': user_wallpapers.filter_by_color(None)[:2] # FIXME: Implement color profile
-            }
+            },
         })
         return context
         

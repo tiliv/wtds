@@ -53,6 +53,18 @@ class TagQuerySet(QuerySet):
 
 
 class WallpaperManager(Manager):
+    @staticmethod
+    def get_profile_filtering_kwargs(profile):
+        """ Retrieves the filtering kwargs for profile attributes into the Wallpaper attributes. """
+        terms = {'purity_rating__{}'.format(profile.purity_style): profile.purity_rating}
+        if profile.ratio:
+            terms['fractional_ratio__{}'.format(profile.ratio_style)] = profile.get_fractional_ratio()
+        if profile.width:
+            terms['width__{}'.format(profile.width_style)] = profile.width
+        if profile.height:
+            terms['height__{}'.format(profile.height_style)] = profile.height
+        return terms
+
     def get_query_set(self):
         return WallpaperQuerySet(self.model, using=self._db)
 
@@ -104,15 +116,8 @@ class WallpaperQuerySet(QuerySet):
 
     def filter_through_profile(self, profile):
         """ Uses options specified by the ``profile`` instance. """
-        terms = {'purity_rating__{}'.format(profile.purity_style): profile.purity_rating}
-        if profile.ratio:
-            terms['fractional_ratio__{}'.format(profile.ratio_style)] = profile.get_fractional_ratio()
-        if profile.width:
-            terms['width__{}'.format(profile.width_style)] = profile.width
-        if profile.height:
-            terms['height__{}'.format(profile.height_style)] = profile.height
-        
-        return self.filter(**terms)
+        kwargs = WallpaperManager.get_profile_filtering_kwargs(profile)
+        return self.filter(**kwargs)
 
     def filter_for_user(self, user):
         """ User might be anonymous, so let the profile manager handle it. """

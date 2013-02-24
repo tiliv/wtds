@@ -25,9 +25,6 @@ class ProfileManager(Manager):
             return profiles[0]
         return dict(zip(users, profiles))
 
-    # def get_cleanest(self):
-    #     return self.get_query_set().get_cleanest()
-    # 
     def deactivate(self):
         return self.get_query_set().deactivate()
 
@@ -45,9 +42,34 @@ class ProfileQuerySet(QuerySet):
                     logger.info("Generating automatic profile for users: %r", users)
                     return self.model.objects.create_default(*users)
 
-    # def get_cleanest(self):
-    #     """ Returns the profile with the least risk of showing severe content. """
-    #     return self.order_by('purity_rating')[0]
-    # 
     def deactivate(self):
         self.update(is_active=False)
+
+class FavoriteManager(Manager):
+    @staticmethod
+    def get_profile_filtering_kwargs(profile):
+        """
+        Prepends all normal Wallpaper filtering kwargs with "wallpaper__" so that they work from
+        a Favorite queryset.
+        """
+        from wtds.wallpapers.managers import WallpaperManager
+        kwargs = WallpaperManager.get_profile_filtering_kwargs(profile)
+        return {'wallpaper__{}'.format(term): value for term, value in kwargs.items()}
+
+    def get_query_set(self):
+        return FavoriteQuerySet(self.model, using=self._db)
+
+    def filter_through_profile(self, profile):
+        return self.get_query_set().filter_through_profile(profile)
+
+    def filter_for_user(self, user):
+        return self.get_query_set().filter_for_user(user)
+
+class FavoriteQuerySet(QuerySet):
+    def filter_through_profile(self, profile):
+        kwargs = FavoriteManager.get_profile_filtering_kwargs(profile)
+        return self.filter(**kwargs)
+
+    def filter_for_user(self, user):
+        from .models import Profile
+        return self.filter_through_profile(Profile.objects.get_active(user))

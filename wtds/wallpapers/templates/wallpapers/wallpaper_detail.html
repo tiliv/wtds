@@ -31,7 +31,14 @@
                     <a rel="delete" href="{% url 'wallpapers:delete' object.pk %}" title="{% trans "Delete" %}"><span /></a>
                 {% endif %}
                 <a rel="download" href="{% url "wallpapers:download" object.pk %}" title="{% trans "Download" %}"><span /></a>
-                <a rel="favorite" href="" title="{% trans "Add to favorites" %}"><span /></a>
+                <a rel="favorite"
+                        {% if object.is_favorite %}
+                        title="{% trans "Remove from favorites" %}" class="active"
+                        href="{% url "profile:favorites:remove" object.pk %}"
+                        {% else %}
+                        title="{% trans "Add to favorites" %}"
+                        href="{% url "profile:favorites:add" object.pk %}"
+                        {% endif %}><span /></a>
             </div>
         </div>
         {% endspaceless %}

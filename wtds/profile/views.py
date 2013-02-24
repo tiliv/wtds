@@ -1,6 +1,6 @@
 import logging
 
-from django.views.generic import View, ListView
+from django.views.generic import View, ListView, DetailView
 from django.views.generic.edit import FormMixin
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -10,7 +10,9 @@ from django.utils.translation import ungettext, ugettext as _
 
 from extra_views import InlineFormSetView
 
-from .models import Profile
+from wtds.core.views import AuthenticationMixin
+from wtds.wallpapers.models import Wallpaper
+from .models import Profile, Favorite
 from .forms import ProfileSwitchForm, ProfileForm
 
 logger = logging.getLogger(__name__)
@@ -71,7 +73,7 @@ class AccountView(InlineFormSetView):
         return context
 
 class UploadsView(ListView):
-    template_name = "profiles/uploads.html"
+    template_name = "profiles/upload_list.html"
     section = "uploads"
 
     def get_queryset(self):
@@ -82,17 +84,40 @@ class UploadsView(ListView):
         context['total'] = self.request.user.wallpaper_set.count()
         return context
 
-class FavoritesView(ListView):
-    template_name = "profiles/favorites.html"
+class FavoriteListView(ListView):
+    template_name = "profiles/favorite_list.html"
     section = "favorites"
 
     def get_queryset(self):
-        return self.request.user.favorite_set.all().select_related('wallpaper')
+        return self.request.user.favorite_set.select_related('wallpaper') \
+                .filter_for_user(self.request.user)
 
     def get_context_data(self, **kwargs):
-        context = super(FavoritesView, self).get_context_data(**kwargs)
+        context = super(FavoriteListView, self).get_context_data(**kwargs)
         context['total'] = self.request.user.favorite_set.count()
         return context
+
+class FavoriteCreateView(AuthenticationMixin, DetailView):
+    model = Wallpaper
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        obj.favorite_set.get_or_create(user=self.request.user)
+        return HttpResponseRedirect(obj.get_absolute_url())
+
+class FavoriteDeleteView(AuthenticationMixin, DetailView):
+    model = Wallpaper
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        success_url = obj.get_absolute_url()
+        try:
+            favorite = obj.favorite_set.get(user=self.request.user)
+        except Wallpaper.DoesNotExist:
+            pass
+        else:
+            favorite.delete()
+        return HttpResponseRedirect(success_url)
 
 class ProfileSwitchView(FormMixin, View):
     """ POST-only view for setting the profile via a ``ProfileSwitchForm`` submission. """

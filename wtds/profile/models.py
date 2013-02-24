@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from wtds.wallpapers.constants import PURITY_CHOICES
-from .managers import ProfileManager
+from .managers import ProfileManager, FavoriteManager
 from .validators import is_ratio
 
 logger = logging.getLogger(__name__)
@@ -113,6 +113,9 @@ class Profile(models.Model):
         return "*"
 
 class Favorite(models.Model):
+
+    objects = FavoriteManager()
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     wallpaper = models.ForeignKey('wallpapers.Wallpaper')
     date_created = models.DateTimeField(auto_now_add=True)

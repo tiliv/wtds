@@ -268,7 +268,8 @@ a.tooltip.active {
             background-repeat: no-repeat;
             background-size: contain;
             width: 16px;
-            height: 100%;
+            height: 16px;
+            margin-top: 5px;
         }
 
     .buttons-strip > *:hover {
@@ -282,17 +283,39 @@ a.tooltip.active {
     .buttons-strip > *[rel="edit"] span {
         background-image: url(../img/edit.png);
     }
+        .buttons-strip > *[rel="edit"].active span {
+            -webkit-mask-box-image: url(../img/edit.png);
+            -moz-mask-box-image: url(../img/edit.png);
+            -o-mask-box-image: url(../img/edit.png);
+            mask-box-image: url(../img/edit.png);
+        }
     .buttons-strip > *[rel="delete"] span {
         background-image: url(../img/delete.png);
     }
     .buttons-strip > *[rel="download"] span {
         background-image: url(../img/download.png);
     }
+        .buttons-strip > *[rel="download"].active span {
+            -webkit-mask-box-image: url(../img/download.png);
+            -moz-mask-box-image: url(../img/download.png);
+            -o-mask-box-image: url(../img/download.png);
+            mask-box-image: url(../img/download.png);
+        }
     .buttons-strip > *[rel="favorite"] span {
         background-image: url(../img/favorite.png);
     }
+        .buttons-strip > *[rel="favorite"].active span {
+            -webkit-mask-box-image: url(../img/favorite.png);
+            -moz-mask-box-image: url(../img/favorite.png);
+            -o-mask-box-image: url(../img/favorite.png);
+            mask-box-image: url(../img/favorite.png);
+        }
     .buttons-strip > *[rel="confirm"] span {
         background-image: url(../img/confirm.png);
+    }
+    .buttons-strip > *.active span {
+        background-image: -webkit-linear-gradient(#ffcb3f, orange) !important;
+        background-image: linear-gradient(#ffcb3f, orange) !important;
     }
 
 /* Wallpaper tiles */
