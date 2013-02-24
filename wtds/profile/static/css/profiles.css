@@ -37,7 +37,7 @@
 #page-changer #page-favorites {
     background-image: url(../img/favorite.png);
 }
-#page-changer #page-favorites {
+#page-changer #page-favorites.active {
     -webkit-mask-box-image: url(../img/favorite.png);
     -moz-mask-box-image: url(../img/favorite.png);
     -o-mask-box-image: url(../img/favorite.png);

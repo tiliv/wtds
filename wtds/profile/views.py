@@ -19,6 +19,7 @@ class AccountView(InlineFormSetView):
     model = User
     inline_model = Profile
     extra = 1
+    template_name = "profiles/profiles_formset.html"
 
     form_class = ProfileForm
 
