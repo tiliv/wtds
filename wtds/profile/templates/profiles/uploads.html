@@ -6,7 +6,7 @@
     <h2>
         {% trans "Your uploads" %}
         {% if total == object_list|length %}
-            ({{ uploads|length }})
+            ({{ object_list|length }})
         {% else %}
             (profile filtered: {{ object_list|length }}/{{ total }})
         {% endif %}
