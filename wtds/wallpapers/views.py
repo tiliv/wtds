@@ -76,7 +76,7 @@ class WallpaperDetailView(WallpaperMixin, DetailView):
                 .exclude(pk=self.object.pk)
         context.update({
             'similar': {
-                'tags': similar_via_tags[:2],
+                'tags': user_wallpapers.filter(id__in=map(attrgetter('id'), similar_via_tags)[:2]),
                 'size': user_wallpapers.filter_by_size(self.object.width, self.object.height)[:2],
                 'color': user_wallpapers.filter_by_color(None)[:2] # FIXME: Implement color profile
             }
