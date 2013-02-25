@@ -164,7 +164,13 @@ a.tooltip:hover span {
     opacity: 1;
     margin-top: 18px;
 }
-a.tooltip.active {
+a.tooltip:hover span {
+    z-index: 1;
+}
+a.tooltip.active span {
+    color: #777;
+}
+body.webkit a.tooltip.active {
     background-image: -webkit-linear-gradient(#ffcb3f, orange) !important;
     background-image: linear-gradient(#ffcb3f, orange) !important;
 }
