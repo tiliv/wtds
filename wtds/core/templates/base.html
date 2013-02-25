@@ -11,6 +11,7 @@
     {% block javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-ui-1.10.1.custom.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery.pjax.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/base.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/switcher.js"></script>
@@ -33,6 +34,7 @@
     {% endblock extra_head %}
 </head>
 <body class="{% block body_classes %}{% endblock body_classes %}">
+    {% if not request.is_pjax %}
     <div id="wrapper">
         <header>
             <menu type="toolbar">
@@ -85,12 +87,17 @@
                 {% endfor %}
             {% endblock messages %}
 
-            {% block search %}{% endblock search %}
-            {% block content %}{% endblock content %}
+    {% endif %}
+            <div id="pjax-wrapper">
+                {% block search %}{% endblock search %}
+                {% block content %}{% endblock content %}
+            </div>
+    {% if not request.is_pjax %}
         </div>
         <footer>
             <div id="tip">{{ random_tip }}</div>
         </footer>
     </div>
+    {% endif %}
 </body>
 </html>

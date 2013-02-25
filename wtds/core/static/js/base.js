@@ -21,4 +21,6 @@ $(function(){
             _actives = button.add(button.siblings('.tags').css('display', 'block')).toggleClass("showing");
         }
     });
+
+    $(document).pjax('#lineup .wallpaper.tile', '#pjax-wrapper');
 });
