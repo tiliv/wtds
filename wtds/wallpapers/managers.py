@@ -175,5 +175,4 @@ class WallpaperQuerySet(QuerySet):
         return reduce(lambda qs, name: qs.filter(tags__name=name), names, self)
 
     def filter_from_request(self, querydict):
-        return self.filter(tags__slug__in=map(unicode.lower, querydict.getlist('tag')))
-
+        return self.filter_by_tag_names(querydict.getlist('tag'))
