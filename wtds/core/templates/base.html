@@ -43,7 +43,7 @@
 
             <div id="settings">
                 {% if user.is_authenticated %}
-                    <form id="account-control" action="{% url 'profile:switch' %}?next={{ request.path }}" method="post">
+                    <form id="account-control" action="{% url 'profile:switch' %}?next={{ request.path }}?{{ request.GET.urlencode }}" method="post">
                         {% csrf_token %}
                         {{ profile_switch_form.profile.label_tag }}
                         {{ profile_switch_form.profile }}
