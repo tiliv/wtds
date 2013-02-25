@@ -77,7 +77,8 @@ class UploadsView(ListView):
     section = "uploads"
 
     def get_queryset(self):
-        return self.request.user.wallpaper_set.filter_for_user(self.request.user)
+        return self.request.user.wallpaper_set.filter_from_request(self.request.GET) \
+                .filter_for_user(self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super(UploadsView, self).get_context_data(**kwargs)
@@ -89,8 +90,8 @@ class FavoriteListView(ListView):
     section = "favorites"
 
     def get_queryset(self):
-        return self.request.user.favorite_set.select_related('wallpaper') \
-                .filter_for_user(self.request.user)
+        return self.request.user.favorite_set.filter_from_request(self.request.GET) \
+                .select_related('wallpaper').filter_for_user(self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super(FavoriteListView, self).get_context_data(**kwargs)

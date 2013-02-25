@@ -110,6 +110,12 @@ class WallpaperManager(Manager):
     def filter_by_tags(self, tags):
         return self.get_query_set().filter_by_tags(tags)
 
+    def filter_by_tag_names(self, names):
+        return self.get_query_set().filter_by_tag_names(names)
+
+    def filter_from_request(self, querydict):
+        return self.get_query_set().filter_from_request(querydict)
+
 class WallpaperQuerySet(QuerySet):
     def popular(self):
         return self.order_by('id') # FIXME: This isn't a measurement of popularity
@@ -158,3 +164,16 @@ class WallpaperQuerySet(QuerySet):
     def filter_by_tags(self, tags):
         # Do an AND search on all tags (chaining filters together)
         return reduce(lambda qs, tag: qs.filter(tags=tag), tags, self)
+
+    # def filter_by_tag_slugs(self, slugs):
+    #     slugs = filter(bool, slugs)
+    #     return reduce(lambda qs, slug: qs.filter(tags__slug=slug), slugs, self)
+
+    def filter_by_tag_names(self, names):
+        # Filters out blank values and does a raw search.  Helpful for searching values that aren't actually backed by databased Tag objects.
+        names = filter(bool, names)
+        return reduce(lambda qs, name: qs.filter(tags__name=name), names, self)
+
+    def filter_from_request(self, querydict):
+        return self.filter(tags__slug__in=map(unicode.lower, querydict.getlist('tag')))
+

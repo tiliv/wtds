@@ -65,6 +65,9 @@ class FavoriteManager(Manager):
     def filter_for_user(self, user):
         return self.get_query_set().filter_for_user(user)
 
+    def filter_from_request(self, querydict):
+        return self.get_query_set().filter_from_request(querydict)
+
 class FavoriteQuerySet(QuerySet):
     def filter_through_profile(self, profile):
         kwargs = FavoriteManager.get_profile_filtering_kwargs(profile)
@@ -73,3 +76,10 @@ class FavoriteQuerySet(QuerySet):
     def filter_for_user(self, user):
         from .models import Profile
         return self.filter_through_profile(Profile.objects.get_active(user))
+
+    def filter_from_request(self, querydict):
+        # FIXME: Because of the way taggit hijacks the query API for its virtual "tags" field, it does incorrect things when it's attribute is not the first part of a relationship-spanning lookup.  For example, "wallpaper__tags__name__in" doesn't work, since taggit rewrites the query as "tagged_item__wallpaper__tags__name__in", which is completely invalid for the Favorite model.  Consequently, this method generates 2 queries instead of 1 direct query.
+        from wtds.wallpapers.models import Wallpaper
+        tags = querydict.getlist('tag')
+        wallpapers = Wallpaper.objects.filter_by_tag_names(tags)
+        return self.filter(wallpaper__in=wallpapers)
