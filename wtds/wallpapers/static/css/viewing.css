@@ -48,8 +48,8 @@
 
 #similar {
     /* Can't code "transparent" into this, or else the gradient gets weird and dark. */
-    background-image: radial-gradient(50% 1.5%, ellipse closest-corner, #ccc, #f2f2f2);
     background-image: -webkit-radial-gradient(top center, 50% 5px, #ccc, #f2f2f2);
+    background-image: radial-gradient(50% 5px ellipse at 50% 0, #ccc, #f2f2f2);
     padding-top: 1em;
     margin-top: 11em;
 }
