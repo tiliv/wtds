@@ -393,6 +393,8 @@ body.webkit a.tooltip.active {
 
 .tile-wrapper {
     display: inline-block;
+    opacity: 1;
+    transition: opacity 0.2s ease;
 }
 .tile-wrapper .tags {
     position: absolute;
@@ -438,6 +440,11 @@ body.webkit a.tooltip.active {
 .tile-wrapper:hover .show-tags-button {
     opacity: 1;
 }
+.tile-wrapper.blur {
+    /* Hidden by pjax */
+    opacity: 0;
+}
+
 
 .tag {
     display: inline-block;

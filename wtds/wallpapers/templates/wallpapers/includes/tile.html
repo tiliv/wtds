@@ -14,7 +14,10 @@
                 data-full-search-url="{{ wallpaper.get_full_search_url }}"
                 contextmenu="tile-options">
             <div class="sleeve"></div>
-            <img src="{{ image.url }}" width="140" height="94" />
+            <img src="{{ image.url }}" width="140" height="94"
+                    data-raw-url="{{ wallpaper.image.url }}"
+                    data-real-width="{{ wallpaper.width }}"
+                    data-real-height="{{ wallpaper.height }}" />
         </a>
         <div class="show-tags-button"></div>
         <div class="tags">

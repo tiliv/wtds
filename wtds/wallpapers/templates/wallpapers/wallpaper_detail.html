@@ -3,10 +3,6 @@
 
 {% block title %}{% trans "Wallpaper" %}: {{ object }}{% endblock title %}
 
-{% block css %}
-    {{ block.super }}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/viewing.css" type="text/css" />
-{% endblock css %}
 {% block javascript %}
     {{ block.super }}
     <script type="text/javascript" src="{{ STATIC_URL }}js/calculate-gcd-javascript.js"></script>
