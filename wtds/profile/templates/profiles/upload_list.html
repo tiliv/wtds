@@ -11,7 +11,9 @@
             (profile filtered: {{ object_list|length }}/{{ total }})
         {% endif %}
     </h2>
-    {% for wallpaper in object_list %}
-        {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
-    {% endfor %}
+    <div id="lineup">
+        {% for wallpaper in object_list %}
+            {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
+        {% endfor %}
+    </div>
 {% endblock content %}
