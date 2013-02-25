@@ -26,19 +26,21 @@ $(function(){
     var content = $('#pjax-wrapper');
     $(document).pjax('#lineup .wallpaper.tile', '#pjax-wrapper');
     $(document).on('pjax:start', function(event, xhr, options) {
-        var image = $(options.target).find('img');
-        // Fade away other images
-        image.closest('.tile-wrapper').siblings('.tile-wrapper').addClass('blur');
+        if ($('#lineup').size()) {
+            var image = $(options.target).find('img');
+            // Fade away other images
+            image.closest('.tile-wrapper').siblings('.tile-wrapper').addClass('blur');
 
-        // Zoom selected image
-        image[0].src = image.attr('data-raw-url');
-        var original_width = image.attr('data-real-width');
-        render_width = .65 * content.width();
-        image.css({
-            'width': render_width,
-            'height': image.attr('data-real-height') / (original_width / render_width)
-        });
-        image.offset({'top': 169, 'left': 32});
+            // Zoom selected image
+            image[0].src = image.attr('data-raw-url');
+            var original_width = image.attr('data-real-width');
+            render_width = .65 * content.width();
+            image.css({
+                'width': render_width,
+                'height': image.attr('data-real-height') / (original_width / render_width)
+            });
+            image.offset({'top': 169, 'left': 32});
+        }
     })
     $(document).on('pjax:send', function() {
         console.log("send");
