@@ -119,3 +119,7 @@ class Favorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     wallpaper = models.ForeignKey('wallpapers.Wallpaper')
     date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-date_created',)
+    
