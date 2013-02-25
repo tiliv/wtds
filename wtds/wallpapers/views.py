@@ -15,7 +15,7 @@ from taggit.utils import parse_tags
 
 from wtds.core.views import AuthenticationMixin
 from .models import Wallpaper, Tag
-from .forms import CreateForm, UpdateForm, SearchForm
+from .forms import CreateForm, UpdateForm
 from .decorators import requires_authorship
 
 logger = logging.getLogger(__name__)
@@ -100,29 +100,24 @@ class WallpaperListView(WallpaperMixin, ListView):
     # If set, a single-tag filter will only show results that have that tag as their only tag.
     in_danger = False
 
-    def get_filter_tags(self):
-        search_form = SearchForm(self.request.GET)
-        search_form.full_clean()
-        return search_form.cleaned_data['terms']
-
     # TODO: Sorting
     def get_queryset(self):
         queryset = Wallpaper.objects.filter_for_user(self.request.user)
+        self._tags = None
         if 'ratio' in self.kwargs:
             queryset = queryset.filter()
         else:
-            tags = self.get_filter_tags()
+            self._tags = Tag.objects.get_from_request(self.request.GET)
             if self.in_danger:
-                queryset = Wallpaper.objects.filter_by_orphan_danger(tags=tags)
+                queryset = Wallpaper.objects.filter_by_orphan_danger(tags=self._tags)
             else:
-                # Do an AND search on all tags (chaining filters together)
-                queryset = reduce(lambda qs, tag: qs.filter(tags=tag), tags, queryset)
+                queryset = queryset.filter_by_tags(self._tags)
         return queryset.distinct()
 
     def get_context_data(self, **kwargs):
         context = super(WallpaperListView, self).get_context_data(**kwargs)
         context.update({
-            'tags': self.get_filter_tags(),
+            'tags': self._tags,
             'in_danger': self.in_danger,
         })
         return context

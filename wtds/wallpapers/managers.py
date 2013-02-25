@@ -13,6 +13,13 @@ class TagManager(Manager):
     def get_query_set(self):
         return TagQuerySet(self.model, using=self._db)
 
+    def get_from_request(self, querydict):
+        from .forms import SearchForm
+        search_form = SearchForm(querydict)
+        search_form.full_clean()
+        return search_form.cleaned_data['terms']
+
+    # Proxy methods to TagQuerySet
     def filter_through_profile(self, profile):
         return self.get_query_set().filter_through_profile(profile)
 
@@ -100,6 +107,9 @@ class WallpaperManager(Manager):
     def filter_by_color(self, color_profile):
         return self.get_query_set().filter_similar_by_color(color_profile)
 
+    def filter_by_tags(self, tags):
+        return self.get_query_set().filter_by_tags(tags)
+
 class WallpaperQuerySet(QuerySet):
     def popular(self):
         return self.order_by('id') # FIXME: This isn't a measurement of popularity
@@ -144,3 +154,7 @@ class WallpaperQuerySet(QuerySet):
     def filter_by_color(self, color_profile):
         # TODO: Implement this
         return self.order_by('?')
+
+    def filter_by_tags(self, tags):
+        # Do an AND search on all tags (chaining filters together)
+        return reduce(lambda qs, tag: qs.filter(tags=tag), tags, self)
