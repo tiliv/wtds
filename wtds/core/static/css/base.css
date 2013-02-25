@@ -370,13 +370,12 @@ body.webkit a.tooltip.active {
 }
 .wallpaper.tile.stack {
     position: relative;
-    z-index: 5;
+    z-index: 1;
 }
 .wallpaper.tile.stack::before {
     content: url();
     position: relative;
     z-index: -1;
-    zoom: 0.5;
     margin-top: 20px;
     margin-bottom: -180px;
     display: block;
@@ -385,7 +384,10 @@ body.webkit a.tooltip.active {
     border: 1px solid #333;
     box-shadow: 0 1px 3px #666;
 }
-    body.mozilla .wallpaper.tile.stack::before {
+    body.webkit .wallpaper.tile.stack::before {
+        zoom: 0.5;
+    }
+    body:not(.webkit) .wallpaper.tile.stack::before {
         transform: scale(0.5);
     }
 
