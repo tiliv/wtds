@@ -38,7 +38,7 @@ class SearchForm(forms.Form):
 
     def clean_terms(self):
         # This technically matches tags that might be excluded by the user's profile settings, but any use of the queryset should be considered internal and not front-end ready.
-        return Tag.objects.filter(name__in=self._slugs)
+        return Tag.objects.filter(name__in=self._names)
     
 
 class CreateForm(forms.ModelForm):

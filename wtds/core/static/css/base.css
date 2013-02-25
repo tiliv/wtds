@@ -51,14 +51,24 @@ body.narrow #content {
     width: 775px;
     height: 110px;
 }
-#sitename {
+/*body.webkit #sitename {
+    margin: auto;
+    background: transparent url(../img/logo.png) no-repeat !important;
+    background-size: cover !important;
+}
+body.webkit #logo {
+    display: block;
+    background-size: cover;
+    -webkit-mask-box-image: url(../img/logo-mask.png);
+}*/
+body/*:not(.webkit)*/ #sitename {
     background-size: cover;
     margin: auto;
 }
-#logo {
+body/*:not(.webkit)*/ #logo {
     display: block;
-    background: transparent url(../img/logo.png) no-repeat;
-    background-size: cover;
+    background: transparent url(../img/logo-compiled.png) no-repeat !important;
+    background-size: cover !important;
 }
 
 #account-control #account {
