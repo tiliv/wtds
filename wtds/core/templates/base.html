@@ -47,14 +47,14 @@
                         {% csrf_token %}
                         {{ profile_switch_form.profile.label_tag }}
                         {{ profile_switch_form.profile }}
+                        <a id="account" class="tooltip" href="{% url 'profile:view' %}">
+                            <span>{% trans "Account" %}</span>
+                        </a>
                         {% if perms.wallpapers.add_wallpaper %}
                             <a id="upload" class="tooltip" href="{% url 'wallpapers:upload' %}">
                                 <span>{% trans "Upload" %}</span>
                             </a>
                         {% endif %}
-                        <a id="account" class="tooltip" href="{% url 'profile:view' %}">
-                            <span>{% trans "Account" %}</span>
-                        </a>
                         <a id="logout" class="tooltip" href="{% url 'auth:logout' %}">
                             <span>{% trans "Logout" %}</span>
                         </a>
