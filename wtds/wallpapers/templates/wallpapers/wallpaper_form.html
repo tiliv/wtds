@@ -14,11 +14,17 @@
 
 {% block content %}
     {{ block.super }}
+    {% if form.instance.id %}
+        {% trans "Save changes" as form_action_text %}
+    {% else %}
+        {% trans "Upload" as form_action_text %}
+    {% endif %}
+
     <form id="upload-form" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="button-strip-wrapper">
             <div class="buttons-strip">
-                <button rel="confirm" type="submit" title="{% trans "Upload" %}"><span></span> {% trans "Upload" %}</button>
+                <button rel="confirm" type="submit" title="{{ form_action_text }}"><span></span> {{ form_action_text }}</button>
             </div>
         </div>
         {{ form.as_p }}
