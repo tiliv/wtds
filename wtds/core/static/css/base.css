@@ -330,8 +330,8 @@ a.tooltip.active {
     border-style: solid;
     border-color: #333;
     box-shadow: 0 1px 3px #666;
-    -webkit-transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    -webkit-transition: 0.2s ease;
+    transition: 0.2s ease;
 }
 .wallpaper.tile .sleeve {
     position: absolute;
