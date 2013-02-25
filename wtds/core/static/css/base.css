@@ -225,6 +225,9 @@ a.tooltip.active {
     margin: 0 auto;
     text-align: center;
 }
+.button-strip-wrapper {
+    text-align: center;
+}
 .buttons-strip {
     display: inline-block;
     background-image: -webkit-linear-gradient(#f8f8f8, #f8f8f8, #f8f8f8, #f0f0f0);

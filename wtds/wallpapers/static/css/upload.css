@@ -1,5 +1,4 @@
-#upload-form > ul,
-#upload-form > p {
+#upload-form > * {
     width: 40%;
 }
 
