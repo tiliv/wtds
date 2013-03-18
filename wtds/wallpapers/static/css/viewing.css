@@ -3,10 +3,11 @@
     width: 34%;
 }
 
-#stage {
+#stage.wallpaper {
     width: 65%;
 }
-    #stage img {
+    #stage.wallpaper img {
+        width: 100%;
         border: none;
         box-shadow: 0 5px 10px #bbb;
     }

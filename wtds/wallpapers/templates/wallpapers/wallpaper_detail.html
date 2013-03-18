@@ -1,4 +1,4 @@
-{% extends "wallpapers/base.html" %}
+{% extends "wallpapers/base_searchable.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "Wallpaper" %}: {{ object }}{% endblock title %}
@@ -10,6 +10,9 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/viewing.js"></script>
 {% endblock javascript %}
 
+{% block stage %}
+    <img src="{{ object.image.url }}" />
+{% endblock stage %}
 
 {% block content %}
     <aside id="details">
@@ -92,8 +95,4 @@
         </div>
 
     </aside>
-
-    <div id="stage" class="wallpaper">
-        <img src="{{ object.image.url }}" width="100%" />
-    </div>
 {% endblock content %}

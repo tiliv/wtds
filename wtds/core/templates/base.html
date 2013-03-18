@@ -1,4 +1,5 @@
 {% load core_tags i18n %}
+{% if not request.is_ajax %}
 <!doctype html>
 <html>
 <head>
@@ -12,7 +13,6 @@
     {% block javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery-ui-1.10.1.custom.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery.pjax.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/base.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/switcher.js"></script>
@@ -35,7 +35,6 @@
     {% endblock extra_head %}
 </head>
 <body class="{% block body_classes %}{% endblock body_classes %}">
-    {% if not request.is_pjax %}
     <div id="wrapper">
         <header>
             <menu type="toolbar">
@@ -88,17 +87,22 @@
                 {% endfor %}
             {% endblock messages %}
 
-    {% endif %}
             <div id="pjax-wrapper">
                 {% block search %}{% endblock search %}
-                {% block content %}{% endblock content %}
+                <div id="wrapped-content"> {# Designed to be loaded over ajax #}
+{% endif %}
+                    {% block content %}{% endblock content %}
+{% if not request.is_ajax %}
+                </div>
+                <div id="stage" class="wallpaper"> {# Designed to contain transitioning content #}
+                    {% block stage %}{% endblock stage %}
+                </div>
             </div>
-    {% if not request.is_pjax %}
         </div>
         <footer>
             <div id="tip">{{ random_tip }}</div>
         </footer>
     </div>
-    {% endif %}
 </body>
 </html>
+{% endif %}

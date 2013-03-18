@@ -394,7 +394,6 @@ body.webkit a.tooltip.active {
 .tile-wrapper {
     display: inline-block;
     opacity: 1;
-    transition: opacity 0.2s ease;
 }
 .tile-wrapper .tags {
     position: absolute;
@@ -440,9 +439,21 @@ body.webkit a.tooltip.active {
 .tile-wrapper:hover .show-tags-button {
     opacity: 1;
 }
-.tile-wrapper.blur {
-    /* Hidden by pjax */
+
+#wrapped-content {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    transition: 200ms ease;
+}
+#wrapped-content.blur {
     opacity: 0;
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
 }
 
 
@@ -526,4 +537,8 @@ footer {
     font-style: italic;
     font-size: 0.8em;
     color: #888;
+}
+
+#transitioning {
+    position: absolute;
 }
