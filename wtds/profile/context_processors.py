@@ -5,7 +5,7 @@ profile_switching_url = reverse_lazy('profile:switch')
 
 from .forms import ProfileSwitchForm
 
-def profile_switching(request):
+def profile_switcher(request):
     if request.user.is_authenticated():
         return {'profile_switch_form': ProfileSwitchForm(request.user)}
     return {}

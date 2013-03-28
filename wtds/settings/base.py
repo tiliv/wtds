@@ -97,7 +97,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
 
     "wtds.core.context_processors.tips",
-    "wtds.profile.context_processors.profile_switching",
+    "wtds.profile.context_processors.profile_switcher",
     "wtds.wallpapers.context_processors.random_logo_wallpapers",
     "wtds.wallpapers.context_processors.search_form",
 )
