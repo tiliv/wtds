@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse_lazy
 from django.template.loader import render_to_string
 
-profile_switching_url = reverse_lazy('profile:switch')
+# profile_switching_url = reverse_lazy('profile:switch')
 
 from .forms import ProfileSwitchForm
 
