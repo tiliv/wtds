@@ -1,6 +1,7 @@
 $(function(){
     var _actives = null;
-    $('.show-tags-button').on('click', function(){
+    var wrapper_id = '#wrapped-content';
+    $(wrapper_id).on('click', '.show-tags-button', function(){
         var button = $(this);
         var toggle_off = button.hasClass("showing");
         if (_actives) {
@@ -22,7 +23,6 @@ $(function(){
         }
     });
 
-    var wrapper_id = '#wrapped-content';
     var content = $(wrapper_id);
     var stage = $('#stage');
     var TRANSITION_TIME = 500 // ms
