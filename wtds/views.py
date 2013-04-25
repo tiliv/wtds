@@ -14,6 +14,9 @@ class HomeView(TemplateView):
         wallpapers = Wallpaper.objects.filter_through_profile(profile)
         tags = Tag.objects.filter_through_profile(profile)
 
+        # FIXME: The wallpapers queryset needs to select the related tags to cut down the number of queries, but I haven't yet figured out the correct prefetch_related() or select_related() that would accomplish this.
+        # wallpapers = wallpapers.prefetch_related('tagged_items')
+
         most_used_tags = tags.annotate(times_used=Count('wallpaper')).order_by('-times_used')
         recently_used_tags = tags.order_by('-wallpaper__date_created')
         new_tags = tags.annotate(times_used=Count('wallpaper')) \
