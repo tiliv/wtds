@@ -1,0 +1,482 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-24 19:35-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: wtds/core/templates/403.html:4 wtds/core/templates/403.html.py:5
+msgid "Permission denied"
+msgstr ""
+
+#: wtds/core/templates/403.html:8
+msgid ""
+"\n"
+"        Weeeeellll, there's good news and bad news. The good news is that "
+"you're a smart cookie,\n"
+"        changing urls around and stuff. The bad news is that you're actually "
+"not allowed to do\n"
+"        that. Glad we had this chat, though. The worst thing we could do to "
+"you is dish out some\n"
+"        old fashioned silent treatment.\n"
+"        "
+msgstr ""
+
+#: wtds/core/templates/403.html:16
+msgid ""
+"\n"
+"        We'll try to convince our logs to let it slide though. They tend to "
+"be stubborn old things\n"
+"        that won't forget until months and months go by.\n"
+"        "
+msgstr ""
+
+#: wtds/core/templates/404.html:4 wtds/core/templates/404.html.py:5
+msgid "Not found"
+msgstr ""
+
+#: wtds/core/templates/404.html:8
+msgid ""
+"\n"
+"        Eeehh, this is awkward, but&mdash;that's not a URL we recognize.\n"
+"        "
+msgstr ""
+
+#: wtds/core/templates/500.html:4 wtds/core/templates/500.html.py:5
+msgid "Server error"
+msgstr ""
+
+#: wtds/core/templates/500.html:8
+msgid ""
+"\n"
+"        Um, sorry about this. We ran into a problem on our end. The logs "
+"have diligently recorded\n"
+"        some aspects of the circumstances, and a very fancy electronic mail "
+"has been written and\n"
+"        posted to the establishment.\n"
+"        "
+msgstr ""
+
+#: wtds/core/templates/500.html:15
+msgid ""
+"\n"
+"        For 25&cent;, we can let the delivery boy know that the fancy "
+"electronic letter should be\n"
+"        delivered with a sung message of your choosing.\n"
+"        "
+msgstr ""
+
+#: wtds/core/templates/base.html:42
+msgid "All tags"
+msgstr "ALL TAGS, MATE"
+
+#: wtds/core/templates/base.html:53
+msgid "Account"
+msgstr ""
+
+#: wtds/core/templates/base.html:57
+#: wtds/wallpapers/templates/wallpapers/wallpaper_form.html:4
+#: wtds/wallpapers/templates/wallpapers/wallpaper_form.html:20
+msgid "Upload"
+msgstr ""
+
+#: wtds/core/templates/base.html:61
+msgid "Logout"
+msgstr ""
+
+#: wtds/core/templates/base.html:66
+msgid "Log in"
+msgstr ""
+
+#: wtds/core/templates/base.html:76
+msgid "Zoom"
+msgstr ""
+
+#: wtds/core/templates/base.html:77
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:32
+msgid "Download"
+msgstr ""
+
+#: wtds/core/templates/base.html:78 wtds/wallpapers/models.py:85
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:50
+msgid "Tags"
+msgstr ""
+
+#: wtds/profile/models.py:38 wtds/wallpapers/models.py:168
+#: wtds/wallpapers/models.py:179
+msgid "name"
+msgstr ""
+
+#: wtds/profile/models.py:39
+msgid "active"
+msgstr ""
+
+#: wtds/profile/models.py:41
+msgid "purity"
+msgstr ""
+
+#: wtds/profile/models.py:43
+msgid "ratio"
+msgstr ""
+
+#: wtds/profile/models.py:45
+msgid "width"
+msgstr ""
+
+#: wtds/profile/models.py:47
+msgid "height"
+msgstr ""
+
+#: wtds/profile/views.py:45
+#, python-format
+msgid "Updated profile"
+msgid_plural "Updated %(count)d profiles"
+msgstr[0] ""
+msgstr[1] ""
+
+#: wtds/profile/views.py:52
+#, python-format
+msgid "Deleted profile."
+msgid_plural "Deleted %(count)d profiles."
+msgstr[0] ""
+msgstr[1] ""
+
+#: wtds/profile/views.py:58
+msgid "No changes."
+msgstr ""
+
+#: wtds/profile/views.py:64
+msgid "Oops, something went wrong."
+msgstr ""
+
+#: wtds/profile/templates/profiles/base.html:14
+#: wtds/profile/templates/profiles/profiles.html:12
+msgid "Profiles"
+msgstr ""
+
+#: wtds/profile/templates/profiles/base.html:19
+msgid "Uploads"
+msgstr ""
+
+#: wtds/profile/templates/profiles/base.html:24
+msgid "Favorites"
+msgstr ""
+
+#: wtds/profile/templates/profiles/favorite_list.html:11
+msgid "Your favorites"
+msgstr ""
+
+#: wtds/profile/templates/profiles/profiles.html:14
+msgid ""
+"\n"
+"            Select your default content settings. The active profile filters "
+"all wallpapers,\n"
+"            including searches, suggestions, and your own list of uploads. "
+"If no profile is\n"
+"            activated, the default clean profile is automatically be used. "
+"Changing the drop-down\n"
+"            at the upper right on any page will instantly activate a new "
+"profile.\n"
+"            "
+msgstr ""
+
+#: wtds/profile/templates/profiles/profiles.html:26
+msgid "Save"
+msgstr ""
+
+#: wtds/profile/templates/profiles/profiles.html:32
+msgid "Add a new profile"
+msgstr ""
+
+#: wtds/profile/templates/profiles/profiles.html:64
+#: wtds/profile/templates/profiles/upload_list.html:11
+msgid "Your uploads"
+msgstr ""
+
+#: wtds/reports/models.py:16
+msgid "Field"
+msgstr ""
+
+#: wtds/reports/models.py:16
+msgid "Specifies the reported field."
+msgstr ""
+
+#: wtds/reports/models.py:17
+msgid "Reason"
+msgstr ""
+
+#: wtds/wallpapers/forms.py:27
+msgid "Narrow by tag names"
+msgstr ""
+
+#: wtds/wallpapers/forms.py:55 wtds/wallpapers/forms.py:112
+msgid "optional"
+msgstr ""
+
+#: wtds/wallpapers/forms.py:77
+msgid "Not a valid image file."
+msgstr ""
+
+#: wtds/wallpapers/forms.py:102
+msgid "File-picker image or drag-and-drop image is required."
+msgstr ""
+
+#: wtds/wallpapers/forms.py:114
+msgid "wallpaper id"
+msgstr ""
+
+#: wtds/wallpapers/models.py:27
+msgid "purity rating"
+msgstr ""
+
+#: wtds/wallpapers/models.py:64
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:46
+msgid "Name"
+msgstr ""
+
+#: wtds/wallpapers/models.py:65
+msgid "If left blank, the tags will be shown."
+msgstr ""
+
+#: wtds/wallpapers/models.py:66
+msgid "Image"
+msgstr ""
+
+#: wtds/wallpapers/models.py:68
+msgid "Height"
+msgstr ""
+
+#: wtds/wallpapers/models.py:69
+msgid "Width"
+msgstr ""
+
+#: wtds/wallpapers/models.py:74
+msgid "uploader"
+msgstr ""
+
+#: wtds/wallpapers/models.py:75
+msgid "Contributing user account"
+msgstr ""
+
+#: wtds/wallpapers/models.py:76
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:71
+msgid "Author"
+msgstr ""
+
+#: wtds/wallpapers/models.py:77
+msgid "Original creator"
+msgstr ""
+
+#: wtds/wallpapers/models.py:78
+msgid "License"
+msgstr ""
+
+#: wtds/wallpapers/models.py:79
+msgid "Duplicate"
+msgstr ""
+
+#: wtds/wallpapers/models.py:80
+msgid "Date created"
+msgstr ""
+
+#: wtds/wallpapers/models.py:81
+msgid "Public"
+msgstr ""
+
+#: wtds/wallpapers/models.py:82
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:54
+msgid "Purity"
+msgstr ""
+
+#: wtds/wallpapers/models.py:84
+msgid "Views"
+msgstr ""
+
+#: wtds/wallpapers/models.py:169 wtds/wallpapers/models.py:183
+msgid "url"
+msgstr ""
+
+#: wtds/wallpapers/models.py:180
+msgid "short name"
+msgstr ""
+
+#: wtds/wallpapers/models.py:181
+msgid "summary"
+msgstr ""
+
+#: wtds/wallpapers/models.py:185
+msgid "attribute author"
+msgstr ""
+
+#: wtds/wallpapers/models.py:186
+msgid "allow derivatives"
+msgstr ""
+
+#: wtds/wallpapers/models.py:187
+msgid "allow commercial use"
+msgstr ""
+
+#: wtds/wallpapers/models.py:188
+msgid "persist license"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/tag_confirm_delete.html:4
+#, python-format
+msgid "Delete tag '%(object)s'?"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/tag_confirm_delete.html:18
+#, python-format
+msgid ""
+"\n"
+"                Deleting this tag will remove it from the %(counter)s "
+"wallpaper shown below.\n"
+"                "
+msgid_plural ""
+"\n"
+"                Deleting this tag will remove it from the %(counter)s "
+"wallpapers shown below.\n"
+"                "
+msgstr[0] ""
+msgstr[1] ""
+
+#: wtds/wallpapers/templates/wallpapers/tag_confirm_delete.html:27
+#, python-format
+msgid ""
+"\n"
+"                    One wallpaper is using this as its only tag.\n"
+"                    This tag cannot be deleted until this wallpaper is given "
+"an additional tag.\n"
+"                    The wallpaper is found here:\n"
+"                    "
+msgid_plural ""
+"\n"
+"                    %(counter)s wallpapers are using this as their only "
+"tag.\n"
+"                    This tag cannot be deleted until these wallpapers are "
+"given an additional tag.\n"
+"                    The wallpapers are found here:\n"
+"                    "
+msgstr[0] ""
+msgstr[1] ""
+
+#: wtds/wallpapers/templates/wallpapers/tag_confirm_delete.html:42
+msgid "This tag is unused, and deleting it will have no side effects."
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/tag_confirm_delete.html:46
+#, python-format
+msgid "Are you sure you want to delete the '%(tag)s' tag?"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/tag_confirm_delete.html:55
+#, python-format
+msgid ""
+"\n"
+"                %(counter)s wallpaper currently tagged:\n"
+"            "
+msgid_plural ""
+"\n"
+"                %(counter)s wallpapers currently tagged:\n"
+"            "
+msgstr[0] ""
+msgstr[1] ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_confirm_delete.html:4
+#, python-format
+msgid "Delete '%(object)s'?"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_confirm_delete.html:11
+msgid "WARNING: This image is not marked as being a duplicate."
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_confirm_delete.html:20
+msgid "Delete this wallpaper?"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:4
+msgid "Wallpaper"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:20
+msgid "This wallpaper has only one tag."
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:27
+#: wtds/wallpapers/templates/wallpapers/wallpaper_form.html:4
+msgid "Edit"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:30
+msgid "Delete"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:35
+msgid "Remove from favorites"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:38
+msgid "Add to favorites"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:58
+msgid "Dimensions"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:60
+msgid "actual size"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:63
+msgid "Aspect ratio"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:67
+msgid "Uploader"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:75
+msgid "Unknown"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:81
+msgid "Similar by:"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:83
+msgid "tags"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:87
+msgid "color"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_detail.html:91
+msgid "size"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/wallpaper_form.html:18
+msgid "Save changes"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/includes/search_bar.html:4
+msgid "Clear"
+msgstr ""
+
+#: wtds/wallpapers/templates/wallpapers/includes/search_bar.html:5
+msgid "Run search"
+msgstr ""
