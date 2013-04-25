@@ -1,9 +1,10 @@
-{% load thumbnail %}
+{% load thumbnail cache %}
 
 {# Snippet for use with {% include %} #}
 
 {# Parameters: stack (wallpaper object or None) #}
 
+{% cache 600 wallpaper_tile wallpaper.id "280x188" %}
 {% thumbnail wallpaper.image "280x188" crop="center" as image %}
     {% spaceless %}
     <div class="tile-wrapper">
@@ -40,3 +41,4 @@
     </style>
 {% endwith %}
 {% endthumbnail %}
+{% endcache %}
