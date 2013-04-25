@@ -33,6 +33,7 @@ DATABASES = {
 }
 
 INTERNAL_IPS = ('127.0.0.1',)
+ALLOWED_HOSTS = ['.wallpapersthatdontsuck.com']
 
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 TIME_ZONE = 'America/Phoenix'
