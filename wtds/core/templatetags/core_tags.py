@@ -6,6 +6,7 @@ register = template.Library()
 
 @register.simple_tag
 def combine_forms_media(*forms):
-    if forms:
-        return reduce(add, map(attrgetter('media'), filter(bool, forms)))
+    media_list = map(attrgetter('media'), filter(bool, forms))
+    if media_list:
+        return reduce(add, media_list)
     return ""
