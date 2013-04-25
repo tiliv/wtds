@@ -10,7 +10,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
 
-        profile = Profile.objects.get_active(self.request.user)
+        profile = self.request.user.active_profile
         wallpapers = Wallpaper.objects.filter_through_profile(profile)
         tags = Tag.objects.filter_through_profile(profile)
 

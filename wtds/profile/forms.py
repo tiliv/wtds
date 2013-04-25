@@ -22,4 +22,4 @@ class ProfileSwitchForm(forms.Form):
 
         profiles = user.profile_set.all()
         self.fields['profile'].queryset = profiles
-        self.fields['profile'].initial = profiles.get_active()
+        self.fields['profile'].initial = user.active_profile

@@ -2,8 +2,9 @@ from .models import Wallpaper
 from .forms import SearchForm
 
 def random_logo_wallpapers(request):
+    queryset = Wallpaper.objects.filter_through_profile(request.user.active_profile).order_by('?')
     try:
-        wallpaper = Wallpaper.objects.filter_for_user(request.user).order_by('?')[0]
+        wallpaper = queryset[0]
     except IndexError:
         # User's profile settings exclude all wallpapers in the database
         wallpaper = Wallpaper.objects.filter_clean().order_by('?')[0]
