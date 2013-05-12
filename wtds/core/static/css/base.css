@@ -532,6 +532,8 @@ a:focus {
 
 footer {
     margin-top: 2em;
+    font-size: 0.9em;
+    color: #333;
 }
 #tip {
     font-style: italic;

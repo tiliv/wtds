@@ -103,6 +103,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
 
     "wtds.core.context_processors.tips",
+    "wtds.core.context_processors.site_modified_date",
     "wtds.profile.context_processors.profile_switcher",
     "wtds.wallpapers.context_processors.random_logo_wallpapers",
     "wtds.wallpapers.context_processors.search_form",
@@ -196,3 +197,5 @@ THUMBNAIL_REDIS_HOST = 'localhost'
 THUMBNAIL_REDIS_PORT = 6379
 THUMBNAIL_REDIS_DB = 0
 THUMBNAIL_REDIS_PASSWORD = ''
+
+LAST_COMMIT_DATE_FILE = 'last_commit_date.txt'

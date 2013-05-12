@@ -101,6 +101,14 @@
         </div>
         <footer>
             <div id="tip">{{ random_tip }}</div>
+            <div id="timestamp">
+                {% if site_modified_date %}
+                    Last site code modification was {{ site_modified_date|timesince }} ago.
+                {% else %}
+                    We're actually not sure when the last site code modification was.
+                    Cron probably isn't generating the file.  Computers, right?
+                {% endif %}
+            </div>
         </footer>
     </div>
 </body>
