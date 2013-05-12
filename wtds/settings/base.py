@@ -32,7 +32,7 @@ DATABASES = {
     }
 }
 
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1', '24.251.166.152')
 ALLOWED_HOSTS = ('.wallpapersthatdontsuck.com',)
 
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
