@@ -1,8 +1,11 @@
 import random
 from datetime import datetime
+import logging
 
 from django.core.cache import cache
 from django.conf import settings
+
+logger = logging.getLogger(__name__)
 
 TIPS = [
     "Fun fact: if you're using Firefox, you can use the freaking awesome right-click menu features!  Try it by right-clicking a wallpaper tile.",
@@ -20,7 +23,9 @@ def site_modified_date(request):
         try:
             with open(settings.LAST_COMMIT_DATE_FILE) as f:
                 date_string = f.read().strip()
-        except IOError:
+        except Exception as e:
+            logger.error("Problem reading settings.LAST_COMMIT_DATE_FILE %r",
+                    settings.LAST_COMMIT_DATE_FILE, exc_info=e)
             date = None
         else:
             date = datetime.strptime(date_string, GIT_DATE_FORMAT)
