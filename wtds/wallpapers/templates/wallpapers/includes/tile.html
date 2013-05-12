@@ -4,7 +4,8 @@
 
 {# Parameters: stack (wallpaper object or None) #}
 
-{% cache 600 wallpaper_tile wallpaper.id "280x188" %}
+{% with is_stack=stack.id|default:False %}
+{% cache 600 wallpaper_tile wallpaper.id is_stack "280x188" %}
 {% thumbnail wallpaper.image "280x188" crop="center" as image %}
     {% spaceless %}
     <div class="tile-wrapper">
@@ -42,3 +43,4 @@
 {% endwith %}
 {% endthumbnail %}
 {% endcache %}
+{% endwith %}
