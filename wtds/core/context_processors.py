@@ -23,11 +23,13 @@ def site_modified_date(request):
         try:
             with open(settings.LAST_COMMIT_DATE_FILE) as f:
                 date_string = f.read().strip()
-        except Exception as e:
-            logger.error("Problem reading settings.LAST_COMMIT_DATE_FILE %r",
+            date = datetime.strptime(date_string, GIT_DATE_FORMAT)
+        except IOError as e:
+            logger.error("Problem reading settings.LAST_COMMIT_DATE_FILE %r.",
                     settings.LAST_COMMIT_DATE_FILE, exc_info=e)
             date = None
-        else:
-            date = datetime.strptime(date_string, GIT_DATE_FORMAT)
+        except ValueError as e:
+            logger.error("Can't format date %r.", date_string, exc_info=e)
+            date = None
         cache.set('site_modified_date', date, 600)
     return { 'site_modified_date': date }
