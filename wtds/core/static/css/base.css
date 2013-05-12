@@ -535,6 +535,9 @@ footer {
     font-size: 0.9em;
     color: #333;
 }
+footer a {
+    color: #777;
+}
 #tip {
     font-style: italic;
     font-size: 0.8em;
