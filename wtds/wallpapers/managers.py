@@ -1,16 +1,18 @@
 import logging
 
+from urllib.parse import urlencode
+from functools import reduce
+
 from django.db.models import Manager, Count, Avg, Max
 from django.db.models.query import QuerySet
 from django.core.urlresolvers import reverse
-from urllib import urlencode
 
 from wtds.profile.models import Profile
 
 logger = logging.getLogger(__name__)
 
 class TagManager(Manager):
-    def get_query_set(self):
+    def get_queryset(self):
         return TagQuerySet(self.model, using=self._db)
 
     def get_from_request(self, querydict):
@@ -21,20 +23,20 @@ class TagManager(Manager):
 
     # Proxy methods to TagQuerySet
     def filter_through_profile(self, profile):
-        return self.get_query_set().filter_through_profile(profile)
+        return self.get_queryset().filter_through_profile(profile)
 
     def filter_for_user(self, user):
         """ User might be anonymous, so let the profile manager handle it. """
-        return self.get_query_set().filter_for_user(user)
+        return self.get_queryset().filter_for_user(user)
 
     def filter_orphaned(self):
-        return self.get_query_set().filter_orphaned()
+        return self.get_queryset().filter_orphaned()
 
     def annotate_wallpaper_counter(self):
-        return self.get_query_set().annotate_wallpaper_counter()
+        return self.get_queryset().annotate_wallpaper_counter()
 
     def get_search_url(self):
-        return self.get_query_set().get_search_url()
+        return self.get_queryset().get_search_url()
 
 class TagQuerySet(QuerySet):
     def filter_through_profile(self, profile):
@@ -72,49 +74,49 @@ class WallpaperManager(Manager):
             terms['height__{}'.format(profile.height_style)] = profile.height
         return terms
 
-    def get_query_set(self):
+    def get_queryset(self):
         return WallpaperQuerySet(self.model, using=self._db)
 
     # Pass through to QuerySet
     def popular(self):
-        return self.get_query_set().popular()
+        return self.get_queryset().popular()
 
     def recent(self):
-        return self.get_query_set().recent()
+        return self.get_queryset().recent()
 
     def filter_by_orphan_danger(self, tags=None):
-        return self.get_query_set().filter_by_orphan_danger(tags=tags)
+        return self.get_queryset().filter_by_orphan_danger(tags=tags)
 
     def filter_through_profile(self, profile):
-        return self.get_query_set().filter_through_profile(profile)
+        return self.get_queryset().filter_through_profile(profile)
 
     def filter_for_user(self, user):
         """ User might be anonymous, so let the profile manager handle it. """
         return self.filter_through_profile(Profile.objects.get_active(user))
 
     def filter_clean(self):
-        return self.get_query_set().filter_clean()
+        return self.get_queryset().filter_clean()
 
     def filter_sketchy(self):
-        return self.get_query_set().filter_sketchy()
+        return self.get_queryset().filter_sketchy()
 
     def filter_nsfw(self):
-        return self.get_query_set().filter_nsfw()
+        return self.get_queryset().filter_nsfw()
 
     def filter_by_size(self, width, height, variation=0.1):
-        return self.get_query_set().filter_similar_by_size(width, height, variation)
+        return self.get_queryset().filter_similar_by_size(width, height, variation)
 
     def filter_by_color(self, color_profile):
-        return self.get_query_set().filter_similar_by_color(color_profile)
+        return self.get_queryset().filter_similar_by_color(color_profile)
 
     def filter_by_tags(self, tags):
-        return self.get_query_set().filter_by_tags(tags)
+        return self.get_queryset().filter_by_tags(tags)
 
     def filter_by_tag_names(self, names):
-        return self.get_query_set().filter_by_tag_names(names)
+        return self.get_queryset().filter_by_tag_names(names)
 
     def filter_from_request(self, querydict):
-        return self.get_query_set().filter_from_request(querydict)
+        return self.get_queryset().filter_from_request(querydict)
 
 class WallpaperQuerySet(QuerySet):
     def popular(self):

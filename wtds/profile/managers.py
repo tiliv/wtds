@@ -6,7 +6,7 @@ from django.db.models.query import QuerySet
 logger = logging.getLogger(__name__)
 
 class ProfileManager(Manager):
-    def get_query_set(self):
+    def get_queryset(self):
         return ProfileQuerySet(self.model, using=self._db)
 
     def get_active(self, user=None):
@@ -14,7 +14,7 @@ class ProfileManager(Manager):
             if user.is_authenticated():
                 return user.profile_set.get_active()
             return self.model()
-        return self.get_query_set().get_active()
+        return self.get_queryset().get_active()
 
     def create_default(self, *users):
         """ Creates a default profile for a new user account. """
@@ -26,7 +26,7 @@ class ProfileManager(Manager):
         return dict(zip(users, profiles))
 
     def deactivate(self):
-        return self.get_query_set().deactivate()
+        return self.get_queryset().deactivate()
 
 class ProfileQuerySet(QuerySet):
     def get_active(self):
@@ -56,17 +56,17 @@ class FavoriteManager(Manager):
         kwargs = WallpaperManager.get_profile_filtering_kwargs(profile)
         return {'wallpaper__{}'.format(term): value for term, value in kwargs.items()}
 
-    def get_query_set(self):
+    def get_queryset(self):
         return FavoriteQuerySet(self.model, using=self._db)
 
     def filter_through_profile(self, profile):
-        return self.get_query_set().filter_through_profile(profile)
+        return self.get_queryset().filter_through_profile(profile)
 
     def filter_for_user(self, user):
-        return self.get_query_set().filter_for_user(user)
+        return self.get_queryset().filter_for_user(user)
 
     def filter_from_request(self, querydict):
-        return self.get_query_set().filter_from_request(querydict)
+        return self.get_queryset().filter_from_request(querydict)
 
 class FavoriteQuerySet(QuerySet):
     def filter_through_profile(self, profile):

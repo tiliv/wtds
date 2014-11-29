@@ -1,4 +1,5 @@
 from operator import add, attrgetter
+from functools import reduce
 
 from django import template
 

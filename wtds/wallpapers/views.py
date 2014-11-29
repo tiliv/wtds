@@ -127,12 +127,10 @@ class TagMixin(object):
     model = Tag
 
 class TagListView(TagMixin, ListView):
-    queryset = Tag.objects.annotate_wallpaper_counter().order_by('purity_rating', 'name')
-
     profile_filtering = True
 
     def get_queryset(self):
-        queryset = self.queryset
+        queryset = Tag.objects.annotate_wallpaper_counter().order_by('purity_rating', 'name')
         if self.profile_filtering:
             queryset = queryset.filter_for_user(self.request.user)
         return queryset

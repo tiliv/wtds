@@ -6,6 +6,7 @@ from .models import Profile
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
+        fields = '__all__'
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'optional'}),
             'ratio_style': forms.Select(attrs={'tabindex': -1}),
@@ -15,7 +16,7 @@ class ProfileForm(forms.ModelForm):
     
 
 class ProfileSwitchForm(forms.Form):
-    profile = forms.ModelChoiceField(queryset=Profile.objects.none(), empty_label=unicode(Profile()))
+    profile = forms.ModelChoiceField(queryset=Profile.objects.none(), empty_label=str(Profile()))
 
     def __init__(self, user, *args, **kwargs):
         super(ProfileSwitchForm, self).__init__(*args, **kwargs)

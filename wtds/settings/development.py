@@ -14,7 +14,7 @@ INSTALLED_APPS += (
     'debug_toolbar',
 )
 
-DATABASES['default']['NAME'] = 'wtds2'
+# DATABASES['default']['NAME'] = 'wtds2'
 LOGGING['formatters']['colored'] = dict(LOGGING['formatters']['default'], **{
     '()': 'djangocolors_formatter.DjangoColorsFormatter',
 })
@@ -28,6 +28,7 @@ LOGGING['loggers']['wtds'] = {
     'level': 'DEBUG',
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # CACHES = {
 #     'default': {
 #         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',

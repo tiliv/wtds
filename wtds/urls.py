@@ -12,6 +12,7 @@ handler404 = 'wtds.core.views.handler404'
 handler500 = 'wtds.core.views.handler500'
 
 urlpatterns = patterns('',
+    url(r'^api/', include('wtds.urls_api')),
     url(r'^$', HomeView.as_view(), name="home"),
     url(r'^', include('wtds.wallpapers.urls')),
     url(r'^account/', include('wtds.profile.urls', namespace="profile")),

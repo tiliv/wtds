@@ -111,6 +111,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 ROOT_URLCONF = 'wtds.urls'
 
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'wtds.wsgi.application'
 
@@ -130,8 +132,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     
     # User apps
+    'rest_framework',
     'taggit',
-    'south',
     'sorl.thumbnail',
     'wtds.core',
     'wtds.reports',

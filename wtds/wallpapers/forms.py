@@ -7,7 +7,7 @@ from django import forms
 from django.forms import ValidationError
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import UploadedFile
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Wallpaper, Tag
 from .widgets import TagListInput, DragAndDropImageProcesserWidget, ClearableThumbnailImageWidget
@@ -23,9 +23,9 @@ BASE64_CONTENT_PATTERN = re.compile(r'^data:(?P<content_type>image/(?P<type>{}))
         r'|'.join(IMAGE_TYPE_EXTENSION_MAP.keys())))
 
 class SearchForm(forms.Form):
-    terms = forms.CharField(required=False, widget=TagListInput(attrs={
-        'placeholder': _("Narrow by tag names"),
-    }))
+    terms = forms.CharField(required=False)#, widget=TagListInput(attrs={
+        #'placeholder': _("Narrow by tag names"),
+        #}))
 
     class Media:
         css = {'screen': ('css/search.css',)}
@@ -53,7 +53,7 @@ class CreateForm(forms.ModelForm):
         fields = ('tags', 'name', 'author', 'license', 'purity_rating', 'image')
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': _("optional")}),
-            'tags': TagListInput,
+            # 'tags': TagListInput,
         }
     
     def clean_image_raw(self):
@@ -110,7 +110,7 @@ class UpdateForm(forms.ModelForm):
                 'duplicate_of', 'is_public', 'views', 'tags')
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': _('optional')}),
-            'tags': TagListInput,
+            # 'tags': TagListInput,
             'duplicate_of': forms.TextInput(attrs={'placeholder': _('wallpaper id')}),
             'image': ClearableThumbnailImageWidget,
         }

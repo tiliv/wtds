@@ -54,11 +54,11 @@ class TagListInput(forms.TextInput):
 
     def render(self, name, value, attrs=None):
         # Kind of a wonky workaround for hyper-lazy url resolution
-        self.tagsInput_options['autocomplete_url'] = unicode(TAGSINPUT_AUTOCOMPLETE_URL)
+        self.tagsInput_options['autocomplete_url'] = str(TAGSINPUT_AUTOCOMPLETE_URL)
 
         if value is None:
             value = ''
-        elif not isinstance(value, basestring):
+        elif not isinstance(value, str):
             value = ','.join([taggeditem.tag.name for taggeditem in value])
         s = super(TagListInput, self).render(name, value, attrs)
         js = '<script type="text/javascript">$("#{id}").tagsInput({tagsInput_options});</script>'

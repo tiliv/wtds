@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.template.defaultfilters import pluralize
-from django.utils.translation import ungettext, ugettext as _
+from django.utils.translation import ungettext, ugettext_lazy as _
 
 from extra_views import InlineFormSetView
 

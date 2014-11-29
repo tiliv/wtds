@@ -9,7 +9,7 @@ from django.db.models import Avg, F
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.generic import GenericRelation
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 from taggit.models import TagBase, GenericTaggedItemBase
@@ -89,7 +89,7 @@ class Wallpaper(models.Model):
     class Meta:
         get_latest_by = 'date_created'
 
-    def __unicode__(self):
+    def __str__(self):
         if self.name:
             return self.name
         return u", ".join(map(unicode, self.tags.all()))
@@ -137,7 +137,7 @@ class Wallpaper(models.Model):
         divisor = gcd(self.width, self.height)
         rw, rh = (self.width / divisor, self.height / divisor)
         if nearest:
-            ratio = sorted(COMMON_ASPECT_RATIOS, key=lambda (w,h): (1.*rw/rh) / (1.*w/h))[-1]
+            ratio = sorted(COMMON_ASPECT_RATIOS, key=lambda w,h: (1.*rw/rh) / (1.*w/h))[-1]
         else:
             ratio = (rw, rh)
 
@@ -170,9 +170,9 @@ class Author(models.Model):
 
     reports = ReportsManager()
 
-    def __unicode__(self):
+    def __str__(self):
         if self.user:
-            return unicode(self.user)
+            return str(self.user)
         return self.name or self.url
 
 class License(models.Model):
@@ -182,11 +182,11 @@ class License(models.Model):
 
     url = models.URLField(_('url'), max_length=400, blank=True)
 
-    attribute_author = models.BooleanField(_('attribute author'))
-    allow_derivatives = models.BooleanField(_('allow derivatives'))
-    allow_commercial_use = models.BooleanField(_('allow commercial use'))
-    persist_license = models.BooleanField(_('persist license'))
+    attribute_author = models.BooleanField(_('attribute author'), default=False)
+    allow_derivatives = models.BooleanField(_('allow derivatives'), default=False)
+    allow_commercial_use = models.BooleanField(_('allow commercial use'), default=False)
+    persist_license = models.BooleanField(_('persist license'), default=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 

@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from django.db import models
 from django.conf import settings
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from wtds.wallpapers.constants import PURITY_CHOICES
 from .managers import ProfileManager, FavoriteManager
@@ -50,7 +50,7 @@ class Profile(models.Model):
     class Meta:
         ordering = ('name', '-id')
 
-    def __unicode__(self):
+    def __str__(self):
         if self.id is None:
             return "[Default]"
         if self.name:

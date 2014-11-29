@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
+        fields = '__all__'
         widgets = {
             'object_fieldname': forms.Select,
         }

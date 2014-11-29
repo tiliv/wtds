@@ -1,3 +1,4 @@
+import os.path
 import random
 from datetime import datetime
 import logging
@@ -20,16 +21,22 @@ def tips(request):
 def site_modified_date(request):
     date = cache.get('site_modified_date')
     if date is None:
+        path = settings.LAST_COMMIT_DATE_FILE
+        if not os.path.isfile(path):
+            try:
+                with open(path, 'w') as f:
+                    f.write('')
+            except IOError as e:
+                logger.exception("Problem writing empty file %r.", path)
         try:
-            with open(settings.LAST_COMMIT_DATE_FILE) as f:
+            with open(path) as f:
                 date_string = f.read().strip()
             date = datetime.strptime(date_string, GIT_DATE_FORMAT)
         except IOError as e:
-            logger.error("Problem reading settings.LAST_COMMIT_DATE_FILE %r.",
-                    settings.LAST_COMMIT_DATE_FILE, exc_info=e)
+            logger.exception("Problem reading settings.LAST_COMMIT_DATE_FILE %r.", path)
             date = None
         except ValueError as e:
-            logger.error("Can't format date %r.", date_string, exc_info=e)
+            logger.warning("Can't format date %r.", date_string, exc_info=e)
             date = None
         cache.set('site_modified_date', date, 600)
     return { 'site_modified_date': date }
