@@ -12,7 +12,7 @@ from sorl.thumbnail.shortcuts import get_thumbnail
 TAGSINPUT_AUTOCOMPLETE_URL = reverse_lazy('tags:autocomplete')
 DEFAULT_TAGSINPUT_OPTIONS = {
     'defaultText': '',
-    'removeText': u'\u25c9', # circle thingy
+    'removeText': '\u25c9', # circle thingy
     'autocomplete_url': None, # filled in at runtime so it's not a wonky __proxy__ reverse
     'autocomplete': {
         'selectFirst': True,
@@ -29,11 +29,11 @@ class DragAndDropImageProcesserWidget(forms.FileInput):
 
     def render(self, name, value, attrs=None):
         s = super(DragAndDropImageProcesserWidget, self).render(name, value, attrs)
-        s = mark_safe(s + u""
-            u'<div id="hover-indicator"></div>'
-            u'<div id="preview-stage">'
-                u'<div id="size-readout"></div>'
-            u'</div>')
+        s = mark_safe(s + ""
+            '<div id="hover-indicator"></div>'
+            '<div id="preview-stage">'
+                '<div id="size-readout"></div>'
+            '</div>')
         return s
 
 class TagListInput(forms.TextInput):
@@ -75,7 +75,7 @@ class ClearableThumbnailImageWidget(forms.ClearableFileInput):
     
     """
 
-    template_with_initial = u'%(clear_template)s %(input_text)s: %(input)s'
+    template_with_initial = '%(clear_template)s %(input_text)s: %(input)s'
 
     def render(self, name, value, attrs=None):
         output = super(ClearableThumbnailImageWidget, self).render(name, value, attrs)
@@ -85,7 +85,7 @@ class ClearableThumbnailImageWidget(forms.ClearableFileInput):
             except Exception:
                 pass
             else:
-                output = (u'<a class="thumbnail tile" target="_blank" href="%s">'
-                    u'<img src="%s" width="140" height="94" /></a>') % (value.url, thumbnail.url) \
+                output = ('<a class="thumbnail tile" target="_blank" href="%s">'
+                    '<img src="%s" width="140" height="94" /></a>') % (value.url, thumbnail.url) \
                     + output
         return mark_safe(output)

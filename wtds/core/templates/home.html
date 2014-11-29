@@ -1,23 +1,7 @@
-{% extends "wallpapers/base_searchable.html" %}
+{% extends "wallpapers/base.html" %}
 
 {% block content %}
     <div id="lineup">
-        {% for wallpaper in wallpapers.recent %}
-            {% include "wallpapers/includes/tile.html" with wallpaper=wallpaper only %}
-        {% endfor %}
-    </div>
-    <div id="tags">
-        <h4>Most used tags</h4>
-        <div>
-            {% include "wallpapers/includes/tags_as_links.html" with tags=tags.most_used only %}
-        </div>
-        <h4>Recently used tags</h4>
-        <div>
-            {% include "wallpapers/includes/tags_as_links.html" with tags=tags.recent only %}
-        </div>
-        <h4>Newly created tags</h4>
-        <div>
-            {% include "wallpapers/includes/tags_as_links.html" with tags=tags.most_used only %}
-        </div>
+        <wallpaper-list>wallpaper-list</wallpaper-list>
     </div>
 {% endblock content %}

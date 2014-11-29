@@ -1,0 +1,11 @@
+<div class="tile-wrapper">
+    <a href="{{ wallpaper.absolute_url }}"
+            class="wallpaper tile {{ wallpaper.purity_rating_display }}"
+            ng-class="{'stack': stack}">
+        <div class="sleeve"></div>
+        <img ng-src="{{ wallpaper.image }}" width="140" height="94"
+             id="wallpaper-{{ wallpaper.id }}" />
+    </a>
+    <div class="show-tags-button"></div>
+    <tag-list objects="wallpaper.tags"></tag-list>
+</div>

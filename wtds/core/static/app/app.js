@@ -1,14 +1,9 @@
-var app = angular.module('wtds', ['wtds.services.HttpQueue'])
+var app = angular.module('wtds', [
+    // Local modules
+    // 'wtds.services.SiteConfiguration',
+    // 'wtds.services.HttpQueue',
+    'wtds.wallpapers'
+])
 
-// .controller('', function(){
-// })
-
-.run(function(HttpQueue){
-    function init(){
-        HttpQueue.getAll([
-            // 'landing.html'
-        ]);
-    }
-
-    init();
-});
+.controller('wtdsController', function($scope){
+})

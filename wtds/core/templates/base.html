@@ -1,7 +1,7 @@
 {% load i18n %}
 <!doctype html>
-<html>
-<head lang="en" ng-app="wtds">
+<html lang="en" ng-app="wtds">
+<head>
     <title>{% block title %}Home{% endblock title %}</title>
     <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}img/favicon.ico" />
 
@@ -17,23 +17,27 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.min.js"></script>
     {# <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular-route.js"></script> #}
 
-    {# Core #}
-    <script src="{{ STATIC_URL }}app/HttpQueue.js"></script>
-    <script src="{{ STATIC_URL }}app/app.js"></script>
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/search.css" />
-    {# <script type="text/javascript" src="{{ STATIC_URL }}js/base.js"></script> #}
+    {# scrub libraries all be demandin dis #}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
 
-    {% block css %}
-    {# <link rel="stylesheet" href="{{ STATIC_URL }}css/viewing.css" type="text/css" /> #}
-    {% endblock css %}
-    {% block javascript %}
-    {% endblock javascript %}
-    {% block extra_head %}
-        {# {% combine_forms_media form search_form %} #}
-    {% endblock extra_head %}
+    {# restangular #}
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/restangular/1.3.1/restangular.min.js"></script>
+
+    {# Core #}
+    <script>
+        window._STATIC_URL = "{{ STATIC_URL }}";
+    </script>
+    <script src="{{ STATIC_URL }}app/SiteConfiguration.js"></script>
+    <script src="{{ STATIC_URL }}app/HttpQueue.js"></script>
+    <script src="{{ STATIC_URL }}app/api.js"></script>
+    <script src="{{ STATIC_URL }}app/wallpapers.js"></script>
+    <script src="{{ STATIC_URL }}app/app.js"></script>
+
+    <script src="{{ STATIC_URL }}js/base.js"></script>
+    <script src="{{ STATIC_URL }}js/resize.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" />
 </head>
-<body>
+<body ng-controller="wtdsController">
     <div id="wrapper">
         <header>
             <menu type="toolbar">
@@ -70,6 +74,7 @@
                 <a id="logo" href="{% url 'home' %}" style="{# background-image: url({{ logo_wallpaper.image.url }}) #}"></a>
             </div>
         </header>
+
         <menu id="tile-options" type="context">
             {% block wallpaper_tile_menuitems %}
             <menuitem class="zoom" label="{% trans "Zoom" noop %} " data-url=""></menuitem>
@@ -78,24 +83,11 @@
             {% endblock %}
         </menu>
         <div id="content">
-            {% block messages %}
-                {% for message in messages %}
-                    <p class="message {{ message.tags }}">
-                        {{ message }}
-                    </p>
-                {% endfor %}
-            {% endblock messages %}
-
-            <div id="pjax-wrapper">
-                {% block search %}{% endblock search %}
-                <div id="wrapped-content"> {# Designed to be loaded over ajax #}
-                    {% block content %}{% endblock content %}
-                </div>
-                <div id="stage" class="wallpaper"> {# Designed to contain transitioning content #}
-                    {% block stage %}{% endblock stage %}
-                </div>
+            <div id="wrapped-content">
+            {% block content %}{% endblock content %}
             </div>
         </div>
+
         <footer>
             <div id="tip">{{ random_tip }}</div>
             <div id="timestamp">

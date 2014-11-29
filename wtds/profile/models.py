@@ -59,7 +59,7 @@ class Profile(models.Model):
         if self.ratio:
             bits.append(self.get_ratio_display())
         if self.width or self.height:
-            bits.append(u"[{} × {}]".format(self.get_width_display(), self.get_height_display()))
+            bits.append("[{} × {}]".format(self.get_width_display(), self.get_height_display()))
         return " ".join(bits)
 
     def save(self, *args, **kwargs):

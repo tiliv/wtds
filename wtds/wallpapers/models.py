@@ -92,7 +92,7 @@ class Wallpaper(models.Model):
     def __str__(self):
         if self.name:
             return self.name
-        return u", ".join(map(unicode, self.tags.all()))
+        return ", ".join(map(str, self.tags.all()))
 
     def clean(self):
         if self.duplicate_of and self.duplicate_of is self:
@@ -106,13 +106,14 @@ class Wallpaper(models.Model):
 
     def assess_tag_purity(self):
         """ Visits each tag and crunches the average purity rating of its wallpapers. """
-        AVG = Avg('wallpapers_taggedwallpaper_items__wallpaper__purity_rating')
-        tags = self.tags.annotate(purity_avg=AVG).exclude(purity_avg=F('purity_rating'))
-        for tag in tags:
-            logger.info("Tag %r changing purity rating from %r to %r", tag, tag.purity_rating,
-                    tag.purity_avg)
-            tag.purity_rating = tag.purity_avg
-            tag.save()
+        return
+        # AVG = Avg('wallpapers_taggedwallpaper_items__wallpaper__purity_rating')
+        # tags = self.tags.annotate(purity_avg=AVG).exclude(purity_avg=F('purity_rating'))
+        # for tag in tags:
+        #     logger.info("Tag %r changing purity rating from %r to %r", tag, tag.purity_rating,
+        #             tag.purity_avg)
+        #     tag.purity_rating = tag.purity_avg
+        #     tag.save()
 
     def get_absolute_url(self):
         return reverse('wallpapers:view', kwargs={'pk': self.pk})
@@ -137,7 +138,7 @@ class Wallpaper(models.Model):
         divisor = gcd(self.width, self.height)
         rw, rh = (self.width / divisor, self.height / divisor)
         if nearest:
-            ratio = sorted(COMMON_ASPECT_RATIOS, key=lambda w,h: (1.*rw/rh) / (1.*w/h))[-1]
+            ratio = sorted(COMMON_ASPECT_RATIOS, key=lambda dim: (rw/rh) / (dim[0]/dim[1]))[-1]
         else:
             ratio = (rw, rh)
 
